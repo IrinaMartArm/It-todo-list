@@ -29,11 +29,16 @@ function App() {
         }
         let newTasks = [newTask, ...tasks]
         setTasks(newTasks)
-        
     }
 
     const changeFilter = (value: FilterValuesType) => {
         setFilter(value)
+    }
+
+    const changeStatus = (taskId: string, isdone: boolean) => {
+        const task = tasks.find(t => t.id === taskId)
+        if(task){task.isdone = isdone}
+        setTasks([...tasks])
     }
 
     let tasksForList = tasks
@@ -50,7 +55,9 @@ function App() {
                         title='What to learn' 
                         removeTask={removeTask}
                         changeFilter={changeFilter}
+                        changeStatus={changeStatus}
                         addTask={addTask}
+                        filter={filter}
                         />                        
         </div>
     );
