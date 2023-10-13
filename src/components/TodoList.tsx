@@ -12,10 +12,12 @@ export type TaskType = {
 type PropsType = {
     title: string
     tasks: Array<TaskType>
-    removeTask: (id: string) => void
-    addTask: (title: string) => void
-    changeFilter: (value: FilterValuesType) => void
-    changeStatus: (taskId: string, isdone: boolean) => void
+    id: string
+    removeTodoList: (todolistId: string) => void
+    removeTask: (id: string, todolistId: string) => void
+    addTask: (title: string, todolistId: string) => void
+    changeFilter: (value: FilterValuesType, todolistId: string) => void
+    changeStatus: (taskId: string, isdone: boolean, todolistId: string) => void
     filter: FilterValuesType
 }
 
@@ -24,8 +26,12 @@ export const TodoList = (props: PropsType) => {
     const [input, setInput] = useState('')
     const [error, setError] = useState<string | null>(null)
 
+    const removeTodoHandler = () => {
+        props.removeTodoList(props.id)
+    }
+
     const addTaskHandler = () => {
-        props.addTask(input)
+        props.addTask(input, props.id)
                 setInput('')
     }
 
@@ -46,14 +52,14 @@ export const TodoList = (props: PropsType) => {
     }  
     
     const filterhandler = (value: FilterValuesType) => {
-        props.changeFilter(value)
+        props.changeFilter(value, props.id)
     }
 
     let tasksList: Array<JSX.Element> | JSX.Element = props.tasks.length > 0 ?
     props.tasks.map((t)=>{
-        const onRemoveTask = ()=>{props.removeTask(t.id)}
+        const onRemoveTask = ()=>{props.removeTask(t.id, props.id)}
         const onChengeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            props.changeStatus(t.id, e.currentTarget.checked)
+            props.changeStatus(t.id, e.currentTarget.checked, props.id)
         }
         return <li key={t.id} className={t.isdone ? 'is-done' : ''}>
                     <input type="checkbox" checked={t.isdone} onChange={onChengeHandler}/> 
@@ -64,7 +70,7 @@ export const TodoList = (props: PropsType) => {
 
     return (
         <div className="todolist">
-                <h3>{props.title}</h3>
+                <h3>{props.title}<button onClick={removeTodoHandler}>x</button></h3>
                 <div>
                     <input value={input} 
                             onChange={onChangeHandler}
