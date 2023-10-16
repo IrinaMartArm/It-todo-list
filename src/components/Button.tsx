@@ -9,6 +9,11 @@ export const Button = (props: PropsType) => {
         props.callback()
     }
     return (  
-        <button onClick={callbackHandler}>{props.name}</button>
+        <button 
+        onClick={callbackHandler} 
+        className={props.className}
+        >
+            {props.name}
+            </button>
     );
 }
