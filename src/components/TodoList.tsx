@@ -18,19 +18,19 @@ type PropsType = {
     tasks: Array<TaskType>
     id: string
     removeTodoList: (todolistId: string) => void
-    removeTask: (id: string, todolistId: string) => void
-    addTask: (title: string, todolistId: string) => void
-    changeFilter: (value: FilterValuesType, todolistId: string) => void
-    changeStatus: (taskId: string, isdone: boolean, todolistId: string) => void
-    changeTaskTitle: (taskId: string, title: string, todolistId: string) => void
-    changeTodoTitle: (title: string, todolistId: string) => void
+    removeTask: (todolistId: string, id: string) => void
+    addTask: (todolistId: string, title: string) => void
+    changeFilter: (todolistId: string, value: FilterValuesType) => void
+    changeStatus: (todolistId: string, taskId: string, isdone: boolean) => void
+    changeTaskTitle: (todolistId: string, taskId: string, title: string) => void
+    changeTodoTitle: (todolistId: string, title: string) => void
     filter: FilterValuesType
 }
 
 export const TodoList = (props: PropsType) => {
 
     const addTask = (title: string) => {
-        props.addTask(title, props.id)
+        props.addTask(props.id, title)
     }
 
     const removeTodoHandler = () => {
@@ -38,12 +38,12 @@ export const TodoList = (props: PropsType) => {
     }
     
     const filterhandler = (value: FilterValuesType) => {
-        props.changeFilter(value, props.id)
+        props.changeFilter(props.id, value)
     }
 
     const changeTitle = (value: string) => {
         console.log('todo', value)
-        props.changeTodoTitle(value, props.id)
+        props.changeTodoTitle(props.id, value)
     }
 
 console.log('filter', props.filter)
@@ -51,7 +51,7 @@ console.log('filter', props.filter)
     props.tasks.map((t)=>{
         const onRemoveTask = ()=>{props.removeTask(t.id, props.id)}
         const onChengeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            props.changeStatus(t.id, e.currentTarget.checked, props.id)
+            props.changeStatus(props.id, t.id, e.currentTarget.checked)
         }
 
 

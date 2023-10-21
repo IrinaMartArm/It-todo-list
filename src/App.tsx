@@ -28,7 +28,6 @@ function App() {
         {id: tdlId1, title: 'What to learn', filter: 'All'},
         {id: tdlId2, title: 'What to buy', filter: 'All'}
     ])
-    console.log('todoLists', todoLists)
 
     const [tasks, setTasks] = useState<TasksStateType>({
         [tdlId1]: [
@@ -62,7 +61,7 @@ function App() {
         setTasks({...tasks})
     }
 
-    const changeFilter = (value: FilterValuesType, todolistId: string) => {
+    const changeFilter = (todolistId: string, value: FilterValuesType) => {
     let todoList = todoLists.find(tl => tl.id === todolistId)
     if(todoList) {
         todoList.filter = value
@@ -70,7 +69,7 @@ function App() {
     }
     }
 
-    const changeStatus = (taskId: string, isdone: boolean, todolistId: string) => {
+    const changeStatus = (todolistId: string, taskId: string, isdone: boolean) => {
         let task = tasks[todolistId] 
         const taska = task.find(t => t.id === taskId)
         if(taska){taska.isdone = isdone}
