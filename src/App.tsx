@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import { TaskType, TodoList } from './components/TodoList';
 import { v1 } from 'uuid';
-import { Button } from './components/Button';
+import { ButtonS } from './components/Button';
 import { TodoListForm } from './components/TodoListForm';
 
 

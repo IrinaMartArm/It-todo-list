@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import './../App.css';
+// import './../App.css';
 import { TaskType, TodoList } from './/TodoList';
 import { v1 } from 'uuid';
-import { Button } from './Button';
+import { ButtonS } from './Button';
 import { TodoListForm } from './/TodoListForm';
+import { Container, Grid, Paper } from '@material-ui/core';
 
 
 
@@ -90,31 +91,42 @@ function App2() {
 
     return (
         <div className="App">
-            <TodoListForm addText={addTodoList}/>
-            {todoLists.map((tl)=>{
-                let tasksForList = tl.tasks
-                if(tl.filter === 'completed') {
-                    tasksForList = tasksForList.filter(t => t.isdone === true)
-                }
-                if(tl.filter === 'active') {
-                    tasksForList = tasksForList.filter(t => t.isdone === false)
-                }
-                return (
-                    <TodoList key={tl.todolistId}
-                                id={tl.todolistId}
-                                tasks={tasksForList} 
-                                title={tl.title} 
-                                removeTodoList={removeTodoList}
-                                removeTask={removeTask}
-                                changeFilter={changeFilter}
-                                changeStatus={changeStatus}
-                                addTask={addTask}
-                                filter={tl.filter}
-                                changeTaskTitle={changeTaskTitle}
-                                changeTodoTitle={changeTodoTitle}
-                        />  
-                ) 
-            })}                               
+            <Grid container spacing={3} style={{ backgroundColor: 'lemonchiffon', minHeight: '100vh', padding: '30px', alignItems: 'start' }}>
+                <Grid item xs={12}>
+                    <TodoListForm addText={addTodoList}/>
+                </Grid>
+                <Grid item container spacing={5} style={{justifyContent: 'center'}}>
+                    
+                {todoLists.map((tl)=>{
+                    let tasksForList = tl.tasks
+                    if(tl.filter === 'completed') {
+                        tasksForList = tasksForList.filter(t => t.isdone === true)
+                    }
+                    if(tl.filter === 'active') {
+                        tasksForList = tasksForList.filter(t => t.isdone === false)
+                    }
+                    return (
+                        <Grid item xs={6} sm={3}>
+                            <Paper style={{backgroundColor: 'beige', padding: '20px', border: '2px solid gray'}}>
+                                <TodoList key={tl.todolistId}
+                                            id={tl.todolistId}
+                                            tasks={tasksForList} 
+                                            title={tl.title} 
+                                            removeTodoList={removeTodoList}
+                                            removeTask={removeTask}
+                                            changeFilter={changeFilter}
+                                            changeStatus={changeStatus}
+                                            addTask={addTask}
+                                            filter={tl.filter}
+                                            changeTaskTitle={changeTaskTitle}
+                                            changeTodoTitle={changeTodoTitle}
+                                    /> 
+                            </Paper> 
+                        </Grid>
+                    ) 
+                })} 
+                </Grid>  
+            </Grid>                                      
         </div>
     );
 }

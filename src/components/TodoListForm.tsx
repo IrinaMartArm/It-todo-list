@@ -1,5 +1,8 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react"
-import { Button } from "./Button"
+import { ButtonS } from "./Button"
+import { IconButton, TextField } from "@material-ui/core"
+import { Add, ControlPoint } from "@mui/icons-material"
+// import { TextField } from "@mui/material"
 
 type TodoListFormType = {
     addText: (title: string) => void
@@ -34,13 +37,25 @@ export const TodoListForm = (props: TodoListFormType) => {
 
     return (
         <div>
-                    <input value={text} 
+                    {/* <input value={text} 
                             onChange={onChangeHandler}
                             onKeyDown={onKeyDownHandler}
                             className={error ? "error" : ''}
-                            />
-                    <Button name="+" callback={addTask}/>       
-                    {error && <div className="error-message">{error}</div>}
+                    />                    */}
+                    <TextField value={text} 
+                            variant="outlined"
+                            label={'Type value'}
+                            size="small"
+                            onChange={onChangeHandler}
+                            onKeyDown={onKeyDownHandler}
+                            error={!!error}
+                            helperText={error}
+                            // className={error ? "error" : ''}
+                    />                   
+                    <IconButton color="inherit" onClick={addTask}>
+                        <Add/>
+                    </IconButton>       
+                    {/* {error && <div className="error-message">{error}</div>} */}
                 </div>
     )
 }
