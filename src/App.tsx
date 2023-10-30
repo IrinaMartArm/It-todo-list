@@ -9,13 +9,13 @@ import { TodoListForm } from './components/TodoListForm';
 
 export type FilterValuesType = 'All' | 'completed' | 'active';
 
-type TodoListType = {
+export type TodoListType = {
     id: string
     title: string
     filter: FilterValuesType
 }
 
-type TasksStateType = {
+export type TasksStateType = {
     [key: string]: TaskType[]
 }
 

@@ -23,3 +23,4 @@ export const ButtonS = (props: PropsType) => {
             </Button>
     ); 
 }
+// <Button style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}/>

@@ -1,6 +1,5 @@
 import { ChangeEvent } from "react"
 import { FilterValuesType } from "../App"
-import { ButtonS } from "./Button"
 import { TodoListForm } from "./TodoListForm"
 import { EditableSpan } from "./EditableSpan"
 import { Button, Checkbox, IconButton } from "@material-ui/core"
@@ -15,7 +14,7 @@ export type TaskType = {
     isdone: boolean
 }
 
-type PropsType = {
+export type PropsType = {
     title: string
     tasks: Array<TaskType>
     id: string
@@ -58,7 +57,7 @@ console.log('filter', props.filter)
 
 
         const onChengeTitle = (value: string) => {
-            props.changeTaskTitle(t.id, value, props.id)
+            props.changeTaskTitle(props.id, t.id, value)
         }
     
         

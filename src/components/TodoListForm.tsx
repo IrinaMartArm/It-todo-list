@@ -42,20 +42,20 @@ export const TodoListForm = (props: TodoListFormType) => {
                             onKeyDown={onKeyDownHandler}
                             className={error ? "error" : ''}
                     />                    */}
-                    <TextField value={text} 
-                            variant="outlined"
-                            label={'Type value'}
-                            size="small"
-                            onChange={onChangeHandler}
-                            onKeyDown={onKeyDownHandler}
-                            error={!!error}
-                            helperText={error}
+            <TextField value={text}
+                       variant="outlined"
+                       label={'Type value'}
+                       size="small"
+                       onChange={onChangeHandler}
+                       onKeyDown={onKeyDownHandler}
+                       error={!!error}
+                       helperText={error}
                             // className={error ? "error" : ''}
-                    />                   
-                    <IconButton color="inherit" onClick={addTask}>
-                        <Add/>
-                    </IconButton>       
+            />
+            <IconButton color="inherit" onClick={addTask}>
+                <Add/>
+            </IconButton>
                     {/* {error && <div className="error-message">{error}</div>} */}
-                </div>
+        </div>
     )
 }
