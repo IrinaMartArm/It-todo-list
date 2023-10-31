@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 // import './../App.css';
-import { TaskType, TodoList } from './/TodoList';
+import { TaskType, TodoList } from './TodoList';
 import { v1 } from 'uuid';
 import { ButtonS } from './Button';
-import { TodoListForm } from './/TodoListForm';
+import { TodoListForm } from './TodoListForm';
 import { Container, Grid, Paper } from '@material-ui/core';
+import ButtonAppBar from "./NavBar";
 
 
 
@@ -91,23 +92,24 @@ function App2() {
 
     return (
         <div className="App">
-            <Grid container spacing={3} style={{ backgroundColor: 'lemonchiffon', minHeight: '100vh', padding: '30px', alignItems: 'start' }}>
+            <ButtonAppBar/>
+            <Grid container spacing={3} style={{ backgroundColor: 'lemonchiffon', minHeight: '100vh', padding: '30px',      alignItems: 'start' }}>
                 <Grid item xs={12}>
                     <TodoListForm addText={addTodoList}/>
                 </Grid>
                 <Grid item container spacing={5} style={{justifyContent: 'center'}}>
                     
-                {todoLists.map((tl)=>{
+                    {todoLists.map((tl)=>{
                     let tasksForList = tl.tasks
                     if(tl.filter === 'completed') {
-                        tasksForList = tasksForList.filter(t => t.isdone === true)
+                        tasksForList = tasksForList.filter(t => t.isdone)
                     }
                     if(tl.filter === 'active') {
-                        tasksForList = tasksForList.filter(t => t.isdone === false)
+                        tasksForList = tasksForList.filter(t => !t.isdone)
                     }
                     return (
-                        <Grid item xs={6} sm={3}>
-                            <Paper style={{backgroundColor: 'beige', padding: '20px', border: '2px solid gray'}}>
+                        <Grid item xs={5} sm={4}>
+                            <Paper elevation={3} style={{backgroundColor: 'beige', padding: '20px', border: '2px solid gray'}}>
                                 <TodoList key={tl.todolistId}
                                             id={tl.todolistId}
                                             tasks={tasksForList} 
@@ -120,7 +122,7 @@ function App2() {
                                             filter={tl.filter}
                                             changeTaskTitle={changeTaskTitle}
                                             changeTodoTitle={changeTodoTitle}
-                                    /> 
+                                />
                             </Paper> 
                         </Grid>
                     ) 

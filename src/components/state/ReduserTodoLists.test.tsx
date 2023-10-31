@@ -1,6 +1,5 @@
 import {
     AddTodolistAC, ChangeTodolistFilterAC,
-    ChangeTodoListFilterActionType,
     ChangeTodolistTitleAC,
     ReduserTodoLists,
     RemoveTodolistAC
@@ -75,7 +74,7 @@ test('correct todolist filter', () => {
 
     let newFilter: FilterValuesType = 'active'
 
-    const action: ChangeTodoListFilterActionType = ChangeTodolistFilterAC(todolistId2, newFilter)
+    const action  = ChangeTodolistFilterAC(todolistId2, newFilter)
 
     const endState = ReduserTodoLists(startState, action)
 
@@ -83,30 +82,6 @@ test('correct todolist filter', () => {
     expect(endState[1].filter).toBe(newFilter)
 })
 
-
-// test('correct todolist task Title', () => {
-//     let todolistId1 = v1()
-//     let todolistId2 = v1()
-//
-//
-//     const startState: Array<TodoListType> = [
-//         {id: todolistId1, title: 'What to learn', filter: 'All'},
-//         {id: todolistId2, title: 'What to buy', filter: 'All'}
-//     ]
-//
-//     let newTitle = 'a'
-//
-//     const action = {
-//         type: 'CHANGE-TODOLIST-TITLE',
-//         id: todolistId2,
-//         title: newTitle
-//     }
-//
-//     const endState = ReduserTodoLists(startState, action)
-//
-//     expect(endState[0].title).toBe('What to learn')
-//     expect(endState[1].title).toBe(newTitle)
-// })
 
 
 

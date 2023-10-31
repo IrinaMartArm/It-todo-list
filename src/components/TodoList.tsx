@@ -63,7 +63,7 @@ console.log('filter', props.filter)
         
         
         return <li key={t.id} className={t.isdone ? 'is-done' : ''}>
-                    <Checkbox checked={t.isdone} onChange={onChengeStatusHandler}/> 
+                    <Checkbox checked={t.isdone} onChange={onChengeStatusHandler} color={"primary"}/>
                     <EditableSpan title={t.title} onChange={onChengeTitle}/>
                     {/* <ButtonS name="X" callback={onRemoveTask}/> */}
                     <IconButton onClick={onRemoveTask}>
