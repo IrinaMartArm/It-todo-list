@@ -31,14 +31,14 @@ function App() {
 
     const [tasks, setTasks] = useState<TasksStateType>({
         [tdlId1]: [
-            {id: v1(), title: 'HTML', isdone: true},
-            {id: v1(), title: 'JS', isdone: true},
-            {id: v1(), title: 'React', isdone: false},
+            {id: v1(), title: 'HTML', isDone: true},
+            {id: v1(), title: 'JS', isDone: true},
+            {id: v1(), title: 'React', isDone: false},
         ],
         [tdlId2]: [
-            {id: v1(), title: 'Koffee', isdone: true},
-            {id: v1(), title: 'Bread', isdone: true},
-            {id: v1(), title: 'Meat', isdone: false},
+            {id: v1(), title: 'Koffee', isDone: true},
+            {id: v1(), title: 'Bread', isDone: true},
+            {id: v1(), title: 'Meat', isDone: false},
         ],
     })
 
@@ -53,7 +53,7 @@ function App() {
         let newTask = {
             id: v1(),
             title: title,
-            isdone: false
+            isDone: false
         }
         let task = tasks[todolistId] 
         let newTasks = [newTask, ...task]
@@ -69,10 +69,10 @@ function App() {
     }
     }
 
-    const changeStatus = (todolistId: string, taskId: string, isdone: boolean) => {
+    const changeStatus = (todolistId: string, taskId: string, isDone: boolean) => {
         let task = tasks[todolistId] 
         const taska = task.find(t => t.id === taskId)
-        if(taska){taska.isdone = isdone}
+        if(taska){taska.isDone = isDone}
         setTasks({...tasks})
     }
 
@@ -115,10 +115,10 @@ function App() {
             {todoLists.map((tl)=>{
                 let tasksForList = tasks[tl.id]
                 if(tl.filter === 'completed') {
-                    tasksForList = tasksForList.filter(t => t.isdone === true)
+                    tasksForList = tasksForList.filter(t => t.isDone === true)
                 }
                 if(tl.filter === 'active') {
-                    tasksForList = tasksForList.filter(t => t.isdone === false)
+                    tasksForList = tasksForList.filter(t => t.isDone === false)
                 }
                 return (
                     <TodoList key={tl.id}

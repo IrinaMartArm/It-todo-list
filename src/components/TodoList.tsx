@@ -11,7 +11,7 @@ import { Delete } from "@mui/icons-material"
 export type TaskType = {
     id: string
     title: string
-    isdone: boolean
+    isDone: boolean
 }
 
 export type PropsType = {
@@ -38,7 +38,7 @@ export const TodoList = (props: PropsType) => {
         props.removeTodoList(props.id)
     }
     
-    const filterhandler = (value: FilterValuesType) => {
+    const filterHandler = (value: FilterValuesType) => {
         props.changeFilter(props.id, value)
     }
 
@@ -62,8 +62,8 @@ console.log('filter', props.filter)
     
         
         
-        return <li key={t.id} className={t.isdone ? 'is-done' : ''}>
-                    <Checkbox checked={t.isdone} onChange={onChengeStatusHandler} color={"primary"}/>
+        return <li key={t.id} className={t.isDone ? 'is-done' : ''}>
+                    <Checkbox checked={t.isDone} onChange={onChengeStatusHandler} color={"primary"}/>
                     <EditableSpan title={t.title} onChange={onChengeTitle}/>
                     {/* <ButtonS name="X" callback={onRemoveTask}/> */}
                     <IconButton onClick={onRemoveTask}>
@@ -94,9 +94,9 @@ console.log('filter', props.filter)
                     {tasksList}
                 </ul>
                 <div>
-                    <Button onClick={()=>filterhandler('All')} name='All'  variant={props.filter === 'All' ? "outlined" : 'text'}>All</Button>
-                    <Button onClick={()=>filterhandler('active')} name='Active'  variant={props.filter === 'active' ? "outlined" : 'text'} color="primary">Active</Button>
-                    <Button onClick={()=>filterhandler('completed')} name='Completed'  variant={props.filter === 'completed' ? "outlined" : 'text'} color="secondary">Completed</Button>
+                    <Button onClick={()=>filterHandler('All')} name='All'  variant={props.filter === 'All' ? "outlined" : 'text'}>All</Button>
+                    <Button onClick={()=>filterHandler('active')} name='Active'  variant={props.filter === 'active' ? "outlined" : 'text'} color="primary">Active</Button>
+                    <Button onClick={()=>filterHandler('completed')} name='Completed'  variant={props.filter === 'completed' ? "outlined" : 'text'} color="secondary">Completed</Button>
                     {/* <Button onClick={()=>filterhandler('All')} name='All' variant={props.filter === 'All' ? "contained" : 'text'}>All</Button> */}
                     {/* <Button onClick={()=>filterhandler('active')} name='Active' className={props.filter === 'active' ? "active-filter" : ''}>All</Button>
                     <Button onClick={()=>filterhandler('completed')} name='Completed' className={props.filter === 'completed' ? "active-filter" : ''}>All</Button> */}
