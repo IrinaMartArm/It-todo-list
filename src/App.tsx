@@ -36,7 +36,7 @@ function App() {
             {id: v1(), title: 'React', isDone: false},
         ],
         [tdlId2]: [
-            {id: v1(), title: 'Koffee', isDone: true},
+            {id: v1(), title: 'Coffee', isDone: true},
             {id: v1(), title: 'Bread', isDone: true},
             {id: v1(), title: 'Meat', isDone: false},
         ],

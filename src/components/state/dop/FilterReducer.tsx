@@ -1,5 +1,5 @@
-import {TaskType} from "../TodoList";
-import {FilterValuesType} from "../App3";
+import {TaskType} from "../../TodoList";
+import {FilterValuesType} from "../../App3";
 
 export const FilterReducer = (state: FilterValuesType, action: ChangeFilterType): FilterValuesType => {
     switch (action.type) {

@@ -2,8 +2,8 @@ import React, {useReducer} from 'react';
 import './App.css';
 import { TaskType, TodoList } from './TodoList';
 import { v1 } from 'uuid';
-import {addTaskAC, changeStatusAC, changeTitleAC, removeTaskAC, TaskReducer} from "./state/TaskReducer";
-import {changeFilterAC, FilterReducer} from "./state/FilterReducer";
+import {addTaskAC, changeStatusAC, changeTitleAC, removeTaskAC, TaskReducer} from "./state/dop/TaskReducer";
+import {changeFilterAC, FilterReducer} from "./state/dop/FilterReducer";
 
 
 
