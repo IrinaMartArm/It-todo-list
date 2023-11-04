@@ -1,9 +1,9 @@
-import { ChangeEvent } from "react"
 import { FilterValuesType } from "../App"
 import { TodoListForm } from "./TodoListForm"
 import { EditableSpan } from "./EditableSpan"
-import { Button, Checkbox, IconButton } from "@material-ui/core"
+import {Button, IconButton} from "@material-ui/core"
 import { Delete } from "@mui/icons-material"
+import {CheckBox} from "./CheckBox";
 
 
 
@@ -22,7 +22,7 @@ export type PropsType = {
     removeTask: (todolistId: string, id: string) => void
     addTask: (todolistId: string, title: string) => void
     changeFilter: (todolistId: string, value: FilterValuesType) => void
-    changeStatus: (todolistId: string, taskId: string, isdone: boolean) => void
+    changeStatus: (todolistId: string, taskId: string, isDone: boolean) => void
     changeTaskTitle: (todolistId: string, taskId: string, title: string) => void
     changeTodoTitle: (todolistId: string, title: string) => void
     filter: FilterValuesType
@@ -47,24 +47,23 @@ export const TodoList = (props: PropsType) => {
         props.changeTodoTitle(props.id, value)
     }
 
+    const onChangeStatusHandler = (id: string, checked: boolean) => {
+        props.changeStatus(props.id, id, checked)
+    }
+
 console.log('filter', props.filter)
     let tasksList: Array<JSX.Element> | JSX.Element = props.tasks.length > 0 ?
     props.tasks.map((t)=>{
         const onRemoveTask = ()=>{props.removeTask(props.id, t.id)}
-        const onChengeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            props.changeStatus(props.id, t.id, e.currentTarget.checked)
-        }
 
-
-        const onChengeTitle = (value: string) => {
+        const onChangeTitle = (value: string) => {
             props.changeTaskTitle(props.id, t.id, value)
         }
-    
-        
+
         
         return <li key={t.id} className={t.isDone ? 'is-done' : ''}>
-                    <Checkbox checked={t.isDone} onChange={onChengeStatusHandler} color={"primary"}/>
-                    <EditableSpan title={t.title} onChange={onChengeTitle}/>
+                    <CheckBox checked={t.isDone} onChange={(checked)=>onChangeStatusHandler(t.id, checked)}/>
+                    <EditableSpan title={t.title} onChange={onChangeTitle}/>
                     {/* <ButtonS name="X" callback={onRemoveTask}/> */}
                     <IconButton onClick={onRemoveTask}>
                         <Delete />
