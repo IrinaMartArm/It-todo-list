@@ -1,7 +1,7 @@
 
 import {TasksStateType} from "../../App";
 import {v1} from "uuid";
-import {AddTodoListActionType} from "./ReduserTodoLists";
+import {AddTodoListActionType, RemoveTodoListActionType} from "./ReduserTodoLists";
 
 const REMOVETASK = 'REMOVE-TASK'
 const ADDTASK = 'ADD-TASK'
@@ -14,7 +14,7 @@ type AddTaskType = ReturnType<typeof addTaskAC>
 type ChangeStatusType = ReturnType<typeof changeStatusAC>
 type ChangeTitleType = ReturnType<typeof changeTitleAC>
 
-type ActionsType = RemoveTaskType | AddTaskType | ChangeStatusType | ChangeTitleType | AddTodoListActionType
+type ActionsType = RemoveTaskType | AddTaskType | ChangeStatusType | ChangeTitleType | AddTodoListActionType | RemoveTodoListActionType
 
 
 export const TasksReducer = (state: TasksStateType, action: ActionsType): TasksStateType => {
@@ -36,9 +36,10 @@ export const TasksReducer = (state: TasksStateType, action: ActionsType): TasksS
         }
         case CHANGESTATUS : {
             const newState = {...state}
-            let tasks = state[action.payload.todoId]
-            const task = tasks.find(t => t.id === action.payload.taskId)
-            if(task){task.isDone = action.payload.isDone}
+            // let tasks = state[action.payload.todoId]
+            // const task = tasks.find(t => t.id === action.payload.taskId)
+            // if(task){task.isDone = action.payload.isDone}
+            let tasks = state[action.payload.todoId].map(t => t.id === action.payload.taskId ? t.isDone = action.payload.isDone : t)
             return newState
         }
         case CHANGETITLE : {
@@ -50,7 +51,12 @@ export const TasksReducer = (state: TasksStateType, action: ActionsType): TasksS
         }
         case ADDTODOLIST : {
             const newState = {...state}
-            newState['1'] = []
+            newState[action.todoId] = []
+            return newState
+        }
+        case 'REMOVE-TODOLIST' : {
+            const newState = {...state}
+            delete newState[action.id]
             return newState
         }
         default:
