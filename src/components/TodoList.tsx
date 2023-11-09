@@ -4,8 +4,9 @@ import { EditableSpan } from "./EditableSpan"
 import {Button, IconButton} from "@material-ui/core"
 import { Delete } from "@mui/icons-material"
 import {CheckBox} from "./CheckBox";
-
-
+import {useDispatch, useSelector} from "react-redux";
+import {RootReducerType} from "./state/Store";
+import {addTaskAC, changeStatusAC, changeTitleAC, removeTaskAC} from "./state/TasksReducer";
 
 
 export type TaskType = {
@@ -16,7 +17,6 @@ export type TaskType = {
 
 export type PropsType = {
     title: string
-    tasks: Array<TaskType>
     id: string
     removeTodoList: (todolistId: string) => void
     removeTask: (todolistId: string, id: string) => void
@@ -29,9 +29,32 @@ export type PropsType = {
 }
 
 export const TodoList = (props: PropsType) => {
+    const dispatch = useDispatch()
+
+    const tasks = useSelector<RootReducerType, Array<TaskType>>(state => state.tasks[props.id])
+
+    // const removeTask = (todolistId: string, id: string) => {
+    //     dispatch(removeTaskAC(todolistId, id))
+    // }
+
+    // const addTask = (todolistId: string, title: string) => {
+    //     dispatch(addTaskAC(todolistId, title))
+    // }
+
+    // const changeStatus = (todolistId: string, taskId: string, isDone: boolean) => {
+    //     dispatch(changeStatusAC(todolistId, taskId, isDone))
+    // }
+    // const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
+    //     dispatch(changeTitleAC(todolistId, taskId, title))
+    // }
+
+
+
+
 
     const addTask = (title: string) => {
-        props.addTask(props.id, title)
+        // props.addTask(props.id, title)
+        dispatch(addTaskAC(props.id, title))
     }
 
     const removeTodoHandler = () => {
@@ -48,41 +71,30 @@ export const TodoList = (props: PropsType) => {
     }
 
     const onChangeStatusHandler = (id: string, checked: boolean) => {
-        props.changeStatus(props.id, id, checked)
+        // props.changeStatus(props.id, id, checked)
+        dispatch(changeStatusAC(props.id, id, checked))
     }
 
-console.log('filter', props.filter)
-    let tasksList: Array<JSX.Element> | JSX.Element = props.tasks.length > 0 ?
-    props.tasks.map((t)=>{
-        const onRemoveTask = ()=>{props.removeTask(props.id, t.id)}
 
-        const onChangeTitle = (value: string) => {
-            props.changeTaskTitle(props.id, t.id, value)
-        }
+    let tasksList: Array<JSX.Element> | JSX.Element = tasks.length > 0 ?
+    tasks.map((t)=>{
+        const onRemoveTask = ()=>{dispatch(removeTaskAC(props.id, t.id))}   // props.removeTask(props.id, t.id)
+
+        const onChangeTitle = (value: string) => {dispatch(changeTitleAC(props.id, t.id, value))}   // props.changeTaskTitle(props.id, t.id, value)
 
         
         return <li key={t.id} className={t.isDone ? 'is-done' : ''}>
                     <CheckBox checked={t.isDone} onChange={(checked)=>onChangeStatusHandler(t.id, checked)}/>
                     <EditableSpan title={t.title} onChange={onChangeTitle}/>
-                    {/* <ButtonS name="X" callback={onRemoveTask}/> */}
                     <IconButton onClick={onRemoveTask}>
                         <Delete />
                     </IconButton>
                 </li>
-        // return <li key={t.id} className={t.isdone ? 'is-done' : ''}>
-        //             <input type="checkbox" checked={t.isdone} onChange={onChengeStatusHandler}/> 
-        //             <EditableSpan title={t.title} onChange={onChengeTitle}/>
-        //             {/* <ButtonS name="X" callback={onRemoveTask}/> */}
-        //             <IconButton onClick={onRemoveTask}>
-        //                 <Delete />
-        //             </IconButton>
-        //         </li>
     }) : <span>no tasks</span>
 
 
     return (
         <div className="todolist">
-                {/* <h3><EditableSpan title={props.title} onChange={changeTitle}/><button onClick={removeTodoHandler}>x</button></h3> */}
                 <h3><EditableSpan title={props.title} onChange={changeTitle}/>
                 <IconButton onClick={removeTodoHandler}>
                         <Delete />
@@ -96,9 +108,6 @@ console.log('filter', props.filter)
                     <Button onClick={()=>filterHandler('All')} name='All'  variant={props.filter === 'All' ? "outlined" : 'text'}>All</Button>
                     <Button onClick={()=>filterHandler('active')} name='Active'  variant={props.filter === 'active' ? "outlined" : 'text'} color="primary">Active</Button>
                     <Button onClick={()=>filterHandler('completed')} name='Completed'  variant={props.filter === 'completed' ? "outlined" : 'text'} color="secondary">Completed</Button>
-                    {/* <Button onClick={()=>filterhandler('All')} name='All' variant={props.filter === 'All' ? "contained" : 'text'}>All</Button> */}
-                    {/* <Button onClick={()=>filterhandler('active')} name='Active' className={props.filter === 'active' ? "active-filter" : ''}>All</Button>
-                    <Button onClick={()=>filterhandler('completed')} name='Completed' className={props.filter === 'completed' ? "active-filter" : ''}>All</Button> */}
                 </div>
             </div>
     )

@@ -6,15 +6,15 @@ type FullInputPropsType = {
 
 export const FullInput = (props: FullInputPropsType) => {
 
-    const [inputValue, setinputValue] = useState('')
+    const [inputValue, setInputValue] = useState('')
 
     const inputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setinputValue(e.currentTarget.value)
+        setInputValue(e.currentTarget.value)
     }
 
     const buttonHandler = () => {
         props.addMessage(inputValue)
-        setinputValue('')
+        setInputValue('')
     }
 
     return (  
