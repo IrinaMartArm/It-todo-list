@@ -50,7 +50,7 @@ export const TasksReducer = (state: TasksStateType = initialState, action: Actio
             // let tasks = state[action.payload.todoId]
             // const task = tasks.find(t => t.id === action.payload.taskId)
             // if(task){task.isDone = action.payload.isDone}
-            let tasks = state[action.payload.todoId].map(t => t.id === action.payload.taskId ? t.isDone = action.payload.isDone : t)
+            let tasks = state[action.payload.todoId].map(t => t.id === action.payload.taskId ? {...t, isDone: action.payload.isDone} : t)
             return newState
         }
         case CHANGETITLE : {

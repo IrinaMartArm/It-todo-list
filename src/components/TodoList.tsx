@@ -19,11 +19,7 @@ export type PropsType = {
     title: string
     id: string
     removeTodoList: (todolistId: string) => void
-    removeTask: (todolistId: string, id: string) => void
-    addTask: (todolistId: string, title: string) => void
     changeFilter: (todolistId: string, value: FilterValuesType) => void
-    changeStatus: (todolistId: string, taskId: string, isDone: boolean) => void
-    changeTaskTitle: (todolistId: string, taskId: string, title: string) => void
     changeTodoTitle: (todolistId: string, title: string) => void
     filter: FilterValuesType
 }
@@ -32,24 +28,6 @@ export const TodoList = (props: PropsType) => {
     const dispatch = useDispatch()
 
     const tasks = useSelector<RootReducerType, Array<TaskType>>(state => state.tasks[props.id])
-
-    // const removeTask = (todolistId: string, id: string) => {
-    //     dispatch(removeTaskAC(todolistId, id))
-    // }
-
-    // const addTask = (todolistId: string, title: string) => {
-    //     dispatch(addTaskAC(todolistId, title))
-    // }
-
-    // const changeStatus = (todolistId: string, taskId: string, isDone: boolean) => {
-    //     dispatch(changeStatusAC(todolistId, taskId, isDone))
-    // }
-    // const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
-    //     dispatch(changeTitleAC(todolistId, taskId, title))
-    // }
-
-
-
 
 
     const addTask = (title: string) => {
@@ -75,9 +53,17 @@ export const TodoList = (props: PropsType) => {
         dispatch(changeStatusAC(props.id, id, checked))
     }
 
+    let tasksForList = tasks
+    if(props.filter === 'completed') {
+        tasksForList = tasksForList.filter(t => t.isDone)
+    }
+    if(props.filter === 'active') {
+        tasksForList = tasksForList.filter(t => !t.isDone)
+    }
+
 
     let tasksList: Array<JSX.Element> | JSX.Element = tasks.length > 0 ?
-    tasks.map((t)=>{
+        tasksForList.map((t)=>{
         const onRemoveTask = ()=>{dispatch(removeTaskAC(props.id, t.id))}   // props.removeTask(props.id, t.id)
 
         const onChangeTitle = (value: string) => {dispatch(changeTitleAC(props.id, t.id, value))}   // props.changeTaskTitle(props.id, t.id, value)

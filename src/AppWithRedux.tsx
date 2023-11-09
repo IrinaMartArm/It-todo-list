@@ -54,13 +54,6 @@ function AppWithRedux() {
         <div className="App">
             <TodoListForm addText={addTodoList}/>
             {todoLists.map((tl)=>{
-                let tasksForList = tasks[tl.id]
-                if(tl.filter === 'completed') {
-                    tasksForList = tasksForList.filter(t => t.isDone)
-                }
-                if(tl.filter === 'active') {
-                    tasksForList = tasksForList.filter(t => !t.isDone)
-                }
                 return (
                     <TodoList key={tl.id}
                                 id={tl.id}

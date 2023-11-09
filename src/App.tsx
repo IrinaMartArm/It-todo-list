@@ -123,7 +123,7 @@ function App() {
                 return (
                     <TodoList key={tl.id}
                                 id={tl.id}
-                                tasks={tasksForList} 
+                                // tasks={tasksForList}
                                 title={tl.title} 
                                 removeTodoList={removeTodoList}
                                 removeTask={removeTask}
