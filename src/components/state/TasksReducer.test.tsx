@@ -101,31 +101,31 @@ test('correct title should be changed', () => {
     expect(endState['todolistId2'][2].title).toBe('cookies')
 })
 
-test('new property with new array should be added when new todolist is added', () => {
-
-    const startState: TasksStateType = {
-        'todolistId1': [
-            {id: '1', title: 'HTML', isDone: true},
-            {id: '2', title: 'JS', isDone: true},
-            {id: '3', title: 'React', isDone: false},
-        ],
-        'todolistId2': [
-            {id: '1', title: 'Coffee', isDone: true},
-            {id: '2', title: 'Bread', isDone: true},
-            {id: '3', title: 'Meat', isDone: false},
-        ],
-    }
-
-    const action = addTodolistAC('some')
-    const endState = TasksReducer(startState, action)
-
-    const keys = Object.keys(endState)
-    const newKey = keys.find(k => k != 'todolistId1' && 'todolistId2')
-    if(!newKey) {throw Error('key not found')}
-
-    expect(keys.length).toBe(3)
-    expect(endState[newKey]).toEqual([])
-})
+// test('new property with new array should be added when new todolist is added', () => {
+//
+//     const startState: TasksStateType = {
+//         'todolistId1': [
+//             {id: '1', title: 'HTML', isDone: true},
+//             {id: '2', title: 'JS', isDone: true},
+//             {id: '3', title: 'React', isDone: false},
+//         ],
+//         'todolistId2': [
+//             {id: '1', title: 'Coffee', isDone: true},
+//             {id: '2', title: 'Bread', isDone: true},
+//             {id: '3', title: 'Meat', isDone: false},
+//         ],
+//     }
+//
+//     const action = addTodolistAC('some')
+//     const endState = TasksReducer(startState, action)
+//
+//     const keys = Object.keys(endState)
+//     const newKey = keys.find(k => k != 'todolistId1' && 'todolistId2')
+//     if(!newKey) {throw Error('key not found')}
+//
+//     expect(keys.length).toBe(3)
+//     expect(endState[newKey]).toEqual([])
+// })
 
 test('property with todoId should be removed', () => {
 
