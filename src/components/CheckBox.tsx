@@ -8,8 +8,8 @@ type Props = {
     onChange: (checked: boolean) => void
 };
 
-export function CheckBox(props: Props) {
-
+export const CheckBox = React.memo((props: Props) => {
+    console.log('checkbox')
     const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
         props.onChange(e.currentTarget.checked)
     }
@@ -17,7 +17,7 @@ export function CheckBox(props: Props) {
     return (
         <Checkbox checked={props.checked}  color={"primary"} onChange={onChangeStatusHandler}/>
     );
-}
+})
 
 
 

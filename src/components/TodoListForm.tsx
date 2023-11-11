@@ -1,15 +1,14 @@
-import { ChangeEvent, KeyboardEvent, useState } from "react"
-import { ButtonS } from "./Button"
-import {Button, IconButton, TextField} from "@material-ui/core"
-import { Add, ControlPoint } from "@mui/icons-material"
-// import { TextField } from "@mui/material"
+import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from "react"
+import { IconButton, TextField} from "@material-ui/core"
+import { Add } from "@mui/icons-material"
+
 
 type TodoListFormType = {
     addText: (title: string) => void
 }
 
-export const TodoListForm = (props: TodoListFormType) => {
-
+export const TodoListForm = React.memo((props: TodoListFormType) => {
+    console.log('TodoListForm')
     const [text, setText] = useState('')
     const [error, setError] = useState<string | null>(null)
 
@@ -22,7 +21,7 @@ export const TodoListForm = (props: TodoListFormType) => {
         if (e.key === 'Enter'){
             addTaskHandler()
         }
-    } 
+    }
 
     const addTaskHandler = () => {
         props.addText(text.trim())
@@ -33,15 +32,10 @@ export const TodoListForm = (props: TodoListFormType) => {
         if(text.trim() !== ''){
             addTaskHandler()
         } else {setError('Field is required')}
-    }  
+    }
 
     return (
         <div>
-                    {/* <input value={text} 
-                            onChange={onChangeHandler}
-                            onKeyDown={onKeyDownHandler}
-                            className={error ? "error" : ''}
-                    />                    */}
             <TextField value={text}
                        variant="outlined"
                        label={error ? error : 'Type value'}
@@ -49,16 +43,10 @@ export const TodoListForm = (props: TodoListFormType) => {
                        onChange={onChangeHandler}
                        onKeyDown={onKeyDownHandler}
                        error={!!error}
-                       // helperText={error}
-                            // className={error ? "error" : ''}
             />
             <IconButton color="inherit" onClick={addTask} >
                 <Add/>
             </IconButton>
-            {/*<Button variant={"outlined"} color={"primary"} onClick={addTask}>*/}
-            {/*    <Add/>*/}
-            {/*</Button>*/}
-                    {/* {error && <div className="error-message">{error}</div>} */}
         </div>
     )
-}
+})

@@ -1,20 +1,21 @@
-import { ChangeEvent, useState } from "react"
+import React, { ChangeEvent, useState } from "react"
 
 type EditableSpanType = {
     title: string
     onChange: (newValue: string) => void
 }
 
-export const EditableSpan = (props: EditableSpanType) => {
+export const EditableSpan = React.memo((props: EditableSpanType) => {
+    console.log('span')
 
     let [editMode, setEditMode] = useState(false)
     let [text, setText] = useState('')
 
-    const activEditMode = () => {
+    const activeEditMode = () => {
         setEditMode(true)
         setText(props.title)
     }
-    const activViewMode = () => {
+    const activeViewMode = () => {
         setEditMode(false)
         props.onChange(text)
     }
@@ -23,8 +24,8 @@ export const EditableSpan = (props: EditableSpanType) => {
     }
 
     return (
-        editMode 
-        ? <input value={text} onBlur={activViewMode} autoFocus onChange={inputHandler}/> 
-        : <span onDoubleClick={activEditMode}>{props.title}</span>
-    )   
-}
+        editMode
+            ? <input value={text} onBlur={activeViewMode} autoFocus onChange={inputHandler}/>
+            : <span onDoubleClick={activeEditMode}>{props.title}</span>
+    )
+})

@@ -17,16 +17,16 @@ type ChangeTitleType = ReturnType<typeof changeTitleAC>
 type ActionsType = RemoveTaskType | AddTaskType | ChangeStatusType | ChangeTitleType | AddTodoListActionType | RemoveTodoListActionType
 
 const initialState: TasksStateType = {
-    [tdlId1]: [
-        {id: v1(), title: 'HTML', isDone: true},
-        {id: v1(), title: 'JS', isDone: true},
-        {id: v1(), title: 'React', isDone: false},
-    ],
-    [tdlId2]: [
-        {id: v1(), title: 'Coffee', isDone: true},
-        {id: v1(), title: 'Bread', isDone: true},
-        {id: v1(), title: 'Meat', isDone: false},
-    ],
+    // [tdlId1]: [
+    //     {id: v1(), title: 'HTML', isDone: true},
+    //     {id: v1(), title: 'JS', isDone: true},
+    //     {id: v1(), title: 'React', isDone: false},
+    // ],
+    // [tdlId2]: [
+    //     {id: v1(), title: 'Coffee', isDone: true},
+    //     {id: v1(), title: 'Bread', isDone: true},
+    //     {id: v1(), title: 'Meat', isDone: false},
+    // ],
 }
 export const TasksReducer = (state: TasksStateType = initialState, action: ActionsType): TasksStateType => {
     switch (action.type) {
