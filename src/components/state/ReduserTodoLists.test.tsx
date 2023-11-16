@@ -5,18 +5,24 @@ import {
     removeTodolistAC
 } from "./ReduserTodoLists";
 
-import { TodoListType} from "../../App";
+
 import {v1} from "uuid";
-import {FilterValuesType} from "../App2";
+import {FilterValuesType, TodoListType} from "../../AppWithRedux";
 
-test('correct todolist should be removed', () => {
-    let todolistId1 = v1()
-    let todolistId2 = v1()
 
-    const startState: Array<TodoListType> = [
+let todolistId1 = v1()
+let todolistId2 = v1()
+
+let startState: Array<TodoListType>
+
+beforeEach(() => {
+    startState = [
         {id: todolistId1, title: 'What to learn', filter: 'All'},
         {id: todolistId2, title: 'What to buy', filter: 'All'}
     ]
+})
+
+test('correct todolist should be removed', () => {
 
     const endState = ReducerTodoLists(startState, removeTodolistAC(todolistId1))
 
@@ -25,13 +31,6 @@ test('correct todolist should be removed', () => {
 })
 
 test('should add TodoList', () => {
-    let todolistId1 = v1()
-    let todolistId2 = v1()
-
-    const startState: Array<TodoListType> = [
-        {id: todolistId1, title: 'What to learn', filter: 'All'},
-        {id: todolistId2, title: 'What to buy', filter: 'All'}
-    ]
 
     let newTodoListTitle = 'a'
 
@@ -43,13 +42,6 @@ test('should add TodoList', () => {
 })
 
 test('correct todolist Title', () => {
-    let todolistId1 = v1()
-    let todolistId2 = v1()
-
-    const startState: Array<TodoListType> = [
-        {id: todolistId1, title: 'What to learn', filter: 'All'},
-        {id: todolistId2, title: 'What to buy', filter: 'All'}
-    ]
 
     let newTitle = 'a'
 
@@ -63,14 +55,6 @@ test('correct todolist Title', () => {
 
 
 test('correct todolist filter', () => {
-    let todolistId1 = v1()
-    let todolistId2 = v1()
-
-
-    const startState: Array<TodoListType> = [
-        {id: todolistId1, title: 'What to learn', filter: 'All'},
-        {id: todolistId2, title: 'What to buy', filter: 'All'}
-    ]
 
     let newFilter: FilterValuesType = 'active'
 
