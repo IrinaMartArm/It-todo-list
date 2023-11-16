@@ -11,6 +11,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import {Button, IconButton, Paper} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import {Container, Grid, Menu} from "@mui/material";
+import ButtonAppBar from "./components/NavBar";
 
 
 
@@ -60,20 +61,10 @@ function AppWithRedux() {
 
 
     return (
-
     <div className="App">
-    <AppBar position="static">
-        <Toolbar>
-            <IconButton edge="start" color='primary' aria-label="menu">
-                {/*<Menu autoFocus={}/>*/}
-            </IconButton>
-            <Typography variant="h6">
-                News
-            </Typography>
-            <Button color="inherit">Login</Button>
-        </Toolbar>
-    </AppBar>
+        <ButtonAppBar/>
     <Container fixed >
+
         <Grid container style={{padding: "20px"}}>
             <TodoListForm addText={addTodoList}/>
         </Grid>

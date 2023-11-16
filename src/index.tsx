@@ -1,9 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-// import App from './App';
-// import App2 from './components/App2';
-// import AppWithReducer from "./AppWithReducer";
 import AppWithRedux from "./AppWithRedux";
 import {Provider} from "react-redux";
 import {store} from "./components/state/Store";
@@ -15,9 +12,6 @@ const root = ReactDOM.createRoot(
 root.render(
     <Provider store={store}>
       <AppWithRedux/>
-      {/*<AppWithReducer/>*/}
-        {/*<App2 />*/}
-        {/* <App /> */}
     </Provider>
 );
 
