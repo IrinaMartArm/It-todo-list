@@ -1,4 +1,3 @@
-
 import { TodoListForm } from "./TodoListForm"
 import { EditableSpan } from "./EditableSpan"
 import {Button, IconButton} from "@material-ui/core"
@@ -9,9 +8,6 @@ import {addTaskAC} from "./state/TasksReducer";
 import React, {useCallback} from "react";
 import {Task} from './Task'
 import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./state/ReduserTodoLists";
-
-
-
 
 export type TaskType = {
     id: string

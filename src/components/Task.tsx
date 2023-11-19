@@ -23,12 +23,13 @@ export const Task = React.memo((props: TaskProps) => {
     const onChangeTitle = useCallback((value: string) => {dispatch(changeTitleAC(props.todoId, props.task.id, value))}, [props.todoId, props.task.id])
 
 
-    return <li key={props.task.id} className={props.task.isDone ? 'is-done' : ''}>
-        {/*<CheckBox checked={props.t.isDone} onChange={(checked)=>onChangeStatusHandler(props.t.id, checked)}/>*/}
-        <CheckBox checked={props.task.isDone} onChange={onChangeStatusHandler}/>
-        <EditableSpan title={props.task.title} onChange={onChangeTitle}/>
-        <IconButton onClick={onRemoveTask}>
-            <Delete />
-        </IconButton>
-    </li>
+    return (
+        <li key={props.task.id} className={props.task.isDone ? 'is-done' : ''}>
+            <CheckBox checked={props.task.isDone} onChange={onChangeStatusHandler}/>
+            <EditableSpan title={props.task.title} onChange={onChangeTitle}/>
+            <IconButton onClick={onRemoveTask}>
+                <Delete />
+            </IconButton>
+        </li>
+    )
 })
