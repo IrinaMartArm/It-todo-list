@@ -1,6 +1,6 @@
 import { TodoListForm } from "./TodoListForm"
 import { EditableSpan } from "./EditableSpan"
-import {Button, IconButton} from "@material-ui/core"
+import {IconButton} from "@material-ui/core"
 import {Delete} from "@mui/icons-material"
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "./state/Store";
@@ -8,6 +8,8 @@ import {addTaskAC} from "./state/TasksReducer";
 import React, {useCallback} from "react";
 import {Task} from './Task'
 import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./state/ReduserTodoLists";
+import {ButtonUI} from "./ButtonUI";
+
 
 export type TaskType = {
     id: string
@@ -32,7 +34,7 @@ export const TodoListRedux = React.memo((props: PropsType) => {
     const tasks = useSelector<RootReducerType, Array<TaskType>>(state => state.tasks[id])
 
 
-    const addTask = useCallback((title: string) => {
+    const addText = useCallback((title: string) => {
         dispatch(addTaskAC(id, title))
     }, [id])
 
@@ -75,18 +77,21 @@ export const TodoListRedux = React.memo((props: PropsType) => {
                     <Delete />
                 </IconButton>
             </h3>
-            <TodoListForm addText={addTask}/>
+            <TodoListForm addText={addText}/>
             <ul>
                 {/*{tasksForList.map(t => <Task key={t.id} tdId={props.id} task={t} />)}*/}
                 {tasksList}
             </ul>
             <div>
-                <Button onClick={allFilterHandler} name='All'  variant={filter === 'All' ? "outlined" : 'text'}>All</Button>
-                <Button onClick={activeFilterHandler} name='Active'  variant={filter === 'active' ? "outlined" : 'text'} color="primary">Active</Button>
-                <Button onClick={completedFilterHandler} name='Completed'  variant={filter === 'completed' ? "outlined" : 'text'} color="secondary">Completed</Button>
+                <ButtonUI onClick={allFilterHandler} name='All' color={'inherit'} variant={filter === 'All' ? "outlined" : 'text'}/>
+                <ButtonUI onClick={activeFilterHandler} name='Active' color={"primary"} variant={filter === 'active' ? "outlined" : 'text'}/>
+                <ButtonUI onClick={completedFilterHandler} name='Completed' color={"secondary"} variant={filter === 'completed' ? "outlined" : 'text'}/>
             </div>
         </div>
     )
 })
 
 
+{/*<Button onClick={allFilterHandler} name='All'  variant={filter === 'All' ? "outlined" : 'text'}>All</Button>*/}
+{/*<Button onClick={activeFilterHandler} name='Active'  variant={filter === 'active' ? "outlined" : 'text'} color="primary">Active</Button>*/}
+{/*<Button onClick={completedFilterHandler} name='Completed'  variant={filter === 'completed' ? "outlined" : 'text'} color="secondary">Completed</Button>*/}

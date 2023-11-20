@@ -17,7 +17,7 @@ export const TodoListForm = React.memo((props: TodoListFormType) => {
     }
 
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>)=>{
-        setError(null)
+        if(error) setError(null)
         if (e.key === 'Enter'){
             addTaskHandler()
         }

@@ -1,5 +1,3 @@
-// import { ButtonBase } from "@mui/material"
-
 import { Button } from "@material-ui/core"
 import React from "react";
 
@@ -10,6 +8,7 @@ type PropsType = {
 }
 
 export const ButtonS = React.memo((props: PropsType) => {
+    console.log('button')
     const callbackHandler = () => {
         props.onClick()
     }

@@ -1,16 +1,12 @@
 import React, {useCallback} from 'react';
 import './App.css';
-import { TodoListForm } from './components/TodoListForm';
+import {TodoListForm } from './components/TodoListForm';
 import {addTodolistAC} from "./components/state/ReduserTodoLists";
-// import {addTaskAC, changeStatusAC, changeTitleAC, removeTaskAC} from "./components/state/TasksReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "./components/state/Store";
 import {TodoListRedux} from "./components/TodoListRedux";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import {Button, IconButton, Paper} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import {Container, Grid, Menu} from "@mui/material";
+import {Paper} from "@material-ui/core";
+import {Container, Grid} from "@mui/material";
 import ButtonAppBar from "./components/NavBar";
 
 
@@ -54,9 +50,8 @@ function AppWithRedux() {
     // }, [])
 
     const addTodoList = useCallback((title: string) => {
-        const action = addTodolistAC(title)
-        dispatch(action)
-    }, [])
+        dispatch(addTodolistAC(title))
+    }, [dispatch])
 
 
 
@@ -71,7 +66,6 @@ function AppWithRedux() {
         <Grid container spacing={3}>
             {
                 todoLists.map(tl => {
-
 
                     return <Grid key={tl.id} item>
                         <Paper>
