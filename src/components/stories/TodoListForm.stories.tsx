@@ -1,4 +1,4 @@
-import {TodoListForm} from "./TodoListForm";
+import {TodoListForm} from "../TodoListForm";
 
 export default {
     title: 'Add form component',
