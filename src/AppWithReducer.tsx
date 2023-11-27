@@ -1,6 +1,7 @@
+export function AppWithReducer() {return <div></div>}
+
 // import React, {useReducer} from 'react';
 // import './App.css';
-// import { TodoList } from './components/TodoList';
 // import { v1 } from 'uuid';
 // import { TodoListForm } from './components/TodoListForm';
 // import {
@@ -11,22 +12,22 @@
 // } from "./components/state/ReduserTodoLists";
 
 
-
-export type FilterValuesType = 'All' | 'completed' | 'active';
-
+//
+// export type FilterValuesType = 'All' | 'completed' | 'active';
+//
 // export type TodoListType = {
 //     id: string
 //     title: string
 //     filter: FilterValuesType
 // }
-
+//
 // export type TasksStateType = {
 //     [key: string]: TaskType[]
 // }
-
+//
 // const tdlId1 = v1()
 // const tdlId2 = v1()
-
+//
 // function AppWithReducer() {
 //
 //
@@ -36,27 +37,27 @@ export type FilterValuesType = 'All' | 'completed' | 'active';
 //         {id: tdlId2, title: 'What to buy', filter: 'All'}
 //     ])
 //
-//     // const [tasks, dispatchToTasksReducer] = useReducer(TasksReducer, {
-//     //     [tdlId1]: [
-//     //         {id: v1(), title: 'HTML', isDone: true},
-//     //         {id: v1(), title: 'JS', isDone: true},
-//     //         {id: v1(), title: 'React', isDone: false},
-//     //     ],
-//     //     [tdlId2]: [
-//     //         {id: v1(), title: 'Coffee', isDone: true},
-//     //         {id: v1(), title: 'Bread', isDone: true},
-//     //         {id: v1(), title: 'Meat', isDone: false},
-//     //     ],
-//     // })
+//     const [tasks, dispatchToTasksReducer] = useReducer(TasksReducer, {
+//         [tdlId1]: [
+//             {id: v1(), title: 'HTML', isDone: true},
+//             {id: v1(), title: 'JS', isDone: true},
+//             {id: v1(), title: 'React', isDone: false},
+//         ],
+//         [tdlId2]: [
+//             {id: v1(), title: 'Coffee', isDone: true},
+//             {id: v1(), title: 'Bread', isDone: true},
+//             {id: v1(), title: 'Meat', isDone: false},
+//         ],
+//     })
 //
-//     // const removeTask = (todolistId: string, id: string) => {
-//     //     dispatchToTasksReducer(removeTaskAC(todolistId, id))
-//     // }
+//     const removeTask = (todolistId: string, id: string) => {
+//         dispatchToTasksReducer(removeTaskAC(todolistId, id))
+//     }
 //
-//     // const addTask = (todolistId: string, title: string) => {
-//     //    const action = addTaskAC(todolistId, title)
-//     //     dispatchToTasksReducer(action)
-//     // }
+//     const addTask = (todolistId: string, title: string) => {
+//        const action = addTaskAC(todolistId, title)
+//         dispatchToTasksReducer(action)
+//     }
 //
 //     const changeFilter = (todolistId: string, value: FilterValuesType) => {
 //         dispatchToTodoListsReducer(changeTodolistFilterAC(todolistId, value))
@@ -104,23 +105,18 @@ export type FilterValuesType = 'All' | 'completed' | 'active';
 //                 return (
 //                     <TodoList key={tl.id}
 //                                 id={tl.id}
-//                                 // tasks={tasksForList}
 //                                 title={tl.title}
 //                                 removeTodoList={removeTodoList}
-//                                 // removeTask={removeTask}
 //                                 changeFilter={changeFilter}
-//                                 // changeStatus={changeStatus}
-//                                 // addTask={addTask}
 //                                 filter={tl.filter}
-//                                 // changeTaskTitle={changeTaskTitle}
 //                                 changeTodoTitle={changeTodoTitle}
-//                         />
+//                     />
 //                 )
 //             })}
 //         </div>
 //     );
 // }
-
+//
 
 
 

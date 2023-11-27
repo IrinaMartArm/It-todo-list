@@ -1,12 +1,10 @@
 import {Task} from "./Task";
-import {Provider} from "react-redux";
-import {store} from "./state/Store";
-import {Decorator} from "../stories/Decorator";
+// import {Decorator} from "../stories/Decorator";
 
 export default {
     title: 'Task component',
     component: Task,
-    decorator: Decorator
+    // decorator: Decorator
 }
 
 export const TaskExample = () => {

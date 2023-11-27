@@ -1,10 +1,10 @@
 import AppWithRedux from "./AppWithRedux";
-import {Decorator} from "./stories/Decorator";
+// import {Decorator} from "./stories/Decorator";
 
 export default {
     title: 'AppExample',
     component: AppWithRedux,
-    decorator: Decorator
+    // decorator: Decorator
 }
 
 export const AppWithReduxExample = () => {
