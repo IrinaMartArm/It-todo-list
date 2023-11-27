@@ -4,7 +4,7 @@ import { Add } from "@mui/icons-material"
 import {useForm} from "./useForm";
 
 
-type TodoListFormType = {
+export type TodoListFormType = {
     addText: (title: string) => void
 }
 
