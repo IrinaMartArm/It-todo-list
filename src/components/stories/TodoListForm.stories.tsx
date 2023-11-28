@@ -42,11 +42,11 @@ export const ErrorTodoListForm = React.memo((props: TodoListFormType) => {
         <div>
             <TextField value={text}
                        variant="outlined"
-                       label={error ? error : 'Type value'}
+                       label={'error'}
                        size="small"
                        onChange={onChangeHandler}
                        onKeyDown={onKeyDownHandler}
-                       error={!!error}
+                       error={true}
             />
             <IconButton color="inherit" onClick={addTask} >
                 <Add/>
