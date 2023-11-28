@@ -1,12 +1,12 @@
 import {TodoListForm, TodoListFormType} from "../TodoListForm";
 import type {Meta, StoryObj} from '@storybook/react';
-import {action} from '@storybook/addon-actions'
+import {action} from '@storybook/addon-actions';
 import React from "react";
 import {useForm} from "../useForm";
 import {IconButton, TextField} from "@material-ui/core";
 import {Add} from "@mui/icons-material";
 
-export const meta: Meta<typeof TodoListForm> = {
+const meta: Meta<typeof TodoListForm> = {
     title: 'TODOLISTS/TodoListForm',
     component: TodoListForm,
     tags: ['autodocs'],
@@ -18,6 +18,8 @@ export const meta: Meta<typeof TodoListForm> = {
     },
 };
 
+export default  meta;
+
 type Story = StoryObj<typeof TodoListForm>;
 
 // export const AddItemFormStory: Story = {
@@ -28,7 +30,6 @@ type Story = StoryObj<typeof TodoListForm>;
 
 
 export const ErrorTodoListForm = React.memo((props: TodoListFormType) => {
-    console.log('TodoListForm')
 
     const {text,
         error,
@@ -52,7 +53,7 @@ export const ErrorTodoListForm = React.memo((props: TodoListFormType) => {
             </IconButton>
         </div>
     )
-})
+});
 export const ErrorTodoListFormStory = () => <TodoListForm addText={action('clicked')}/>
 
 
