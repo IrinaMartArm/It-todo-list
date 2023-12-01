@@ -46,7 +46,7 @@ export const ErrorTodoListForm = React.memo((props: TodoListFormType) => {
                        size="small"
                        onChange={onChangeHandler}
                        onKeyDown={onKeyDownHandler}
-                       error={true}
+                       error={!!error}
             />
             <IconButton color="inherit" onClick={addTask} >
                 <Add/>

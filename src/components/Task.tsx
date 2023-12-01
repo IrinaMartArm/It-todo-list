@@ -5,12 +5,12 @@ import {CheckBox} from "./CheckBox";
 import {EditableSpan} from "./EditableSpan";
 import {IconButton} from "@material-ui/core";
 import {Delete} from "@mui/icons-material";
-import {TaskType} from "../AppWithRedux";
+import {TaskStatuses, TaskTypeOfResponse} from "../api/TodoLists-api";
 
 
 type TaskProps = {
     todoId : string
-    task: TaskType
+    task: TaskTypeOfResponse
 }
 
 export const Task = React.memo((props: TaskProps) => {
@@ -18,14 +18,14 @@ export const Task = React.memo((props: TaskProps) => {
     const dispatch = useDispatch()
     const onRemoveTask = useCallback(()=>{dispatch(removeTaskAC(props.todoId, props.task.id))}, [props.todoId, props.task.id])  // props.removeTask(props.id, t.id)
 
-    const onChangeStatusHandler = useCallback((checked: boolean)=>{dispatch(changeStatusAC(props.todoId, props.task.id, checked))}, [props.todoId, props.task.id])
+    const onChangeStatusHandler = useCallback((status: TaskStatuses)=>{dispatch(changeStatusAC(props.todoId, props.task.id, status))}, [props.todoId, props.task.id])
 
     const onChangeTitle = useCallback((value: string) => {dispatch(changeTitleAC(props.todoId, props.task.id, value))}, [props.todoId, props.task.id])
 
 
     return (
-        <li key={props.task.id} className={props.task.isDone ? 'is-done' : ''}>
-            <CheckBox checked={props.task.isDone} onChange={onChangeStatusHandler}/>
+        <li key={props.task.id} className={props.task.status === TaskStatuses.Completed ? 'is-done' : ''}>
+            <CheckBox status={props.task.status} onChange={onChangeStatusHandler}/>
             <EditableSpan title={props.task.title} onChange={onChangeTitle}/>
             <IconButton onClick={onRemoveTask}>
                 <Delete />

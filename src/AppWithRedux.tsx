@@ -8,26 +8,6 @@ import ButtonAppBar from "./components/NavBar";
 import {useApp} from "./useApp";
 
 
-
-export type FilterValuesType = 'All' | 'completed' | 'active';
-
-export type TodoListType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
-
-export type TasksStateType = {
-    [key: string]: TaskType[]
-}
-
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
-
-
 function AppWithRedux() {
 
     const {todoLists, addTodoList} = useApp()

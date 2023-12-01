@@ -1,18 +1,12 @@
-import { TodoListForm } from "./TodoListForm"
-import { EditableSpan } from "./EditableSpan"
+import {TodoListForm} from "./TodoListForm"
+import {EditableSpan} from "./EditableSpan"
 import {IconButton} from "@material-ui/core"
 import {Delete} from "@mui/icons-material"
 import React from "react";
 import {Task} from './Task'
 import {ButtonUI} from "./ButtonUI";
 import {useTodo} from "./useTodo";
-
-
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
+import {TaskStatuses} from "../api/TodoLists-api";
 
 export type PropsType = {
     id: string
@@ -32,10 +26,10 @@ export const TodoListRedux = React.memo((props: PropsType) => {
 
 
     if(filter === 'completed') {
-        tasks = tasks.filter(t => t.isDone)
+        tasks = tasks.filter(t => t.status === TaskStatuses.Completed)
     }
     if(filter === 'active') {
-        tasks = tasks.filter(t => !t.isDone)
+        tasks = tasks.filter(t => t.status === TaskStatuses.New)
     }
 
 
