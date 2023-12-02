@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {TodoListForm } from './components/TodoListForm';
 import {TodoListRedux} from "./components/TodoListRedux";
@@ -6,11 +6,19 @@ import {Paper} from "@material-ui/core";
 import {Container, Grid} from "@mui/material";
 import ButtonAppBar from "./components/NavBar";
 import {useApp} from "./useApp";
+import {fetchTodoListsTC} from "./components/state/ReduserTodoLists";
+import {useDispatch} from "react-redux";
+import {ThunkDispatch} from "redux-thunk";
 
 
 function AppWithRedux() {
 
     const {todoLists, addTodoList} = useApp()
+    const dispatch: ThunkDispatch<State, ExtraThunkArg, BasicAction> = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchTodoListsTC())
+    }, []);
 
     return (
     <div className="App">

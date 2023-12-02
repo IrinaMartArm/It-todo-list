@@ -1,6 +1,7 @@
 
 import {v1} from "uuid";
-import {TodoListsTypeOfResponse} from "../../api/TodoLists-api";
+import {TodoListsApi, TodoListsTypeOfResponse} from "../../api/TodoLists-api";
+import {Dispatch} from "redux";
 
 
 
@@ -89,4 +90,13 @@ export const changeTodolistFilterAC = (id: string, filter: FilterValuesType): Ch
 }
 export const setTodoAC = (todoLists: TodoListsTypeOfResponse[]): setTodoActionType => {
     return {type: 'SET-TODO', todoLists: todoLists}
+}
+
+export const fetchTodoListsTC = () => {
+    return (dispatch: Dispatch) => {
+        TodoListsApi.getTodoLists()
+            .then((res) => {
+                dispatch(setTodoAC(res.data))
+            })
+    }
 }

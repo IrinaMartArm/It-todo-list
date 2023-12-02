@@ -6,8 +6,7 @@
   padding: 30px;
   display: flex;
   background-color: lemonchiffon;
-  height: 100vh;
-  display: flex;
+  height: 100%;
   flex-direction: column;
 }
 

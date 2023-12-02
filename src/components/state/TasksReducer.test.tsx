@@ -1,4 +1,12 @@
-import {addTaskAC, changeStatusAC, changeTitleAC, removeTaskAC, TasksReducer, TasksStateType} from "./TasksReducer";
+import {
+    addTaskAC,
+    changeStatusAC,
+    changeTitleAC,
+    removeTaskAC,
+    setTasksAC,
+    TasksReducer,
+    TasksStateType
+} from "./TasksReducer";
 import {removeTodolistAC, setTodoAC} from "./ReduserTodoLists";
 import {TaskPriorities, TaskStatuses} from "../../api/TodoLists-api";
 
@@ -110,7 +118,8 @@ test('property with todoId should be removed', () => {
     expect(keys.length).toBe(1)
     expect(endState['todolistId2']).toBeUndefined()
 })
-test('tasks should be added', () => {
+
+test('todoLists should be added', () => {
 
     const action = setTodoAC([
         {id: '1', title: 'What to learn', order: 0,
@@ -125,5 +134,14 @@ test('tasks should be added', () => {
     expect(keys.length).toBe(2)
     expect(endState['1']).toStrictEqual([])
     expect(endState['2']).toStrictEqual([])
+})
+test('tasks should be added', () => {
+
+    const action = setTasksAC('todolistId1',startState['todolistId1'])
+    const endState = TasksReducer({'todolistId1': [], 'todolistId2': []}, action)
+
+
+    expect(endState['todolistId1'].length).toBe(3)
+    expect(endState['todolistId2'].length).toBe(0)
 })
 
