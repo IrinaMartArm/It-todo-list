@@ -1,5 +1,5 @@
 import {addTaskAC, changeStatusAC, changeTitleAC, removeTaskAC, TasksReducer, TasksStateType} from "./TasksReducer";
-import {removeTodolistAC} from "./ReduserTodoLists";
+import {removeTodolistAC, setTodoAC} from "./ReduserTodoLists";
 import {TaskPriorities, TaskStatuses} from "../../api/TodoLists-api";
 
 
@@ -101,32 +101,6 @@ test('correct title should be changed', () => {
     expect(endState['todolistId2'][2].title).toBe('cookies')
 })
 
-// test('new property with new array should be added when new todolist is added', () => {
-//
-//     const startState: TasksStateType = {
-//         'todolistId1': [
-//             {id: '1', title: 'HTML', isDone: true},
-//             {id: '2', title: 'JS', isDone: true},
-//             {id: '3', title: 'React', isDone: false},
-//         ],
-//         'todolistId2': [
-//             {id: '1', title: 'Coffee', isDone: true},
-//             {id: '2', title: 'Bread', isDone: true},
-//             {id: '3', title: 'Meat', isDone: false},
-//         ],
-//     }
-//
-//     const action = addTodolistAC('some')
-//     const endState = TasksReducer(startState, action)
-//
-//     const keys = Object.keys(endState)
-//     const newKey = keys.find(k => k != 'todolistId1' && 'todolistId2')
-//     if(!newKey) {throw Error('key not found')}
-//
-//     expect(keys.length).toBe(3)
-//     expect(endState[newKey]).toEqual([])
-// })
-
 test('property with todoId should be removed', () => {
 
     const action = removeTodolistAC('todolistId2')
@@ -136,3 +110,20 @@ test('property with todoId should be removed', () => {
     expect(keys.length).toBe(1)
     expect(endState['todolistId2']).toBeUndefined()
 })
+test('tasks should be added', () => {
+
+    const action = setTodoAC([
+        {id: '1', title: 'What to learn', order: 0,
+            addedDate: '',},
+        {id: '2', title: 'What to buy', order: 0,
+            addedDate: '',}
+    ])
+    const endState = TasksReducer({}, action)
+
+    const keys = Object.keys(endState)
+
+    expect(keys.length).toBe(2)
+    expect(endState['1']).toStrictEqual([])
+    expect(endState['2']).toStrictEqual([])
+})
+

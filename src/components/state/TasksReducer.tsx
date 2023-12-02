@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {AddTodoListActionType, RemoveTodoListActionType} from "./ReduserTodoLists";
+import {AddTodoListActionType, RemoveTodoListActionType, setTodoAC, setTodoActionType} from "./ReduserTodoLists";
 import {TaskPriorities, TaskStatuses, TaskTypeOfResponse} from "../../api/TodoLists-api";
 
 
@@ -16,7 +16,7 @@ type ChangeStatusType = ReturnType<typeof changeStatusAC>
 type ChangeTitleType = ReturnType<typeof changeTitleAC>
 type setTasksType = ReturnType<typeof setTasksAC>
 
-type ActionsType = RemoveTaskType | AddTaskType | ChangeStatusType | ChangeTitleType | AddTodoListActionType | RemoveTodoListActionType | setTasksType
+type ActionsType = RemoveTaskType | AddTaskType | ChangeStatusType | ChangeTitleType | AddTodoListActionType | RemoveTodoListActionType | setTasksType | setTodoActionType
 
 export type TasksStateType = {
     [key: string]: Array<TaskTypeOfResponse>
@@ -76,8 +76,12 @@ export const TasksReducer = (state: TasksStateType = initialState, action: Actio
             const {[action.id]: [], ...rest} = state
             return rest
         }
-        case 'SET_TASKS': {
-            return state
+        case 'SET-TODO': {
+            const stateCopy = {...state}
+            action.todoLists.forEach((tl) => {
+                stateCopy[tl.id] = []
+            })
+            return stateCopy;
         }
         default:
             return state

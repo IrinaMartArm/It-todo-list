@@ -2,11 +2,12 @@ import {
     addTodolistAC, changeTodolistFilterAC,
     changeTodolistTitleAC, FilterValuesType,
     ReducerTodoLists,
-    removeTodolistAC, TogoDomainType
+    removeTodolistAC, setTodoAC, TogoDomainType
 } from "./ReduserTodoLists";
 
 
 import {v1} from "uuid";
+import {TodoListsTypeOfResponse} from "../../api/TodoLists-api";
 
 
 
@@ -17,9 +18,9 @@ let startState: Array<TogoDomainType>
 
 beforeEach(() => {
     startState = [
-        {id: todolistId1, title: 'What to learn', filter: 'All', order: 0,
+        {id: todolistId1, title: 'What to learn', filter: 'all', order: 0,
             addedDate: '',},
-        {id: todolistId2, title: 'What to buy', filter: 'All', order: 0,
+        {id: todolistId2, title: 'What to buy', filter: 'all', order: 0,
             addedDate: '',}
     ]
 })
@@ -40,7 +41,7 @@ test('should add TodoList', () => {
 
     expect(endState.length).toBe(3)
     expect(endState[0].title).toBe(newTodoListTitle)
-    expect(endState[0].filter).toBe('All')
+    expect(endState[0].filter).toBe('all')
 })
 
 test('correct todolist Title', () => {
@@ -64,8 +65,17 @@ test('correct todolist filter', () => {
 
     const endState = ReducerTodoLists(startState, action)
 
-    expect(endState[0].filter).toBe('All')
+    expect(endState[0].filter).toBe('all')
     expect(endState[1].filter).toBe(newFilter)
+})
+test('correct state', () => {
+
+    const action  = setTodoAC(startState)
+
+    const endState = ReducerTodoLists([], action)
+
+    expect(endState.length).toBe(2)
+
 })
 
 

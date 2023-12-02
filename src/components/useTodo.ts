@@ -27,7 +27,7 @@ export const useTodo = (id: string) => {
         // props.changeTodoTitle(id, value)
     }, [id])
 
-    const allFilterHandler = useCallback(() => {dispatch(changeTodolistFilterAC(id, 'All'))}, [id])
+    const allFilterHandler = useCallback(() => {dispatch(changeTodolistFilterAC(id, 'all'))}, [id])
     const activeFilterHandler = useCallback(() => {dispatch(changeTodolistFilterAC(id, 'active'))}, [id])
     const completedFilterHandler = useCallback(() => {dispatch(changeTodolistFilterAC(id, 'completed'))}, [id])
 
