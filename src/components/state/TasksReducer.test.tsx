@@ -67,7 +67,7 @@ beforeEach(() => {
     }
 })
 
-test('correct tasklist should be removed', () => {
+test('correct taskList should be removed', () => {
 
     const action = removeTaskAC('todolistId2', '1')
     const endState = TasksReducer(startState, action)
@@ -78,16 +78,25 @@ test('correct tasklist should be removed', () => {
     expect(endState['todolistId2'][0].id).toBe('2')
 })
 
-test('correct todolist should be removed', () => {
+test('task should be added', () => {
 
-    const action = addTaskAC('todolistId2', 'Redux')
+    const action = addTaskAC( {id: '1',
+        title: 'HTML',
+        status: TaskStatuses.New,
+        todoListId: 'todolistId1',
+        priority: TaskPriorities.Later,
+        startDate: '',
+        deadline: '',
+        description: '',
+        order: 1,
+        addedDate: ''})
     const endState = TasksReducer(startState, action)
 
-    expect(endState['todolistId1'].length).toBe(3)
-    expect(endState['todolistId2'].length).toBe(4)
+    expect(endState['todolistId1'].length).toBe(4)
+    expect(endState['todolistId2'].length).toBe(3)
     // expect(endState['todolistId2'].every(t => t.id === '4')).toBeTruthy()
     expect(endState['todolistId2'][0].id).toBeDefined()
-    expect(endState['todolistId2'][0].title).toBe('Redux')
+    expect(endState['todolistId1'][0].title).toBe('HTML')
 })
 
 test('correct status should be changed', () => {

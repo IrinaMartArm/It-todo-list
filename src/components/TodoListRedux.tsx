@@ -9,6 +9,9 @@ import {useTodo} from "./useTodo";
 import {TaskStatuses} from "../api/TodoLists-api";
 import {useDispatch} from "react-redux";
 import {fetchTasksTC} from "./state/TasksReducer";
+import {ThunkDispatch} from "redux-thunk";
+import {RootReducerType} from "./state/Store";
+import {AnyAction} from "redux";
 
 export type PropsType = {
     id: string
@@ -21,14 +24,14 @@ export const TodoListRedux = React.memo((props: PropsType) => {
 
     const {id, filter, title} = props
 
-    const dispatch = useDispatch()
+    const dispatch: ThunkDispatch<RootReducerType, unknown, AnyAction> = useDispatch()
 
     useEffect(() => {
         dispatch(fetchTasksTC(id))
     }, [id]);
 
     let {tasks,
-        addText, removeTodoHandler,
+        addTask, removeTodoHandler,
         changeTodoListTitle, allFilterHandler,
         activeFilterHandler, completedFilterHandler} = useTodo(id)
 
@@ -52,7 +55,7 @@ export const TodoListRedux = React.memo((props: PropsType) => {
                     <Delete />
                 </IconButton>
             </h3>
-            <TodoListForm addText={addText}/>
+            <TodoListForm addText={addTask}/>
             <ul>
                 {tasksList}
             </ul>

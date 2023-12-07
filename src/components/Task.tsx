@@ -1,11 +1,21 @@
 import {useDispatch} from "react-redux";
 import React, {useCallback} from "react";
-import {changeStatusAC, changeTitleAC, removeTaskAC} from "./state/TasksReducer";
+import {
+    changeStatusAC,
+    changeTaskStatusTC,
+    changeTaskTitleTC,
+    changeTitleAC,
+    removeTaskAC,
+    removeTaskTC
+} from "./state/TasksReducer";
 import {CheckBox} from "./CheckBox";
 import {EditableSpan} from "./EditableSpan";
 import {IconButton} from "@material-ui/core";
 import {Delete} from "@mui/icons-material";
 import {TaskStatuses, TaskTypeOfResponse} from "../api/TodoLists-api";
+import {ThunkDispatch} from "redux-thunk";
+import {RootReducerType} from "./state/Store";
+import {AnyAction} from "redux";
 
 
 type TaskProps = {
@@ -15,12 +25,14 @@ type TaskProps = {
 
 export const Task = React.memo((props: TaskProps) => {
 
-    const dispatch = useDispatch()
-    const onRemoveTask = useCallback(()=>{dispatch(removeTaskAC(props.todoId, props.task.id))}, [props.todoId, props.task.id])  // props.removeTask(props.id, t.id)
+    const dispatch: ThunkDispatch<RootReducerType, unknown, AnyAction> = useDispatch()
 
-    const onChangeStatusHandler = useCallback((status: TaskStatuses)=>{dispatch(changeStatusAC(props.todoId, props.task.id, status))}, [props.todoId, props.task.id])
+    const onRemoveTask = useCallback(()=>{
+        dispatch(removeTaskTC(props.todoId, props.task.id))}, [props.todoId, props.task.id])  // props.removeTask(props.id, t.id)
 
-    const onChangeTitle = useCallback((value: string) => {dispatch(changeTitleAC(props.todoId, props.task.id, value))}, [props.todoId, props.task.id])
+    const onChangeStatusHandler = useCallback((status: TaskStatuses)=>{dispatch(changeTaskStatusTC(props.todoId, props.task.id, status))}, [props.todoId, props.task.id])
+
+    const onChangeTitle = useCallback((value: string) => {dispatch(changeTaskTitleTC(props.todoId, props.task.id, value))}, [props.todoId, props.task.id])
 
 
     return (

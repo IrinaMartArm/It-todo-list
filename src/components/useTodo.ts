@@ -1,29 +1,35 @@
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "./state/Store";
 import {useCallback} from "react";
-import {addTaskAC} from "./state/TasksReducer";
-import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./state/ReduserTodoLists";
+import {addTaskTC} from "./state/TasksReducer";
+import {
+    changeTodolistFilterAC,
+    changeTodolistTitleAC,
+    changeTodoTitleTC,
+    removeTodolistAC,
+    removeTodoTC
+} from "./state/ReduserTodoLists";
 import {TaskTypeOfResponse} from "../api/TodoLists-api";
+import {ThunkDispatch} from "redux-thunk";
+import {AnyAction} from "redux";
 
 
 export const useTodo = (id: string) => {
-    const dispatch = useDispatch()
+    const dispatch: ThunkDispatch<RootReducerType, unknown, AnyAction> = useDispatch()
 
     const tasks = useSelector<RootReducerType, Array<TaskTypeOfResponse>>(state => state.tasks[id])
 
 
-    const addText = useCallback((title: string) => {
-        dispatch(addTaskAC(id, title))
+    const addTask = useCallback((title: string) => {
+        dispatch(addTaskTC(id, title))
     }, [id])
 
     const removeTodoHandler = useCallback(() => {
-        // props.removeTodoList(id)
-        dispatch(removeTodolistAC(id))
+        dispatch(removeTodoTC(id))
     }, [id])
 
     const changeTodoListTitle = useCallback((value: string) => {
-        console.log('todo', value)
-        dispatch(changeTodolistTitleAC(id, value))
+        dispatch(changeTodoTitleTC(id, value))
         // props.changeTodoTitle(id, value)
     }, [id])
 
@@ -32,5 +38,5 @@ export const useTodo = (id: string) => {
     const completedFilterHandler = useCallback(() => {dispatch(changeTodolistFilterAC(id, 'completed'))}, [id])
 
 
-    return {tasks, addText, removeTodoHandler, changeTodoListTitle, allFilterHandler, activeFilterHandler, completedFilterHandler}
+    return {tasks, addTask, removeTodoHandler, changeTodoListTitle, allFilterHandler, activeFilterHandler, completedFilterHandler}
 }

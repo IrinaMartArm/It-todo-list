@@ -9,12 +9,14 @@ import {useApp} from "./useApp";
 import {fetchTodoListsTC} from "./components/state/ReduserTodoLists";
 import {useDispatch} from "react-redux";
 import {ThunkDispatch} from "redux-thunk";
+import {AnyAction} from "redux";
+import {RootReducerType} from "./components/state/Store";
 
 
 function AppWithRedux() {
 
     const {todoLists, addTodoList} = useApp()
-    const dispatch: ThunkDispatch<State, ExtraThunkArg, BasicAction> = useDispatch()
+    const dispatch: ThunkDispatch<RootReducerType, unknown, AnyAction> = useDispatch()
 
     useEffect(() => {
         dispatch(fetchTodoListsTC())
