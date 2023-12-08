@@ -1,11 +1,10 @@
 import {
     addTaskAC,
-    changeStatusAC,
-    changeTitleAC,
     removeTaskAC,
     setTasksAC,
     TasksReducer,
-    TasksStateType
+    TasksStateType,
+    updateTaskAC
 } from "./TasksReducer";
 import {removeTodolistAC, setTodoAC} from "./ReduserTodoLists";
 import {TaskPriorities, TaskStatuses} from "../../api/TodoLists-api";
@@ -101,7 +100,7 @@ test('task should be added', () => {
 
 test('correct status should be changed', () => {
 
-    const action = changeStatusAC('todolistId2', '3', 2)
+    const action = updateTaskAC('todolistId2', '3', {status: TaskStatuses.Completed})
     const endState = TasksReducer(startState, action)
 
     expect(endState['todolistId1'][2].status).toBeFalsy()
@@ -111,7 +110,7 @@ test('correct status should be changed', () => {
 
 test('correct title should be changed', () => {
 
-    const action = changeTitleAC('todolistId2','3','cookies')
+    const action = updateTaskAC('todolistId2','3', {title: 'cookies'})
     const endState = TasksReducer(startState, action)
 
     expect(endState['todolistId1'][2].title).toBe('React')

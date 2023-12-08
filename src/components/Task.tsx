@@ -1,13 +1,6 @@
 import {useDispatch} from "react-redux";
 import React, {useCallback} from "react";
-import {
-    changeStatusAC,
-    changeTaskStatusTC,
-    changeTaskTitleTC,
-    changeTitleAC,
-    removeTaskAC,
-    removeTaskTC
-} from "./state/TasksReducer";
+import {removeTaskTC, updateTaskTC} from "./state/TasksReducer";
 import {CheckBox} from "./CheckBox";
 import {EditableSpan} from "./EditableSpan";
 import {IconButton} from "@material-ui/core";
@@ -30,9 +23,10 @@ export const Task = React.memo((props: TaskProps) => {
     const onRemoveTask = useCallback(()=>{
         dispatch(removeTaskTC(props.todoId, props.task.id))}, [props.todoId, props.task.id])  // props.removeTask(props.id, t.id)
 
-    const onChangeStatusHandler = useCallback((status: TaskStatuses)=>{dispatch(changeTaskStatusTC(props.todoId, props.task.id, status))}, [props.todoId, props.task.id])
+    const onChangeStatusHandler = useCallback((status: TaskStatuses)=>{dispatch(updateTaskTC(props.todoId, props.task.id, {status: status}))}, [props.todoId, props.task.id])
 
-    const onChangeTitle = useCallback((value: string) => {dispatch(changeTaskTitleTC(props.todoId, props.task.id, value))}, [props.todoId, props.task.id])
+
+    const onChangeTitle = useCallback((title: string) => {dispatch(updateTaskTC(props.todoId, props.task.id, {title}))}, [props.todoId, props.task.id])
 
 
     return (

@@ -50,7 +50,7 @@ export type TaskTypeOfResponse = {
     addedDate: string
 }
 
-export type UpdateTaskType = {
+export type UpdateApiModelType = {
     description: string
     title: string
     status: TaskStatuses
@@ -88,8 +88,8 @@ export const TodoListsApi = {
     createTask(todoId: string, title: string) {
         return instance.post<ResponseType<{item: TaskTypeOfResponse}>>(`todo-lists/${todoId}/tasks`,{title})
     },
-    updateTask(todoId: string, taskId: string, model: UpdateTaskType) {
-        return instance.put<ResponseType>(`todo-lists/${todoId}/tasks/${taskId}`,{model})
+    updateTask(todoId: string, taskId: string, model: UpdateApiModelType) {
+        return instance.put<ResponseType>(`todo-lists/${todoId}/tasks/${taskId}`, model)
     },
 }
 
