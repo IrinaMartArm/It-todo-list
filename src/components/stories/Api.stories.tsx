@@ -73,7 +73,7 @@ export const GetTasks = () => {
     const getTasksHandler = () => {
         TodoListsApi.getTasks(todoId)
             .then((res)=>{
-                setState(res.data.items)
+                setState(res)
             })
     }
 
@@ -125,7 +125,7 @@ export const CreateTask = () => {
 
         TodoListsApi.createTask(todoId, title)
             .then((res)=>{
-                setState(res.data)
+                setState(res)
             })
     }
 

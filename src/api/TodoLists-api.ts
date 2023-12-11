@@ -79,14 +79,16 @@ export const TodoListsApi = {
     updateTodoList(id: string, title: string) {
         return instance.put<ResponseType>(`todo-lists/${id}`,{title})
     },
-    getTasks(todoId: string) {
-        return instance.get<TaskResponseType>(`todo-lists/${todoId}/tasks`)
+    async getTasks(todoId: string) {
+        let resp = await instance.get<TaskResponseType>(`todo-lists/${todoId}/tasks`)
+        return resp.data.items
     },
     removeTask(todoId: string, taskId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todoId}/tasks/${taskId}`)
     },
-    createTask(todoId: string, title: string) {
-        return instance.post<ResponseType<{item: TaskTypeOfResponse}>>(`todo-lists/${todoId}/tasks`,{title})
+    async createTask(todoId: string, title: string) {
+        const resp = await instance.post<ResponseType<{ item: TaskTypeOfResponse }>>(`todo-lists/${todoId}/tasks`, {title})
+        return resp.data.data.item;
     },
     updateTask(todoId: string, taskId: string, model: UpdateApiModelType) {
         return instance.put<ResponseType>(`todo-lists/${todoId}/tasks/${taskId}`, model)

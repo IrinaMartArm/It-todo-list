@@ -36,7 +36,7 @@ export type setTodoActionType = {
     todoLists: TodoListsTypeOfResponse[]
 }
 
-type ActionType = RemoveTodoListActionType | AddTodoListActionType | ChangeTodoListTitleActionType | ChangeTodoListFilterActionType | setTodoActionType
+export type TodoListActionsType = RemoveTodoListActionType | AddTodoListActionType | ChangeTodoListTitleActionType | ChangeTodoListFilterActionType | setTodoActionType
 
 export const tdlId1 = v1()
 export const tdlId2 = v1()
@@ -46,7 +46,7 @@ const initialState: TogoDomainType[] = [
     // {id: tdlId2, title: 'What to buy', filter: 'all'}
 ]
 
-export const ReducerTodoLists = (state: TogoDomainType[] = initialState , action: ActionType): TogoDomainType[] => {
+export const ReducerTodoLists = (state: TogoDomainType[] = initialState , action: TodoListActionsType): TogoDomainType[] => {
     switch (action.type) {
         case 'REMOVE-TODOLIST':
             {return state.filter(t => t.id !== action.id)}
