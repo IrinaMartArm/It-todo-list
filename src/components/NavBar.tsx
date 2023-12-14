@@ -12,7 +12,7 @@ import {useAppSelector} from "./hooks/Hooks";
 export default function ButtonAppBar() {
     const status = useAppSelector(state => state.app.status)
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 0 }}>
             <AppBar position="static" color={'transparent'}>
                 <Toolbar>
                     <IconButton

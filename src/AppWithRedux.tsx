@@ -1,55 +1,22 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './App.css';
-import {TodoListForm } from './components/TodoListForm';
-import {TodoListRedux} from "./components/TodoListRedux";
-import {Container, Grid, LinearProgress, Paper} from "@mui/material";
 import ButtonAppBar from "./components/NavBar";
-import {useApp} from "./useApp";
-import {fetchTodoListsTC} from "./components/state/ReduserTodoLists";
-import {useAppDispatch} from "./components/hooks/Hooks";
 import {ErrorSnackbar} from "./components/ErrorSneckBar";
+import {TodoListBox} from "./components/TodoListsBox";
 
-
-function AppWithRedux() {
-
-    const {todoLists, addTodoList} = useApp()
-    const dispatch = useAppDispatch()
-
-    useEffect(() => {
-        dispatch(fetchTodoListsTC())
-    }, []);
+type PropsType = {
+    demo?: boolean
+}
+function AppWithRedux({demo = false}: PropsType) {
 
     return (
     <div className="App">
         <ErrorSnackbar/>
         <ButtonAppBar/>
-        <Container fixed >
-
-            <Grid container style={{padding: "20px"}}>
-                <TodoListForm addText={addTodoList}/>
-            </Grid>
-            <Grid container spacing={3}>
-                {
-                    todoLists.map(tl => {
-
-                        return <Grid key={tl.id} item>
-                            <Paper>
-                               <TodoListRedux key={tl.id}
-                                   id={tl.id}
-                                   title={tl.title}
-                                   filter={tl.filter}
-                                />
-                            </Paper>
-                        </Grid>
-                    })
-                }
-            </Grid>
-        </Container>
+        <TodoListBox/>
     </div>
     );
 }
-
-
 
 export default AppWithRedux;
 
@@ -118,7 +85,7 @@ export default AppWithRedux;
 //
 //                     return <Grid key={tl.id} item>
 //                         <Paper style={{padding: "10px"}}>
-//                            <TodoListRedux key={tl.id}
+//                            <TodoList key={tl.id}
 // //                            id={tl.id}
 // //                            title={tl.title}
 // //                            filter={tl.filter}
@@ -137,7 +104,7 @@ export default AppWithRedux;
 //     <TodoListForm addText={addTodoList}/>
 //     {todoLists.map((tl)=>{
 //         return (
-//             <TodoListRedux key={tl.id}
+//             <TodoList key={tl.id}
 //                            id={tl.id}
 //                            title={tl.title}
 //                            filter={tl.filter}

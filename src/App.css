@@ -1,6 +1,6 @@
 
 .App > div {
-  margin-right: 50px;
+  /*margin-right: 50px;*/
 }
 .App {
   padding: 30px;
@@ -8,6 +8,7 @@
   background-color: lemonchiffon;
   height: 100%;
   flex-direction: column;
+  justify-content: start;
 }
 
 
@@ -17,6 +18,12 @@
   border-radius: 5px;
   padding: 15px;
   height: max-content;
+}
+
+.todoBox {
+  border: 1px solid red;
+  /*display: flex;*/
+  justify-content: space-around;
 }
 
 .active-filter {

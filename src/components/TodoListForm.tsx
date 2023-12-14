@@ -6,16 +6,16 @@ import {IconButton, TextField} from "@mui/material";
 
 export type TodoListFormType = {
     addText: (title: string) => void
+    disabled?: boolean
 }
 
-export const TodoListForm = React.memo((props: TodoListFormType) => {
-    console.log('TodoListForm')
+export const TodoListForm = React.memo(({addText, disabled = false}: TodoListFormType) => {
 
     const {text,
             error,
             addTask,
             onKeyDownHandler,
-            onChangeHandler} = useForm(props.addText)
+            onChangeHandler} = useForm(addText)
 
 
     return (
@@ -27,8 +27,9 @@ export const TodoListForm = React.memo((props: TodoListFormType) => {
                        onChange={onChangeHandler}
                        onKeyDown={onKeyDownHandler}
                        error={!!error}
+                       disabled={disabled}
             />
-            <IconButton color="inherit" onClick={addTask} >
+            <IconButton color="inherit" onClick={addTask} disabled={disabled}>
                 <Add/>
             </IconButton>
         </div>

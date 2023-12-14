@@ -1,13 +1,12 @@
 import {
-    addTodolistAC, changeTodolistFilterAC,
+    addTodolistAC, changeEntityStatusAC, changeTodolistFilterAC,
     changeTodolistTitleAC, FilterValuesType,
     ReducerTodoLists,
     removeTodolistAC, setTodoAC, TogoDomainType
 } from "./ReduserTodoLists";
-
-
 import {v1} from "uuid";
-import {TodoListsTypeOfResponse} from "../../api/TodoLists-api";
+import {RequestStatus} from "./AppReducer";
+
 
 
 
@@ -19,9 +18,9 @@ let startState: Array<TogoDomainType>
 beforeEach(() => {
     startState = [
         {id: todolistId1, title: 'What to learn', filter: 'all', order: 0,
-            addedDate: '',},
+            addedDate: '', entityStatus: 'idle'},
         {id: todolistId2, title: 'What to buy', filter: 'all', order: 0,
-            addedDate: '',}
+            addedDate: '', entityStatus: 'idle'}
     ]
 })
 
@@ -69,6 +68,18 @@ test('correct todolist filter', () => {
     expect(endState[0].filter).toBe('all')
     expect(endState[1].filter).toBe(newFilter)
 })
+test('correct todolist status should be changed', () => {
+
+    let newStatus: RequestStatus = 'loading'
+
+    const action  = changeEntityStatusAC(todolistId1, newStatus)
+
+    const endState = ReducerTodoLists(startState, action)
+
+    expect(endState[0].entityStatus).toBe('loading')
+    expect(endState[1].entityStatus).toBe('idle')
+})
+
 test('correct state', () => {
 
     const action  = setTodoAC(startState)
