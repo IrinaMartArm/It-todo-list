@@ -2,10 +2,10 @@ import React, {useCallback} from "react";
 import {removeTaskTC, updateTaskTC} from "./state/TasksReducer";
 import {CheckBox} from "./CheckBox";
 import {EditableSpan} from "./EditableSpan";
-import {IconButton} from "@material-ui/core";
 import {Delete} from "@mui/icons-material";
 import {TaskStatuses, TaskTypeOfResponse} from "../api/TodoLists-api";
 import {useAppDispatch} from "./hooks/Hooks";
+import {IconButton} from "@mui/material";
 
 
 type TaskProps = {

@@ -1,8 +1,7 @@
-import {RootReducerType, store} from "../state/Store";
+import {RootReducerType} from "../state/Store";
 import React from 'react'
 import { Provider } from 'react-redux';
 import {combineReducers, legacy_createStore} from "redux";
-import {v1} from "uuid";
 import {TasksReducer} from "../state/TasksReducer";
 import {ReducerTodoLists} from "../state/ReduserTodoLists";
 import {TaskPriorities, TaskStatuses} from "../../api/TodoLists-api";
@@ -58,6 +57,10 @@ const initialGlobalState = {
                 order: 1,
                 addedDate: ''},
         ]
+    },
+    app: {
+        error: null,
+        status: 'idle'
     }
 };
 

@@ -88,7 +88,7 @@ export const TodoListsApi = {
     },
     async createTask(todoId: string, title: string) {
         const resp = await instance.post<ResponseType<{ item: TaskTypeOfResponse }>>(`todo-lists/${todoId}/tasks`, {title})
-        return resp.data.data.item;
+        return resp.data;
     },
     updateTask(todoId: string, taskId: string, model: UpdateApiModelType) {
         return instance.put<ResponseType>(`todo-lists/${todoId}/tasks/${taskId}`, model)

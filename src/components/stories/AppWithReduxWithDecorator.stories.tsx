@@ -1,7 +1,5 @@
 import AppWithRedux from "../../AppWithRedux";
-import type {Meta, StoryFn, StoryObj} from '@storybook/react';
-import {Provider} from "react-redux";
-import {store} from "../state/Store";
+import type {Meta, StoryObj} from '@storybook/react';
 import {Decorator} from "./Decorator";
 
 

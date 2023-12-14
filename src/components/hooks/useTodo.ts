@@ -1,23 +1,21 @@
-import {useDispatch, useSelector} from "react-redux";
-import {RootReducerType} from "./state/Store";
+import {useSelector} from "react-redux";
+import {RootReducerType} from "../state/Store";
 import {useCallback} from "react";
-import {addTaskTC} from "./state/TasksReducer";
+import {addTaskTC} from "../state/TasksReducer";
 import {
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
     changeTodoTitleTC,
-    removeTodolistAC,
     removeTodoTC
-} from "./state/ReduserTodoLists";
-import {TaskTypeOfResponse} from "../api/TodoLists-api";
-import {ThunkDispatch} from "redux-thunk";
-import {AnyAction} from "redux";
+} from "../state/ReduserTodoLists";
+import {TaskTypeOfResponse} from "../../api/TodoLists-api";
+import {useAppDispatch, useAppSelector} from "./Hooks";
 
 
 export const useTodo = (id: string) => {
-    const dispatch: ThunkDispatch<RootReducerType, unknown, AnyAction> = useDispatch()
 
-    const tasks = useSelector<RootReducerType, Array<TaskTypeOfResponse>>(state => state.tasks[id])
+    const dispatch = useAppDispatch()
+
+    const tasks = useAppSelector(state => state.tasks[id])
 
 
     const addTask = useCallback((title: string) => {
