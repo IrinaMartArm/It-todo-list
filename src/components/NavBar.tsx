@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import {LinearProgress} from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 import {useAppSelector} from "./hooks/Hooks";
 
 export default function ButtonAppBar() {

@@ -8,6 +8,7 @@ import {
 import {Dispatch} from "redux";
 import {AppDispatch, RootReducerType} from "./Store";
 import {setAppErrorAC, setAppStatusAC} from "./AppReducer";
+import {handleAppError, handleNetworkError} from "../utils/ErrorUtils";
 
 
 const REMOVETASK = 'REMOVE-TASK'
@@ -120,22 +121,17 @@ export const removeTaskTC = (todoId: string, taskId: string) => async (dispatch:
 }
 
 export const addTaskTC = (todoId: string, title: string) => async (dispatch: AppDispatch) => {
-    try {
         dispatch(setAppStatusAC('loading'))
+    try {
         const res = await TodoListsApi.createTask(todoId, title)
         if (res.resultCode === 0) {
             dispatch(addTaskAC(res.data.item))
             dispatch(setAppStatusAC('succeeded'))
         } else {
-            if (res.messages.length) {
-                dispatch(setAppErrorAC(res.messages[0]))
-            } else {
-                dispatch(setAppErrorAC('some error'))
-            }
-            dispatch(setAppStatusAC('failed'))
+            handleAppError(res, dispatch)
         }
     } catch (err){
-        dispatch(setAppErrorAC(err.messages))
+        handleNetworkError(err, dispatch)
     }
 }
 
@@ -149,8 +145,8 @@ export type UpdateDomainModelType = {
     deadline?: string
 }
 
-export const updateTaskTC = (todoId: string, taskId: string, domainModel: UpdateDomainModelType) => {
-        return async (dispatch: Dispatch, getState: ()=>RootReducerType) => {
+export const updateTaskTC = (todoId: string, taskId: string, domainModel: UpdateDomainModelType) =>
+        async (dispatch: Dispatch, getState: ()=>RootReducerType) => {
             dispatch(setAppStatusAC('loading'))
             let state = getState()
             const task = state.tasks[todoId].find(t => t.id === taskId)
@@ -167,9 +163,14 @@ export const updateTaskTC = (todoId: string, taskId: string, domainModel: Update
                 deadline: task.deadline,
                 ...domainModel
             }
-            await TodoListsApi.updateTask(todoId, taskId, apiModel)
-                    dispatch(updateTaskAC(todoId, taskId, domainModel))
-                    dispatch(setAppStatusAC('succeeded'))
+            const res = await TodoListsApi.updateTask(todoId, taskId, apiModel)
+            if(res.data.resultCode === 0) {
+                dispatch(updateTaskAC(todoId, taskId, domainModel))
+                dispatch(setAppStatusAC('succeeded'))
+            } else {
+                handleAppError(res.data, dispatch)
+            }
+
         }
-    }
+
 

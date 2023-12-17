@@ -1,6 +1,6 @@
 import {TodoListForm} from "./TodoListForm"
 import {EditableSpan} from "./EditableSpan"
-import {Delete} from "@mui/icons-material"
+import Delete from "@mui/icons-material/Delete"
 import React, {useEffect} from "react";
 import {Task} from './Task'
 import {ButtonUI} from "./ButtonUI";
@@ -8,8 +8,9 @@ import {useTodo} from "./hooks/useTodo";
 import {TaskStatuses} from "../api/TodoLists-api";
 import {fetchTasksTC} from "./state/TasksReducer";
 import {useAppDispatch} from "./hooks/Hooks";
-import {IconButton} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 import {TogoDomainType} from "./state/ReduserTodoLists";
+
 
 export type PropsType = {
     todoList: TogoDomainType
@@ -19,6 +20,7 @@ export type PropsType = {
 export const TodoList = React.memo(({todoList}: PropsType) => {
 
     const dispatch = useAppDispatch()
+    // const dispatch: Dispatch = useDispatch()
 
     useEffect(() => {
         // if (demo) {

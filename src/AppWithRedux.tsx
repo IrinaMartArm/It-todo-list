@@ -3,6 +3,8 @@ import './App.css';
 import ButtonAppBar from "./components/NavBar";
 import {ErrorSnackbar} from "./components/ErrorSneckBar";
 import {TodoListBox} from "./components/TodoListsBox";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Login} from "./components/Login";
 
 type PropsType = {
     demo?: boolean
@@ -10,11 +12,20 @@ type PropsType = {
 function AppWithRedux({demo = false}: PropsType) {
 
     return (
-    <div className="App">
-        <ErrorSnackbar/>
-        <ButtonAppBar/>
-        <TodoListBox/>
-    </div>
+        <BrowserRouter>
+            <div className="App">
+                <ErrorSnackbar/>
+                <ButtonAppBar/>
+                <div>
+                    <Routes>
+                        <Route path={'/login'} element={<Login/>}/>
+                        <Route path={'/'} element={<TodoListBox/>}/>
+                        <Route path = '/404' element = {<h1>404: PAGE NOT FOUND</h1>}/>
+                        <Route path='*' element={<h1>404: PAGE NOT FOUND</h1>} />
+                    </Routes>
+                </div>
+            </div>
+        </BrowserRouter>
     );
 }
 

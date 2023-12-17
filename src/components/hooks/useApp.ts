@@ -1,6 +1,6 @@
 import {useCallback} from "react";
-import {addTodoListTC} from "./components/state/ReduserTodoLists";
-import {useAppDispatch, useAppSelector} from "./components/hooks/Hooks";
+import {addTodoListTC} from "../state/ReduserTodoLists";
+import {useAppDispatch, useAppSelector} from "./Hooks";
 
 
 export const useApp = () => {
