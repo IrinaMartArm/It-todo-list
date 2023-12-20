@@ -1,7 +1,8 @@
 import {Dispatch} from "redux";
 import {setAppStatusAC} from "./AppReducer";
-import {AuthApi, Params} from "../../api/TodoLists-api";
+import {AuthApi, Params, ResponseType} from "../../api/TodoLists-api";
 import {handleAppError, handleNetworkError} from "../utils/ErrorUtils";
+import axios from "axios/index";
 
 
 const initState = {
@@ -33,7 +34,12 @@ export const AuthTC = (params: Params) => async (dispatch: Dispatch) => {
         }
     }
     catch (err) {
-        handleNetworkError(err, dispatch)
+        if(axios.isAxiosError<ResponseType>(err)){
+            const error = err.response?.data ? err.response?.data.messages[0] : err.message
+            handleNetworkError(error, dispatch)
+        } else {
+            handleNetworkError((err as Error).message, dispatch)
+        }
     }
 }
 
@@ -49,7 +55,12 @@ export const logoutTC = () => async (dispatch: Dispatch) => {
         }
     }
     catch (err){
-        handleNetworkError(err, dispatch)
+        if(axios.isAxiosError<ResponseType>(err)){
+            const error = err.response?.data ? err.response?.data.messages[0] : err.message
+            handleNetworkError(error, dispatch)
+        } else {
+            handleNetworkError((err as Error).message, dispatch)
+        }
     }
 }
 

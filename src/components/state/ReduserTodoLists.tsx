@@ -1,7 +1,8 @@
-import {TodoListsApi, TodoListsTypeOfResponse} from "../../api/TodoLists-api";
+import {ResponseType, TodoListsApi, TodoListsTypeOfResponse} from "../../api/TodoLists-api";
 import {Dispatch} from "redux";
 import {RequestStatus, setAppStatusAC} from "./AppReducer";
 import {handleAppError, handleNetworkError} from "../utils/ErrorUtils";
+import axios from "axios/index";
 
 export type FilterValuesType = 'all' | 'completed' | 'active';
 
@@ -80,7 +81,12 @@ export const removeTodoTC = (id: string) => async (dispatch: Dispatch) => {
     }
     catch (err) {
         dispatch(changeEntityStatusAC(id, 'idle'))
-        handleNetworkError(err, dispatch)
+        if(axios.isAxiosError<ResponseType>(err)){
+            const error = err.response?.data ? err.response?.data.messages[0] : err.message
+            handleNetworkError(error, dispatch)
+        } else {
+            handleNetworkError((err as Error).message, dispatch)
+        }
     }
 
 }

@@ -155,7 +155,12 @@ export const addTaskTC = (todoId: string, title: string) => async (dispatch: App
             handleAppError(res, dispatch)
         }
     } catch (err){
-        handleNetworkError(err, dispatch)
+        if(axios.isAxiosError<ResponseType>(err)){
+            const error = err.response?.data ? err.response?.data.messages[0] : err.message
+            handleNetworkError(error, dispatch)
+        } else {
+            handleNetworkError((err as Error).message, dispatch)
+        }
     }
 }
 
