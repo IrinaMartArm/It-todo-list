@@ -1,7 +1,7 @@
 import {setAppErrorAC, setAppStatusAC} from "../state/AppReducer";
-import {useAppDispatch} from "../hooks/Hooks";
 import {ResponseType} from "../../api/TodoLists-api";
 import {AppDispatch} from "../state/Store";
+import {AxiosError} from "axios";
 
 
 export const handleAppError = <D>(res: ResponseType<D>, dispatch: AppDispatch) => {
@@ -14,7 +14,9 @@ export const handleAppError = <D>(res: ResponseType<D>, dispatch: AppDispatch) =
     dispatch(setAppStatusAC('failed'))
 }
 
-export const handleNetworkError = (err: any, dispatch: AppDispatch) => {
-    dispatch(setAppErrorAC(err.message ? err.message : 'Some error occurred'))
+export const handleNetworkError = (err: string, dispatch: AppDispatch) => {
+    dispatch(setAppErrorAC(err ? err : 'Some error occurred'))
     dispatch(setAppStatusAC('failed'))
 }
+
+//AxiosError<ResponseType>

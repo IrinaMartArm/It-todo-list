@@ -1,5 +1,11 @@
-import {AddTodoListActionType, RemoveTodoListActionType, setTodoActionType} from "./ReduserTodoLists";
 import {
+    AddTodoListActionType,
+    changeEntityStatusAC,
+    RemoveTodoListActionType,
+    setTodoActionType
+} from "./ReduserTodoLists";
+import {
+    ResponseType,
     TaskPriorities,
     TaskStatuses,
     TaskTypeOfResponse,
@@ -9,6 +15,8 @@ import {Dispatch} from "redux";
 import {AppDispatch, RootReducerType} from "./Store";
 import {setAppStatusAC} from "./AppReducer";
 import {handleAppError, handleNetworkError} from "../utils/ErrorUtils";
+import axios from "axios";
+
 
 
 const REMOVETASK = 'REMOVE-TASK'
@@ -115,9 +123,25 @@ export const fetchTasksTC = (todoId: string) => async (dispatch: Dispatch) => {
 
 export const removeTaskTC = (todoId: string, taskId: string) => async (dispatch: AppDispatch) => {
         dispatch(setAppStatusAC('loading'))
-        await TodoListsApi.removeTask(todoId, taskId)
-        dispatch(removeTaskAC(todoId, taskId))
-        dispatch(setAppStatusAC('succeeded'))
+        dispatch(changeEntityStatusAC(todoId, 'loading'))
+        try {
+            const res = await TodoListsApi.removeTask(todoId, taskId)
+            if(res.data.resultCode === 0){
+                dispatch(removeTaskAC(todoId, taskId))
+                dispatch(setAppStatusAC('succeeded'))
+            } else {
+                handleAppError(res.data, dispatch)
+            }
+        }
+        catch (err) {
+            if(axios.isAxiosError<ResponseType>(err)){
+                const error = err.response?.data ? err.response?.data.messages[0] : err.message
+                handleNetworkError(error, dispatch)
+            } else {
+                handleNetworkError((err as Error).message, dispatch)
+            }
+            dispatch(changeEntityStatusAC(todoId, 'idle'))
+        }
 }
 
 export const addTaskTC = (todoId: string, title: string) => async (dispatch: AppDispatch) => {

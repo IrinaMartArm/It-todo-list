@@ -27,12 +27,10 @@ export function ErrorSnackbar() {
     };
 
     return (
-        <Stack spacing={2} sx={{ width: '100%' }}>
-            <Snackbar open={error !== null} autoHideDuration={6000} onClose={handleClose}>
+            <Snackbar open={error !== null} autoHideDuration={7000} onClose={handleClose} sx={{ width: '50%' }}>
                 <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
                     {error}
                 </Alert>
             </Snackbar>
-        </Stack>
     );
 }

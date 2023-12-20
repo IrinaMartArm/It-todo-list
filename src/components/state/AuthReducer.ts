@@ -32,8 +32,8 @@ export const AuthTC = (params: Params) => async (dispatch: Dispatch) => {
             handleAppError(res.data, dispatch)
         }
     }
-    catch {
-        // handleNetworkError(err, dispatch)
+    catch (err) {
+        handleNetworkError(err, dispatch)
     }
 }
 
@@ -48,8 +48,8 @@ export const logoutTC = () => async (dispatch: Dispatch) => {
             handleAppError(res.data, dispatch)
         }
     }
-    catch {
-        // handleNetworkError(err, dispatch)
+    catch (err){
+        handleNetworkError(err, dispatch)
     }
 }
 
