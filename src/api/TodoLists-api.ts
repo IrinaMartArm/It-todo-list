@@ -95,6 +95,7 @@ export const TodoListsApi = {
     updateTask(todoId: string, taskId: string, model: UpdateApiModelType) {
         return instance.put<ResponseType>(`todo-lists/${todoId}/tasks/${taskId}`, model)
     },
+
 }
 
 export type Params = {
@@ -107,6 +108,12 @@ export type Params = {
 export const AuthApi = {
     authMe(params: Params){
         return instance.post<ResponseType<{userId?: number}>>('auth/login', params)
+    },
+    me(){
+        return instance.get<ResponseType<{id: number, email: string, login: string}>>('auth/me')
+    },
+    logout(){
+        return instance.delete<ResponseType>('auth/login')
     }
 }
 

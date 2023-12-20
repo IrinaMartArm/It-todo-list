@@ -9,11 +9,13 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
 import {AuthTC} from "./state/AuthReducer";
-import {useAppDispatch} from "./hooks/Hooks";
+import {useAppDispatch, useAppSelector} from "./hooks/Hooks";
+import {Navigate, redirect} from 'react-router-dom'
 
 export const Login = () => {
 
     const dispatch = useAppDispatch()
+    const isAuth = useAppSelector(state => state.auth.isAuth)
 
     const formik = useFormik({
         validate: (values)=>{
@@ -34,6 +36,10 @@ export const Login = () => {
             alert(JSON.stringify(values));
         },
     });
+
+    if(isAuth){
+        return <Navigate to={'/'}/>
+    }
 
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>

@@ -16,7 +16,7 @@ export const useTodo = (id: string) => {
     const dispatch = useAppDispatch()
 
     const tasks = useAppSelector(state => state.tasks[id])
-
+    const isAuth = useAppSelector(state => state.auth.isAuth)
 
     const addTask = useCallback((title: string) => {
         dispatch(addTaskTC(id, title))
@@ -36,5 +36,5 @@ export const useTodo = (id: string) => {
     const completedFilterHandler = useCallback(() => {dispatch(changeTodolistFilterAC(id, 'completed'))}, [id])
 
 
-    return {tasks, addTask, removeTodoHandler, changeTodoListTitle, allFilterHandler, activeFilterHandler, completedFilterHandler}
+    return {tasks, addTask, removeTodoHandler, changeTodoListTitle, allFilterHandler, activeFilterHandler, completedFilterHandler, isAuth}
 }

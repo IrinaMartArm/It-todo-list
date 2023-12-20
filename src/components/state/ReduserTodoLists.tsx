@@ -80,7 +80,7 @@ export const changeEntityStatusAC = (id: string, status: RequestStatus) => {
 
 
 export const fetchTodoListsTC = () => async (dispatch: Dispatch) => {
-        dispatch(setAppStatusAC('loading'))
+        // dispatch(setAppStatusAC('loading'))
         const res = await TodoListsApi.getTodoLists()
                 dispatch(setTodoAC(res))
                 dispatch(setAppStatusAC('succeeded'))

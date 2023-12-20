@@ -7,9 +7,10 @@ import {ButtonUI} from "./ButtonUI";
 import {useTodo} from "./hooks/useTodo";
 import {TaskStatuses} from "../api/TodoLists-api";
 import {fetchTasksTC} from "./state/TasksReducer";
-import {useAppDispatch} from "./hooks/Hooks";
+import {useAppDispatch, useAppSelector} from "./hooks/Hooks";
 import IconButton from "@mui/material/IconButton";
 import {TogoDomainType} from "./state/ReduserTodoLists";
+import {Navigate} from "react-router-dom";
 
 
 export type PropsType = {
@@ -20,19 +21,19 @@ export type PropsType = {
 export const TodoList = React.memo(({todoList}: PropsType) => {
 
     const dispatch = useAppDispatch()
-    // const dispatch: Dispatch = useDispatch()
-
-    useEffect(() => {
-        // if (demo) {
-        //     return
-        // }
-        dispatch(fetchTasksTC(todoList.id))
-    }, []);
-
     let {tasks,
         addTask, removeTodoHandler,
         changeTodoListTitle, allFilterHandler,
-        activeFilterHandler, completedFilterHandler} = useTodo(todoList.id)
+        activeFilterHandler, completedFilterHandler, isAuth} = useTodo(todoList.id)
+
+
+    useEffect(() => {
+        if(!isAuth) {
+            return
+        }
+        dispatch(fetchTasksTC(todoList.id))
+    }, [dispatch]);
+
 
 
     if(todoList.filter === 'completed') {
@@ -45,6 +46,10 @@ export const TodoList = React.memo(({todoList}: PropsType) => {
 
     let tasksList: Array<JSX.Element> | JSX.Element = tasks.length > 0 ?
         tasks.map(t => <Task key={t.id} todoId={todoList.id} task={t}/>) : <span>no tasks</span>
+
+    if(!isAuth){
+        return <Navigate to={'/login'}/>
+    }
 
 
     return (

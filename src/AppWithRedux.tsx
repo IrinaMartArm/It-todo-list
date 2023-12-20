@@ -1,29 +1,46 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import ButtonAppBar from "./components/NavBar";
 import {ErrorSnackbar} from "./components/ErrorSneckBar";
 import {TodoListBox} from "./components/TodoListsBox";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Login} from "./components/Login";
+import {useAppDispatch, useAppSelector} from "./components/hooks/Hooks";
+import CircularProgress from '@mui/material/CircularProgress';
+import {initialization} from "./components/state/AppReducer";
 
 type PropsType = {
     demo?: boolean
 }
 function AppWithRedux({demo = false}: PropsType) {
+    const dispatch = useAppDispatch()
+    const isInitialized = useAppSelector(state => state.app.isInitialized)
+
+
+    useEffect(() => {
+        dispatch(initialization())
+    }, []);
+
 
     return (
         <BrowserRouter>
             <div className="App">
                 <ErrorSnackbar/>
                 <ButtonAppBar/>
-                <div>
-                    <Routes>
-                        <Route path={'/login'} element={<Login/>}/>
-                        <Route path={'/'} element={<TodoListBox/>}/>
-                        <Route path = '/404' element = {<h1>404: PAGE NOT FOUND</h1>}/>
-                        <Route path='*' element={<h1>404: PAGE NOT FOUND</h1>} />
-                    </Routes>
-                </div>
+                {!isInitialized ?
+                    <div  style={{width: '100%', top: '30%', position: 'fixed', textAlign: 'center'}}>
+                        <CircularProgress color="secondary"/>
+                    </div>:
+                    <div>
+                        <Routes>
+                            <Route path={'/login'} element={<Login/>}/>
+                            <Route path={'/'} element={<TodoListBox/>}/>
+                            <Route path = '/404' element = {<h1>404: PAGE NOT FOUND</h1>}/>
+                            <Route path='*' element={<h1>404: PAGE NOT FOUND</h1>} />
+                        </Routes>
+                    </div>
+                }
+
             </div>
         </BrowserRouter>
     );

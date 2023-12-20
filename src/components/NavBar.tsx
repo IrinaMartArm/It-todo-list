@@ -7,10 +7,20 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import LinearProgress from "@mui/material/LinearProgress";
-import {useAppSelector} from "./hooks/Hooks";
+import {useAppDispatch, useAppSelector} from "./hooks/Hooks";
+import {logoutTC, setAuthAC} from "./state/AuthReducer";
+import {useCallback} from "react";
+import {RequestStatus} from "./state/AppReducer";
 
 export default function ButtonAppBar() {
-    const status = useAppSelector(state => state.app.status)
+    const dispatch = useAppDispatch()
+    const status = useAppSelector<RequestStatus>(state => state.app.status)
+    const isAuth = useAppSelector(state => state.auth.isAuth)
+
+    const logoutHandler = useCallback(() => {
+        dispatch(logoutTC())
+    }, [])
+
     return (
         <Box sx={{ flexGrow: 0 }}>
             <AppBar position="static" color={'transparent'}>
@@ -27,7 +37,8 @@ export default function ButtonAppBar() {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         News
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    {isAuth && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
+
                 </Toolbar>
             </AppBar>
             {status === 'loading' && <LinearProgress color={"secondary"}/>}
