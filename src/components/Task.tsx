@@ -18,7 +18,7 @@ export const Task = React.memo((props: TaskProps) => {
     const dispatch = useAppDispatch()
 
     const onRemoveTask = useCallback(()=>{
-        dispatch(removeTaskTC(props.todoId, props.task.id)).then()
+        dispatch(removeTaskTC(props.todoId, props.task.id))
     }, [props.todoId, props.task.id])  // props.removeTask(props.id, t.id)
 
     const onChangeStatusHandler = useCallback((status: TaskStatuses)=>{

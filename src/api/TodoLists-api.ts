@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 
 
 const instance = axios.create({
@@ -89,12 +89,25 @@ export const TodoListsApi = {
         return instance.delete<ResponseType>(`todo-lists/${todoId}/tasks/${taskId}`)
     },
     async createTask(todoId: string, title: string) {
-        const resp = await instance.post<ResponseType<{ item: TaskTypeOfResponse }>>(`todo-lists/${todoId}/tasks`, {title})
+        const resp = await instance.post<ResponseType<{ item: TaskTypeOfResponse }>, AxiosResponse<ResponseType<{item: TaskTypeOfResponse}>>, {title: string}>(`todo-lists/${todoId}/tasks`, {title})
         return resp.data;
     },
     updateTask(todoId: string, taskId: string, model: UpdateApiModelType) {
         return instance.put<ResponseType>(`todo-lists/${todoId}/tasks/${taskId}`, model)
     },
+}
+
+export type Params = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: string
+}
+
+export const AuthApi = {
+    authMe(params: Params){
+        return instance.post<ResponseType<{userId?: number}>>('auth/login', params)
+    }
 }
 
 

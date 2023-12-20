@@ -64,6 +64,9 @@ const initialGlobalState: RootReducerType = {
     app: {
         error: null,
         status: 'idle'
+    },
+    auth: {
+        isAuth: false
     }
 };
 

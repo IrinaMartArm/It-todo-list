@@ -7,7 +7,7 @@ import {
 } from "../../api/TodoLists-api";
 import {Dispatch} from "redux";
 import {AppDispatch, RootReducerType} from "./Store";
-import {setAppErrorAC, setAppStatusAC} from "./AppReducer";
+import {setAppStatusAC} from "./AppReducer";
 import {handleAppError, handleNetworkError} from "../utils/ErrorUtils";
 
 
@@ -113,7 +113,7 @@ export const fetchTasksTC = (todoId: string) => async (dispatch: Dispatch) => {
         dispatch(setAppStatusAC('succeeded'))
 }
 
-export const removeTaskTC = (todoId: string, taskId: string) => async (dispatch: Dispatch) => {
+export const removeTaskTC = (todoId: string, taskId: string) => async (dispatch: AppDispatch) => {
         dispatch(setAppStatusAC('loading'))
         await TodoListsApi.removeTask(todoId, taskId)
         dispatch(removeTaskAC(todoId, taskId))
@@ -146,7 +146,7 @@ export type UpdateDomainModelType = {
 }
 
 export const updateTaskTC = (todoId: string, taskId: string, domainModel: UpdateDomainModelType) =>
-        async (dispatch: Dispatch, getState: ()=>RootReducerType) => {
+        async (dispatch: Dispatch, getState: () => RootReducerType) => {
             dispatch(setAppStatusAC('loading'))
             let state = getState()
             const task = state.tasks[todoId].find(t => t.id === taskId)
