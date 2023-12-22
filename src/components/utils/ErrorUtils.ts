@@ -20,3 +20,8 @@ export const handleNetworkError = (err: string, dispatch: AppDispatch) => {
 }
 
 //AxiosError<ResponseType>
+
+
+export const handleNetworkErrors = () => {
+
+}

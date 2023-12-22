@@ -116,9 +116,18 @@ export const setTasksAC = (todoId: string, tasks: Array<TaskTypeOfResponse>) => 
 
 export const fetchTasksTC = (todoId: string) => async (dispatch: Dispatch) => {
         dispatch(setAppStatusAC('loading'))
+    try {
         const res = await TodoListsApi.getTasks(todoId)
         dispatch(setTasksAC(todoId, res))
         dispatch(setAppStatusAC('succeeded'))
+    } catch (err) {
+        if(axios.isAxiosError<ResponseType>(err)){
+            const error = err.response?.data ? err.response?.data.messages[0] : err.message
+            handleNetworkError(error, dispatch)
+        } else {
+            handleNetworkError((err as Error).message, dispatch)
+        }
+    }
 }
 
 export const removeTaskTC = (todoId: string, taskId: string) => async (dispatch: AppDispatch) => {
@@ -140,6 +149,10 @@ export const removeTaskTC = (todoId: string, taskId: string) => async (dispatch:
             } else {
                 handleNetworkError((err as Error).message, dispatch)
             }
+            dispatch(changeEntityStatusAC(todoId, 'idle'))
+        }
+        finally {
+            dispatch(setAppStatusAC('idle'))
             dispatch(changeEntityStatusAC(todoId, 'idle'))
         }
 }
@@ -192,14 +205,22 @@ export const updateTaskTC = (todoId: string, taskId: string, domainModel: Update
                 deadline: task.deadline,
                 ...domainModel
             }
-            const res = await TodoListsApi.updateTask(todoId, taskId, apiModel)
-            if(res.data.resultCode === 0) {
-                dispatch(updateTaskAC(todoId, taskId, domainModel))
-                dispatch(setAppStatusAC('succeeded'))
-            } else {
-                handleAppError(res.data, dispatch)
+            try {
+                const res = await TodoListsApi.updateTask(todoId, taskId, apiModel)
+                if(res.data.resultCode === 0) {
+                    dispatch(updateTaskAC(todoId, taskId, domainModel))
+                    dispatch(setAppStatusAC('succeeded'))
+                } else {
+                    handleAppError(res.data, dispatch)
+                }
+            } catch (err) {
+                if(axios.isAxiosError<ResponseType>(err)){
+                    const error = err.response?.data ? err.response?.data.messages[0] : err.message
+                    handleNetworkError(error, dispatch)
+                } else {
+                    handleNetworkError((err as Error).message, dispatch)
+                }
             }
-
-        }
+}
 
 

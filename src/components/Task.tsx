@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useState} from "react";
 import {removeTaskTC, updateTaskTC} from "./state/TasksReducer";
 import {CheckBox} from "./CheckBox";
 import {EditableSpan} from "./EditableSpan";
@@ -16,9 +16,12 @@ type TaskProps = {
 export const Task = React.memo((props: TaskProps) => {
 
     const dispatch = useAppDispatch()
+    const [isDisabled, setIsDisabled] = useState(false)
 
     const onRemoveTask = useCallback(()=>{
+        setIsDisabled(true)
         dispatch(removeTaskTC(props.todoId, props.task.id))
+            .then(() => setIsDisabled(false))
     }, [props.todoId, props.task.id])  // props.removeTask(props.id, t.id)
 
     const onChangeStatusHandler = useCallback((status: TaskStatuses)=>{
@@ -32,8 +35,8 @@ export const Task = React.memo((props: TaskProps) => {
         <li key={props.task.id} className={props.task.status === TaskStatuses.Completed ? 'is-done' : ''}>
             <CheckBox status={props.task.status} onChange={onChangeStatusHandler}/>
             <EditableSpan title={props.task.title} onChange={onChangeTitle}/>
-            <IconButton onClick={onRemoveTask}>
-                <Delete />
+            <IconButton onClick={onRemoveTask} disabled={isDisabled}>
+                <Delete/>
             </IconButton>
         </li>
     )

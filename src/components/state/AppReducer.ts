@@ -1,6 +1,8 @@
 import {Dispatch} from "redux";
-import {AuthApi} from "../../api/TodoLists-api";
+import {AuthApi, ResponseType} from "../../api/TodoLists-api";
 import {setAuthAC} from "./AuthReducer";
+import axios from "axios";
+import {handleAppError, handleNetworkError} from "../utils/ErrorUtils";
 
 
 const initialState: InitState = {
@@ -36,14 +38,24 @@ export const setInitialized = (value: boolean) => ({
 } as const)
 
 
-export const initialization = () => (dispatch: Dispatch) => {
-    AuthApi.me()
-        .then(res => {
-            if(res.data.resultCode === 0){
-                dispatch(setAuthAC(true))
-                dispatch(setInitialized(true))
-            }
-        })
+export const initialization = () => async (dispatch: Dispatch) => {
+    try {
+        const res = await AuthApi.me()
+                if(res.data.resultCode === 0){
+                    dispatch(setAuthAC(true))
+                    dispatch(setInitialized(true))
+                } else {
+                    handleAppError(res.data, dispatch)
+                }
+    }
+    catch (err){
+        if(axios.isAxiosError<ResponseType>(err)){
+            const error = err.response?.data ? err.response?.data.messages[0] : err.message
+            handleNetworkError(error, dispatch)
+        } else {
+            handleNetworkError((err as Error).message, dispatch)
+        }
+    }
 }
 
 

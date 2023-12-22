@@ -2,7 +2,7 @@ import {Dispatch} from "redux";
 import {setAppStatusAC} from "./AppReducer";
 import {AuthApi, Params, ResponseType} from "../../api/TodoLists-api";
 import {handleAppError, handleNetworkError} from "../utils/ErrorUtils";
-import axios from "axios/index";
+import axios from "axios";
 
 
 const initState = {
