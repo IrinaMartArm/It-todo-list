@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import {useFormik} from "formik";
 import {AuthTC} from "./state/AuthReducer";
 import {useAppDispatch, useAppSelector} from "./hooks/Hooks";
-import {Navigate, redirect} from 'react-router-dom'
+import {Navigate} from 'react-router-dom'
 
 export const Login = () => {
 

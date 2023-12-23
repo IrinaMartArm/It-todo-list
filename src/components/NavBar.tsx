@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import LinearProgress from "@mui/material/LinearProgress";
 import {useAppDispatch, useAppSelector} from "./hooks/Hooks";
-import {logoutTC, setAuthAC} from "./state/AuthReducer";
+import {logoutTC} from "./state/AuthReducer";
 import {useCallback} from "react";
 import {RequestStatus} from "./state/AppReducer";
 

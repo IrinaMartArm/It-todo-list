@@ -1,5 +1,3 @@
-import {useSelector} from "react-redux";
-import {RootReducerType} from "../state/Store";
 import {useCallback} from "react";
 import {addTaskTC} from "../state/TasksReducer";
 import {
@@ -7,7 +5,6 @@ import {
     changeTodoTitleTC,
     removeTodoTC
 } from "../state/ReduserTodoLists";
-import {TaskTypeOfResponse} from "../../api/TodoLists-api";
 import {useAppDispatch, useAppSelector} from "./Hooks";
 
 
@@ -31,9 +28,9 @@ export const useTodo = (id: string) => {
         // props.changeTodoTitle(id, value)
     }, [id])
 
-    const allFilterHandler = useCallback(() => {dispatch(changeTodolistFilterAC(id, 'all'))}, [id])
-    const activeFilterHandler = useCallback(() => {dispatch(changeTodolistFilterAC(id, 'active'))}, [id])
-    const completedFilterHandler = useCallback(() => {dispatch(changeTodolistFilterAC(id, 'completed'))}, [id])
+    const allFilterHandler = useCallback(() => {dispatch(changeTodolistFilterAC({id, filter: 'all'}))}, [id])
+    const activeFilterHandler = useCallback(() => {dispatch(changeTodolistFilterAC({id, filter: "active"}))}, [id])
+    const completedFilterHandler = useCallback(() => {dispatch(changeTodolistFilterAC({id, filter: "completed"}))}, [id])
 
 
     return {tasks, addTask, removeTodoHandler, changeTodoListTitle, allFilterHandler, activeFilterHandler, completedFilterHandler, isAuth}

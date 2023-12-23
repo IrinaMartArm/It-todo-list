@@ -22,21 +22,6 @@ const slice = createSlice({
 })
 
 export const AuthReducer = slice.reducer
-
-//     (state: initStateType = initState, action: AuthActionType): initStateType => {
-//     switch (action.type) {
-//         case 'AUTH/AUTH_ME':
-//             return {...state, isAuth: action.isAuth}
-//         default:
-//             return state
-//     }
-// }
-
-// export const setAuthAC = (isAuth: boolean) => ({
-//     type: 'AUTH/AUTH_ME' as const,
-//     isAuth
-// })
-
 export const setAuthAC = slice.actions.setAuthAC
 
 export const AuthTC = (params: Params) => async (dispatch: Dispatch) => {
@@ -83,3 +68,17 @@ export const logoutTC = () => async (dispatch: Dispatch) => {
 
 // type initStateType = typeof initState
 // export type AuthActionType = ReturnType<typeof setAuthAC>
+
+//     (state: initStateType = initState, action: AuthActionType): initStateType => {
+//     switch (action.type) {
+//         case 'AUTH/AUTH_ME':
+//             return {...state, isAuth: action.isAuth}
+//         default:
+//             return state
+//     }
+// }
+
+// export const setAuthAC = (isAuth: boolean) => ({
+//     type: 'AUTH/AUTH_ME' as const,
+//     isAuth
+// })

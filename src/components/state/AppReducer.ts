@@ -22,11 +22,13 @@ const slice = createSlice({
         setAppStatusAC(state, action: PayloadAction<{status: RequestStatus}>) {
             state.status = action.payload.status
         },
-        setInitialized(state, action: PayloadAction<{value: boolean}>) {
-            state.isInitialized = action.payload.value
+        setInitialized(state, action: PayloadAction<{isInitialized: boolean}>) {
+            state.isInitialized = action.payload.isInitialized
         }
     }
 })
+
+export const AppReducer = slice.reducer
 export const {setAppErrorAC, setAppStatusAC, setInitialized} = slice.actions
 
 
@@ -62,7 +64,7 @@ export const initialization = () => async (dispatch: Dispatch) => {
         const res = await AuthApi.me()
                 if(res.data.resultCode === 0){
                     dispatch(setAuthAC({isAuth: true}))
-                    dispatch(setInitialized({value: true}))
+                    dispatch(setInitialized({isInitialized: true}))
                 } else {
                     handleAppError(res.data, dispatch)
                 }
