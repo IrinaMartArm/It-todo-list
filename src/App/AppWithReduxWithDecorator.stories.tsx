@@ -1,4 +1,4 @@
-import AppWithRedux from "../../AppWithRedux";
+import AppWithRedux from "./AppWithRedux";
 import type {Meta, StoryObj} from '@storybook/react';
 import {Decorator} from "./Decorator";
 

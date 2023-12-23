@@ -1,10 +1,10 @@
 import {useCallback} from "react";
-import {addTaskTC} from "../state/TasksReducer";
+import {addTaskTC} from "../TodoList/TasksReducer";
 import {
     changeTodolistFilterAC,
     changeTodoTitleTC,
     removeTodoTC
-} from "../state/ReduserTodoLists";
+} from "../TodoList/ReduserTodoLists";
 import {useAppDispatch, useAppSelector} from "./Hooks";
 
 

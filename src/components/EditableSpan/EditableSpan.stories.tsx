@@ -1,4 +1,4 @@
- import {EditableSpan} from "../EditableSpan";
+ import {EditableSpan} from "./EditableSpan";
 //
 // export default {
 //     title: 'EditableSpan component',

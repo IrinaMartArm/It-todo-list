@@ -7,10 +7,10 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import LinearProgress from "@mui/material/LinearProgress";
-import {useAppDispatch, useAppSelector} from "./hooks/Hooks";
-import {logoutTC} from "./state/AuthReducer";
+import {useAppDispatch, useAppSelector} from "../hooks/Hooks";
+import {logoutTC} from "../Login/AuthReducer";
 import {useCallback} from "react";
-import {RequestStatus} from "./state/AppReducer";
+import {RequestStatus} from "../../App/AppReducer";
 
 export default function ButtonAppBar() {
     const dispatch = useAppDispatch()

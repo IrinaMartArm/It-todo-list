@@ -3,7 +3,7 @@ import {AuthApi, Params, ResponseType} from "../../api/TodoLists-api";
 import {handleAppError, handleNetworkError} from "../utils/ErrorUtils";
 import axios from "axios";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {setAppStatusAC} from "./AppReducer";
+import {setAppStatusAC} from "../../App/AppReducer";
 
 
 const initState = {

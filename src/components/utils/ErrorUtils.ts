@@ -1,6 +1,6 @@
-import {setAppErrorAC, setAppStatusAC} from "../state/AppReducer";
+import {setAppErrorAC, setAppStatusAC} from "../../App/AppReducer";
 import {ResponseType} from "../../api/TodoLists-api";
-import {AppDispatch} from "../state/Store";
+import {AppDispatch} from "../../App/Store";
 
 
 export const handleAppError = <D>(res: ResponseType<D>, dispatch: AppDispatch) => {

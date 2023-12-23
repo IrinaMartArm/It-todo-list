@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import ButtonAppBar from "./components/NavBar";
-import {ErrorSnackbar} from "./components/ErrorSneckBar";
-import {TodoListBox} from "./components/TodoListsBox";
+import ButtonAppBar from "../components/Elements/NavBar";
+import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSneckBar";
+import {TodoListBox} from "../components/TodoList/TodoListsBox";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {Login} from "./components/Login";
-import {useAppDispatch, useAppSelector} from "./components/hooks/Hooks";
+import {Login} from "../components/Login/Login";
+import {useAppDispatch, useAppSelector} from "../components/hooks/Hooks";
 import CircularProgress from '@mui/material/CircularProgress';
-import {initialization} from "./components/state/AppReducer";
+import {initialization} from "./AppReducer";
 
 type PropsType = {
     demo?: boolean

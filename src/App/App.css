@@ -1,0 +1,67 @@
+
+.App > div {
+  /*margin-right: 50px;*/
+}
+.App {
+  padding: 30px;
+  display: flex;
+  background-color: lemonchiffon;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: start;
+}
+
+
+.todolist {
+  border: 2px solid gray;
+  background-color: beige;
+  border-radius: 5px;
+  padding: 15px;
+  height: max-content;
+}
+
+.todoBox {
+  border: 1px solid red;
+  /*display: flex;*/
+  justify-content: space-around;
+}
+
+.active-filter {
+  background-color: aquamarine;
+}
+
+.is-done {
+  opacity: 0.5;
+}
+
+.error {
+  border: red 1px solid;
+}
+
+.error-message {
+  color: red;
+}
+/* import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+})); */
+
+
+/* export default function CenteredGrid() {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <Grid container spacing={3}>
+        <Grid item xs={12}> */

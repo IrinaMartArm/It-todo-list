@@ -5,7 +5,7 @@ import {
     removeTodolistAC, setTodoAC, TogoDomainType
 } from "./ReduserTodoLists";
 import {v1} from "uuid";
-import {RequestStatus} from "./AppReducer";
+import {RequestStatus} from "../../App/AppReducer";
 
 
 

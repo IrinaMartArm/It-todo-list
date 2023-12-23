@@ -1,10 +1,10 @@
 import React, {useCallback, useState} from "react";
-import {removeTaskTC, updateTaskTC} from "./state/TasksReducer";
-import {CheckBox} from "./CheckBox";
-import {EditableSpan} from "./EditableSpan";
+import {removeTaskTC, updateTaskTC} from "./TasksReducer";
+import {CheckBox} from "../Elements/CheckBox";
+import {EditableSpan} from "../EditableSpan/EditableSpan";
 import Delete from "@mui/icons-material/Delete";
-import {TaskStatuses, TaskTypeOfResponse} from "../api/TodoLists-api";
-import {useAppDispatch} from "./hooks/Hooks";
+import {TaskStatuses, TaskTypeOfResponse} from "../../api/TodoLists-api";
+import {useAppDispatch} from "../hooks/Hooks";
 import IconButton from "@mui/material/IconButton";
 
 

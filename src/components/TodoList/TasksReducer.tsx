@@ -7,8 +7,8 @@ import {
     TodoListsApi, UpdateApiModelType,
 } from "../../api/TodoLists-api";
 import {Dispatch} from "redux";
-import {AppDispatch, RootReducerType} from "./Store";
-import {setAppStatusAC} from "./AppReducer";
+import {AppDispatch, RootReducerType} from "../../App/Store";
+import {setAppStatusAC} from "../../App/AppReducer";
 import {handleAppError, handleNetworkError} from "../utils/ErrorUtils";
 import axios from "axios";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";

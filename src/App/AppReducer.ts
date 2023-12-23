@@ -1,8 +1,8 @@
 import {Dispatch} from "redux";
-import {AuthApi, ResponseType} from "../../api/TodoLists-api";
-import {setAuthAC} from "./AuthReducer";
+import {AuthApi, ResponseType} from "../api/TodoLists-api";
+import {setAuthAC} from "../components/Login/AuthReducer";
 import axios from "axios";
-import {handleAppError, handleNetworkError} from "../utils/ErrorUtils";
+import {handleAppError, handleNetworkError} from "../components/utils/ErrorUtils";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 

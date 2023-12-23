@@ -1,6 +1,6 @@
 import {ResponseType, TodoListsApi, TodoListsTypeOfResponse} from "../../api/TodoLists-api";
 import {Dispatch} from "redux";
-import {RequestStatus, setAppStatusAC} from "./AppReducer";
+import {RequestStatus, setAppStatusAC} from "../../App/AppReducer";
 import {handleAppError, handleNetworkError} from "../utils/ErrorUtils";
 import axios from "axios";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
