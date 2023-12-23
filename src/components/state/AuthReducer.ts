@@ -1,34 +1,51 @@
 import {Dispatch} from "redux";
-import {setAppStatusAC} from "./AppReducer";
 import {AuthApi, Params, ResponseType} from "../../api/TodoLists-api";
 import {handleAppError, handleNetworkError} from "../utils/ErrorUtils";
 import axios from "axios";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {setAppStatusAC} from "./AppReducer";
 
 
 const initState = {
     isAuth: false
 }
-export const AuthReducer = (state: initStateType = initState, action: AuthActionType): initStateType => {
-    switch (action.type) {
-        case 'AUTH/AUTH_ME':
-            return {...state, isAuth: action.isAuth}
-        default:
-            return state
-    }
-}
 
-export const setAuthAC = (isAuth: boolean) => ({
-    type: 'AUTH/AUTH_ME' as const,
-    isAuth
+
+const slice = createSlice({
+    name: 'auth',
+    initialState: initState,
+    reducers: {
+        setAuthAC(state, action: PayloadAction<{isAuth: boolean }>){
+            state.isAuth = action.payload.isAuth
+        }
+    }
 })
 
+export const AuthReducer = slice.reducer
+
+//     (state: initStateType = initState, action: AuthActionType): initStateType => {
+//     switch (action.type) {
+//         case 'AUTH/AUTH_ME':
+//             return {...state, isAuth: action.isAuth}
+//         default:
+//             return state
+//     }
+// }
+
+// export const setAuthAC = (isAuth: boolean) => ({
+//     type: 'AUTH/AUTH_ME' as const,
+//     isAuth
+// })
+
+export const setAuthAC = slice.actions.setAuthAC
+
 export const AuthTC = (params: Params) => async (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatusAC({status: 'loading'}))
     try {
         let res = await AuthApi.authMe(params)
         if(res.data.resultCode === 0){
-            dispatch(setAppStatusAC('succeeded'))
-            dispatch(setAuthAC(true))
+            dispatch(setAppStatusAC({status: 'succeeded'}))
+            dispatch(setAuthAC({isAuth: true}))
         } else {
             handleAppError(res.data, dispatch)
         }
@@ -44,12 +61,12 @@ export const AuthTC = (params: Params) => async (dispatch: Dispatch) => {
 }
 
 export const logoutTC = () => async (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatusAC({status: 'loading'}))
     try {
         let res = await AuthApi.logout()
         if(res.data.resultCode === 0){
-            dispatch(setAppStatusAC('succeeded'))
-            dispatch(setAuthAC(false))
+            dispatch(setAppStatusAC({status: 'succeeded'}))
+            dispatch(setAuthAC({isAuth: false}))
         } else {
             handleAppError(res.data, dispatch)
         }
@@ -64,5 +81,5 @@ export const logoutTC = () => async (dispatch: Dispatch) => {
     }
 }
 
-type initStateType = typeof initState
-export type AuthActionType = ReturnType<typeof setAuthAC>
+// type initStateType = typeof initState
+// export type AuthActionType = ReturnType<typeof setAuthAC>
