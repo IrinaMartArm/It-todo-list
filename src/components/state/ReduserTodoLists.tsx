@@ -21,7 +21,7 @@ const slice = createSlice({
     reducers: {
         removeTodolistAC(state, action: PayloadAction<{todolistId: string}>){
             const index = state.findIndex(tl => tl.id === action.payload.todolistId)
-            if(index){
+            if(index > -1){
                 state.splice(index, 1)
             }
         },
@@ -30,13 +30,13 @@ const slice = createSlice({
         },
         changeTodolistTitleAC(state, action: PayloadAction<{id: string, title: string}>) {
             const index = state.findIndex(tl => tl.id === action.payload.id)
-            if(index){
+            if(index > -1){
                 state[index].title = action.payload.title
             }
         },
         changeTodolistFilterAC(state, action: PayloadAction<{id: string, filter: FilterValuesType}>) {
             const index = state.findIndex(tl => tl.id === action.payload.id)
-            if(index){
+            if(index > -1){
                 state[index].filter = action.payload.filter
             }
         },
@@ -46,7 +46,8 @@ const slice = createSlice({
         },
         changeEntityStatusAC(state, action: PayloadAction<{id: string, entityStatus: RequestStatus}>) {
             const index = state.findIndex(tl => tl.id === action.payload.id)
-            if(index){
+            if(index > -1){
+                console.log(action.payload.entityStatus)
                 state[index].entityStatus = action.payload.entityStatus
             }
         },

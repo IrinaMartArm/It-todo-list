@@ -76,7 +76,7 @@ test('correct todolist status should be changed', () => {
 
     const endState = ReducerTodoLists(startState, action)
 
-    expect(endState[0].entityStatus).toBe('loading')
+    expect(endState[0].entityStatus).toBe(newStatus)
     expect(endState[1].entityStatus).toBe('idle')
 })
 

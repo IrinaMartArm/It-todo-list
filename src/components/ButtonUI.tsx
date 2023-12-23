@@ -10,7 +10,6 @@ type PropsType = {
 }
 
 export const ButtonUI = React.memo((props: PropsType) => {
-    console.log('button')
     const callbackHandler = () => {
         props.onClick()
     }

@@ -9,7 +9,6 @@ type Props = {
 };
 
 export const CheckBox = React.memo((props: Props) => {
-    console.log('checkbox')
     const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
         props.onChange(e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New)
     }

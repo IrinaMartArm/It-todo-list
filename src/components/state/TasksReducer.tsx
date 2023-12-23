@@ -37,17 +37,17 @@ const slice = createSlice({
     reducers: {
         removeTaskAC(state, action: PayloadAction<{todoId: string, taskId: string}>) {
             const task = state[action.payload.todoId].findIndex(t => t.id === action.payload.taskId)
-            if(task){
+            if(task > -1){
                 state[action.payload.todoId].splice(task, 1)
             }
         },
-        addTaskAC(state, action: PayloadAction<{task: TaskTypeOfResponse}>) {
-            state[action.payload.task.todoListId].unshift(action.payload.task)
+        addTaskAC(state, action: PayloadAction< TaskTypeOfResponse>) {
+            state[action.payload.todoListId].unshift(action.payload)
         },
         updateTaskAC(state, action: PayloadAction<{todoId: string, taskId: string, model: UpdateDomainModelType}>) {
             const tasks = state[action.payload.todoId]
             const task = tasks.findIndex(t => t.id === action.payload.taskId)
-            if(task){
+            if(task > -1){
                 tasks[task] = {...tasks[task], ...action.payload.model}
             }
         },
@@ -122,7 +122,7 @@ export const addTaskTC = (todoId: string, title: string) => async (dispatch: App
     try {
         const res = await TodoListsApi.createTask(todoId, title)
         if (res.resultCode === 0) {
-            dispatch(addTaskAC({task: res.data.item}))
+            dispatch(addTaskAC(res.data.item))
             dispatch(setAppStatusAC({status: 'succeeded'}))
         } else {
             handleAppError(res, dispatch)

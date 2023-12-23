@@ -1,12 +1,5 @@
-import {
-    addTaskAC,
-    removeTaskAC,
-    setTasksAC,
-    TasksReducer,
-    TasksStateType,
-    updateTaskAC
-} from "./TasksReducer";
-import {removeTodolistAC, setTodoAC} from "./ReduserTodoLists";
+import {addTaskAC, removeTaskAC, setTasksAC, TasksReducer, TasksStateType, updateTaskAC} from "./TasksReducer";
+import {addTodolistAC, removeTodolistAC, setTodoAC} from "./ReduserTodoLists";
 import {TaskPriorities, TaskStatuses} from "../../api/TodoLists-api";
 
 
@@ -66,20 +59,19 @@ beforeEach(() => {
     }
 })
 
-test('correct taskList should be removed', () => {
+test('correct task should be removed', () => {
 
-    const action = removeTaskAC('todolistId2', '1')
+    const action = removeTaskAC({todoId: 'todolistId2', taskId: '3'})
     const endState = TasksReducer(startState, action)
 
     expect(endState['todolistId1'].length).toBe(3)
     expect(endState['todolistId2'].length).toBe(2)
-    // expect(endState['todolistId2'].every(t => t.id !== '1')).toBeTruthy()
-    expect(endState['todolistId2'][0].id).toBe('2')
+    expect(endState['todolistId2'][2]).toBeUndefined()
 })
 
 test('task should be added', () => {
 
-    const action = addTaskAC( {id: '1',
+    const action = addTaskAC(  {id: '1',
         title: 'HTML',
         status: TaskStatuses.New,
         todoListId: 'todolistId1',
@@ -100,17 +92,16 @@ test('task should be added', () => {
 
 test('correct status should be changed', () => {
 
-    const action = updateTaskAC('todolistId2', '3', {status: TaskStatuses.Completed})
+    const action = updateTaskAC({todoId: 'todolistId2', taskId: '3', model: {status: TaskStatuses.Completed}})
     const endState = TasksReducer(startState, action)
 
     expect(endState['todolistId1'][2].status).toBeFalsy()
     expect(endState['todolistId2'][2].status).toBeTruthy()
 })
 
-
 test('correct title should be changed', () => {
 
-    const action = updateTaskAC('todolistId2','3', {title: 'cookies'})
+    const action = updateTaskAC({todoId: 'todolistId2', taskId: '3', model: {title: 'cookies'}})
     const endState = TasksReducer(startState, action)
 
     expect(endState['todolistId1'][2].title).toBe('React')
@@ -119,7 +110,7 @@ test('correct title should be changed', () => {
 
 test('property with todoId should be removed', () => {
 
-    const action = removeTodolistAC('todolistId2')
+    const action = removeTodolistAC({todolistId: 'todolistId2'})
     const endState = TasksReducer(startState, action)
 
     const keys = Object.keys(endState)
@@ -129,12 +120,12 @@ test('property with todoId should be removed', () => {
 
 test('todoLists should be added', () => {
 
-    const action = setTodoAC([
-        {id: '1', title: 'What to learn', order: 0,
-            addedDate: '',},
-        {id: '2', title: 'What to buy', order: 0,
-            addedDate: '',}
-    ])
+    const action = setTodoAC({todoLists: [
+            {id: '1', title: 'What to learn', order: 0,
+                addedDate: '',},
+            {id: '2', title: 'What to buy', order: 0,
+                addedDate: '',}
+        ]})
     const endState = TasksReducer({}, action)
 
     const keys = Object.keys(endState)
@@ -143,13 +134,33 @@ test('todoLists should be added', () => {
     expect(endState['1']).toStrictEqual([])
     expect(endState['2']).toStrictEqual([])
 })
-test('tasks should be added', () => {
+test('tasks should be set', () => {
 
-    const action = setTasksAC('todolistId1',startState['todolistId1'])
+    const action = setTasksAC({todoId: 'todolistId1', tasks: startState['todolistId1']})
     const endState = TasksReducer({'todolistId1': [], 'todolistId2': []}, action)
 
 
     expect(endState['todolistId1'].length).toBe(3)
     expect(endState['todolistId2'].length).toBe(0)
 })
+test('new array should be added when new todo added', () => {
+
+    const action = addTodolistAC({todoList: {
+        id: 'todolistId3',
+        title: 'addTodolistAC',
+        order: 0,
+        addedDate: '',
+    }})
+    const endState = TasksReducer(startState, action)
+
+    const keys = Object.keys(endState)
+    const newKey = keys.find(k => k != 'todolistId1' && k != 'todolistId2')
+    if(!newKey){
+        throw Error('oh')
+    }
+    expect(keys.length).toBe(3)
+    expect(endState[newKey]).toEqual([])
+})
+
+
 

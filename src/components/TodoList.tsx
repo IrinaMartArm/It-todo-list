@@ -42,7 +42,7 @@ export const TodoList = React.memo(({todoList}: PropsType) => {
     if(todoList.filter === 'active') {
         tasks = tasks.filter(t => t.status === TaskStatuses.New)
     }
-
+    console.log(tasks)
 
     let tasksList: Array<JSX.Element> | JSX.Element = tasks.length > 0 ?
         tasks.map(t => <Task key={t.id} todoId={todoList.id} task={t}/>) : <span>no tasks</span>
