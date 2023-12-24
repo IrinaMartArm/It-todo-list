@@ -1,4 +1,4 @@
-import {ResponseType, TodoListsApi, TodoListsTypeOfResponse} from "../../api/TodoLists-api";
+import {ResponseType, Api, TodoListsTypeOfResponse} from "../../api/Api";
 import {Dispatch} from "redux";
 import {RequestStatus, setAppStatusAC} from "../../App/AppReducer";
 import {handleAppError, handleNetworkError} from "../utils/ErrorUtils";
@@ -61,7 +61,7 @@ export const {removeTodolistAC, addTodolistAC, changeTodolistFilterAC, changeTod
 export const fetchTodoListsTC = () => async (dispatch: Dispatch) => {
         // dispatch(setAppStatusAC('loading'))
         try {
-            const res = await TodoListsApi.getTodoLists()
+            const res = await Api.getTodoLists()
             dispatch(setTodoAC({todoLists: res}))
             dispatch(setAppStatusAC({status: 'succeeded'}))
         } catch (err) {
@@ -79,7 +79,7 @@ export const removeTodoTC = (id: string) => async (dispatch: Dispatch) => {
         dispatch(setAppStatusAC({status: 'loading'}))
         dispatch(changeEntityStatusAC({id, entityStatus: 'loading'}))
     try {
-        const res = await TodoListsApi.removeTodoList(id)
+        const res = await Api.removeTodoList(id)
         if(res.data.resultCode === 0) {
             dispatch(removeTodolistAC({todolistId: id}))
             dispatch(setAppStatusAC({status: 'succeeded'}))
@@ -102,7 +102,7 @@ export const removeTodoTC = (id: string) => async (dispatch: Dispatch) => {
 export const addTodoListTC = (title: string) => async (dispatch: Dispatch) => {
         dispatch(setAppStatusAC({status: 'loading'}))
         try {
-            const res = await TodoListsApi.createTodoList(title)
+            const res = await Api.createTodoList(title)
             if(res.data.resultCode === 0) {
                 dispatch(addTodolistAC({todoList: res.data.data.item}))
                 dispatch(setAppStatusAC({status: 'succeeded'}))
@@ -122,7 +122,7 @@ export const addTodoListTC = (title: string) => async (dispatch: Dispatch) => {
 export const changeTodoTitleTC = (id: string, title: string) => async (dispatch: Dispatch) => {
         dispatch(setAppStatusAC({status: 'loading'}))
     try {
-        const res = await TodoListsApi.updateTodoList(id, title)
+        const res = await Api.updateTodoList(id, title)
         if(res.data.resultCode === 0) {
             dispatch(changeTodolistTitleAC({id, title}))
             dispatch(setAppStatusAC({status: 'succeeded'}))

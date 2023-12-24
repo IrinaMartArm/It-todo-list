@@ -1,5 +1,5 @@
 import {setAppErrorAC, setAppStatusAC} from "../../App/AppReducer";
-import {ResponseType} from "../../api/TodoLists-api";
+import {ResponseType} from "../../api/Api";
 import {AppDispatch} from "../../App/Store";
 
 

@@ -3,7 +3,7 @@ import {removeTaskTC, updateTaskTC} from "./TasksReducer";
 import {CheckBox} from "../Elements/CheckBox";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import Delete from "@mui/icons-material/Delete";
-import {TaskStatuses, TaskTypeOfResponse} from "../../api/TodoLists-api";
+import {TaskStatuses, TaskTypeOfResponse} from "../../api/Api";
 import {useAppDispatch} from "../hooks/Hooks";
 import IconButton from "@mui/material/IconButton";
 

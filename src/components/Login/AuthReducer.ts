@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {AuthApi, Params, ResponseType} from "../../api/TodoLists-api";
+import {AuthApi, Params, ResponseType} from "../../api/Api";
 import {handleAppError, handleNetworkError} from "../utils/ErrorUtils";
 import axios from "axios";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";

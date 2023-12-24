@@ -5,12 +5,13 @@ import React, {useEffect} from "react";
 import {Task} from './Task'
 import {ButtonUI} from "../Elements/ButtonUI";
 import {useTodo} from "../hooks/useTodo";
-import {TaskStatuses} from "../../api/TodoLists-api";
+import {TaskStatuses} from "../../api/Api";
 import {fetchTasksTC} from "./TasksReducer";
-import {useAppDispatch, useAppSelector} from "../hooks/Hooks";
+import {useAppDispatch} from "../hooks/Hooks";
 import IconButton from "@mui/material/IconButton";
 import {TogoDomainType} from "./ReduserTodoLists";
 import {Navigate} from "react-router-dom";
+
 
 
 export type PropsType = {

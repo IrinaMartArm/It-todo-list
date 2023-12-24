@@ -4,8 +4,8 @@ import {
     TaskPriorities,
     TaskStatuses,
     TaskTypeOfResponse,
-    TodoListsApi, UpdateApiModelType,
-} from "../../api/TodoLists-api";
+    Api, UpdateApiModelType,
+} from "../../api/Api";
 import {Dispatch} from "redux";
 import {AppDispatch, RootReducerType} from "../../App/Store";
 import {setAppStatusAC} from "../../App/AppReducer";
@@ -77,7 +77,7 @@ export const {removeTaskAC, addTaskAC,updateTaskAC, setTasksAC} = slice.actions
 export const fetchTasksTC = (todoId: string) => async (dispatch: Dispatch) => {
         dispatch(setAppStatusAC({status: 'loading'}))
     try {
-        const res = await TodoListsApi.getTasks(todoId)
+        const res = await Api.getTasks(todoId)
         dispatch(setTasksAC({todoId, tasks: res}))
         dispatch(setAppStatusAC({status: 'succeeded'}))
     } catch (err) {
@@ -94,7 +94,7 @@ export const removeTaskTC = (todoId: string, taskId: string) => async (dispatch:
         dispatch(setAppStatusAC({status: 'loading'}))
         dispatch(changeEntityStatusAC({id: todoId, entityStatus: 'loading'}))
         try {
-            const res = await TodoListsApi.removeTask(todoId, taskId)
+            const res = await Api.removeTask(todoId, taskId)
             if(res.data.resultCode === 0){
                 dispatch(removeTaskAC({todoId, taskId}))
                 dispatch(setAppStatusAC({status: 'succeeded'}))
@@ -120,7 +120,7 @@ export const removeTaskTC = (todoId: string, taskId: string) => async (dispatch:
 export const addTaskTC = (todoId: string, title: string) => async (dispatch: AppDispatch) => {
         dispatch(setAppStatusAC({status: 'loading'}))
     try {
-        const res = await TodoListsApi.createTask(todoId, title)
+        const res = await Api.createTask(todoId, title)
         if (res.resultCode === 0) {
             dispatch(addTaskAC(res.data.item))
             dispatch(setAppStatusAC({status: 'succeeded'}))
@@ -166,7 +166,7 @@ export const updateTaskTC = (todoId: string, taskId: string, domainModel: Update
                 ...domainModel
             }
             try {
-                const res = await TodoListsApi.updateTask(todoId, taskId, apiModel)
+                const res = await Api.updateTask(todoId, taskId, apiModel)
                 if(res.data.resultCode === 0) {
                     dispatch(updateTaskAC({todoId, taskId, model: domainModel}))
                     dispatch(setAppStatusAC({status: 'succeeded'}))

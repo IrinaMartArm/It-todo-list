@@ -66,7 +66,7 @@ export type TaskResponseType = {
 }
 
 
-export const TodoListsApi = {
+export const Api = {
     async getTodoLists() {
         let resp = await
         instance.get<Array<TodoListsTypeOfResponse>>('todo-lists')

@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {AuthApi, ResponseType} from "../api/TodoLists-api";
+import {AuthApi, ResponseType} from "../api/Api";
 import {setAuthAC} from "../components/Login/AuthReducer";
 import axios from "axios";
 import {handleAppError, handleNetworkError} from "../components/utils/ErrorUtils";

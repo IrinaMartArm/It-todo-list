@@ -7,9 +7,6 @@ import {
 import {v1} from "uuid";
 import {RequestStatus} from "../../App/AppReducer";
 
-
-
-
 let todolistId1 = v1()
 let todolistId2 = v1()
 
