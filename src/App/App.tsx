@@ -21,24 +21,26 @@ function App({demo = false}: PropsType) {
         dispatch(initialization())
     }, []);
 
+    if(!isInitialized) {
+        return (
+            <div style={{width: '100%', top: '30%', position: 'fixed', textAlign: 'center'}}>
+                <CircularProgress color="secondary"/>
+            </div>)
+    }
+
 
     return (
         <div className="App">
             <ErrorSnackbar/>
             <ButtonAppBar/>
-            {!isInitialized ?
-                <div  style={{width: '100%', top: '30%', position: 'fixed',textAlign: 'center'}}>
-                    <CircularProgress color="secondary"/>
-                </div>:
-                <div>
-                    <Routes>
-                        <Route path={'/login'} element={<Login/>}/>
-                        <Route path={'/'} element={<TodoListBox/>}/>
-                        <Route path = '/404' element = {<h1>404: PAGE NOTFOUND</h1>}/>
-                        <Route path='*' element={<h1>404: PAGE NOT FOUND</h1>}/>
-                    </Routes>
-                </div>
-            }
+            <div>
+                <Routes>
+                    <Route path={'/login'} element={<Login/>}/>
+                    <Route path={'/'} element={<TodoListBox/>}/>
+                    <Route path = '/404' element = {<h1>404: PAGE NOTFOUND</h1>}/>
+                    <Route path='*' element={<h1>404: PAGE NOT FOUND</h1>}/>
+                </Routes>
+            </div>
         </div>
     );
 }
@@ -80,13 +82,6 @@ export default App;
 //     );
 // }
 
-
-
-
-
-
-
-
 // <div className="App">
 //     <AppBar position="static">
 //         <Toolbar>
@@ -123,8 +118,6 @@ export default App;
 //     </Container>
 // </div>
 
-
-
 // <div className="App">
 //     <TodoListForm addText={addTodoList}/>
 //     {todoLists.map((tl)=>{
@@ -140,8 +133,6 @@ export default App;
 //         )
 //     })}
 // </div>
-
-
 
 // const changeFilter = useCallback((todolistId: string, value: FilterValuesType) => {
 //     dispatch(changeTodolistFilterAC(todolistId, value))

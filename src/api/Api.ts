@@ -106,8 +106,8 @@ export type Params = {
 }
 
 export const AuthApi = {
-    authMe(params: Params){
-        return instance.post<ResponseType<{userId?: number}>>('auth/login', params)
+    authMe(data: Params){
+        return instance.post<ResponseType<{userId?: number}>, AxiosResponse<ResponseType<{userId?: number}>>, Params>('auth/login', data)
     },
     me(){
         return instance.get<ResponseType<{id: number, email: string, login: string}>>('auth/me')

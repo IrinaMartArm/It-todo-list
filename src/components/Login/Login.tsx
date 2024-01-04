@@ -10,30 +10,55 @@ import Button from '@mui/material/Button';
 import {useFormik} from "formik";
 import {AuthTC} from "./AuthReducer";
 import {useAppDispatch, useAppSelector} from "../hooks/Hooks";
-import {Navigate} from 'react-router-dom'
+import {Navigate} from 'react-router-dom';
+import * as Yup from 'yup';
+
+type FormDataType = {
+    email: string
+    password: string
+    rememberMe: boolean
+}
+
+const validationSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email').required('Required'),
+    password: Yup.string()
+        .min(2, 'Too Short!')
+        .max(50, 'Too Long!')
+        .required('Required'),
+});
 
 export const Login = () => {
 
     const dispatch = useAppDispatch()
     const isAuth = useAppSelector(state => state.auth.isAuth)
 
-    const formik = useFormik({
-        validate: (values)=>{
-            if(!values.email){
-                return {email: 'Email is required!'}
-            }
-            if(!values.password){
-                return {password: 'Password is required!'}
-            }
-        },
+    const formik = useFormik<FormDataType>({
         initialValues: {
             email: '',
             password: '',
             rememberMe: false
         },
-        onSubmit: values => {
-            dispatch(AuthTC(values))
-            alert(JSON.stringify(values));
+        validationSchema,
+        // validate: (values) => {
+        //     const errors: Partial<Omit<FormDataType, 'rememberMe'>> = {}
+        //     if (!values.email) {
+        //         errors.email = 'Required'
+        //     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        //         errors.email = 'Invalid email address'
+        //     }
+        //     if(!values.password) {
+        //         errors.password = 'Required'
+        //     } else if(values.password.length < 5) {
+        //         errors.password = 'Password so small!'
+        //     }
+        //     return errors
+        // },
+        onSubmit: async (values) => {
+             await dispatch(AuthTC(values))
+                 .then((data) => {
+                     if(data?.resultCode === 0)
+                     formik.resetForm()
+                 })
         },
     });
 
@@ -58,18 +83,28 @@ export const Login = () => {
                 <FormGroup>
                     <TextField label="Email"
                                margin="normal"
-                               {...formik.getFieldProps('email')}/>
-                    {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+                               {...formik.getFieldProps('email')}
+                    />
+                    {formik.touched.email && formik.errors.email ? <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
+
                     <TextField type="password" label="Password"
                                margin="normal"
-                               {...formik.getFieldProps('password')}/>
-                    {formik.errors.password ? <div>{formik.errors.password}</div> : null}
+                               {...formik.getFieldProps('password')}
+                    />
+                    {formik.touched.password && formik.errors.password ?
+                        <div>{formik.errors.password}</div> : null}
+
                     <FormControlLabel label={'Remember me'}
                                       control={
                         <Checkbox {...formik.getFieldProps('rememberMe')}
-                                  checked={formik.values.rememberMe}/>}
+                                  checked={formik.values.rememberMe}
+                        />}
                     />
-                    <Button type={'submit'} variant={'contained'} color={'primary'}>
+                    <Button type={'submit'}
+                            variant={'contained'}
+                            color={'primary'}
+                            disabled={formik.isSubmitting}
+                    >
                         Login
                     </Button>
                 </FormGroup>
@@ -78,3 +113,5 @@ export const Login = () => {
         </Grid>
     </Grid>
 }
+
+
