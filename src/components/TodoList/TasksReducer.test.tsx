@@ -1,5 +1,5 @@
 import {
-  addTaskAC,
+  addTaskTC,
   fetchTasksTC,
   removeTaskTC,
   TasksReducer,
@@ -103,7 +103,7 @@ test("correct task should be removed", () => {
 });
 
 test("task should be added", () => {
-  const action = addTaskAC({
+  let task = {
     id: "1",
     title: "HTML",
     status: TaskStatuses.New,
@@ -114,6 +114,10 @@ test("task should be added", () => {
     description: "",
     order: 1,
     addedDate: "",
+  };
+  const action = addTaskTC.fulfilled(task, "", {
+    todoId: task.todoListId,
+    title: task.title,
   });
   const endState = TasksReducer(startState, action);
 

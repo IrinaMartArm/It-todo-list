@@ -8,43 +8,45 @@ import {
 import { useAppDispatch, useAppSelector } from "./Hooks";
 import { getIsAuth, getTasks } from "../utils/Selectors";
 
-export const useTodo = (id: string) => {
+export const useTodo = (todoId: string) => {
   const dispatch = useAppDispatch();
 
-  const tasks = useAppSelector(getTasks)[id];
+  const tasks = useAppSelector(getTasks)[todoId];
 
   const isAuth = useAppSelector(getIsAuth);
 
   const addTask = useCallback(
     (title: string) => {
-      dispatch(addTaskTC(id, title));
+      dispatch(addTaskTC({ todoId, title }));
     },
-    [id],
+    [todoId],
   );
 
   const removeTodoHandler = useCallback(() => {
-    dispatch(removeTodoTC(id));
-  }, [id]);
+    dispatch(removeTodoTC(todoId));
+  }, [todoId]);
 
   const changeTodoListTitle = useCallback(
     (value: string) => {
-      dispatch(changeTodoTitleTC(id, value));
+      dispatch(changeTodoTitleTC(todoId, value));
       // props.changeTodoTitle(id, value)
     },
-    [id],
+    [todoId],
   );
 
   const allFilterHandler = useCallback(() => {
-    dispatch(TodoListActions.changeTodolistFilterAC({ id, filter: "all" }));
-  }, [id]);
+    dispatch(TodoListActions.changeTodolistFilterAC({ todoId, filter: "all" }));
+  }, [todoId]);
   const activeFilterHandler = useCallback(() => {
-    dispatch(TodoListActions.changeTodolistFilterAC({ id, filter: "active" }));
-  }, [id]);
+    dispatch(
+      TodoListActions.changeTodolistFilterAC({ todoId, filter: "active" }),
+    );
+  }, [todoId]);
   const completedFilterHandler = useCallback(() => {
     dispatch(
-      TodoListActions.changeTodolistFilterAC({ id, filter: "completed" }),
+      TodoListActions.changeTodolistFilterAC({ todoId, filter: "completed" }),
     );
-  }, [id]);
+  }, [todoId]);
 
   return {
     tasks,
