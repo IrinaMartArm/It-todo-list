@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { AppActions, RequestStatus } from "../../App/AppReducer";
 import { handleAppError, handleNetworkError } from "../utils/ErrorUtils";
 import axios from "axios";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchTasksTC } from "./TasksReducer";
 import { AppDispatch } from "../../App/Store";
 import { clearTodosTasks } from "../../common/Actions";
@@ -17,6 +17,29 @@ export type TogoDomainType = TodoListsTypeOfResponse & {
 };
 
 const initialState: TogoDomainType[] = [];
+
+export const fetchTodoListsTC = createAsyncThunk(
+  "TodoLists/fetchTodoListsTC",
+  async (arg, thunkAPI) => {
+    thunkAPI.dispatch(AppActions.setAppStatusAC({ status: "loading" }));
+    try {
+      const res = await Api.getTodoLists();
+      thunkAPI.dispatch(TodoListActions.setTodoAC({ todoLists: res }));
+
+      res.forEach((t) => thunkAPI.dispatch(fetchTasksTC(t.id)));
+      thunkAPI.dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
+    } catch (err) {
+      if (axios.isAxiosError<ResponseType>(err)) {
+        const error = err.response?.data
+          ? err.response?.data.messages[0]
+          : err.message;
+        handleNetworkError(error, thunkAPI.dispatch);
+      } else {
+        handleNetworkError((err as Error).message, thunkAPI.dispatch);
+      }
+    }
+  },
+);
 
 const slice = createSlice({
   name: "TodoLists",
@@ -88,7 +111,7 @@ const slice = createSlice({
 export const ReducerTodoLists = slice.reducer;
 export const TodoListActions = slice.actions;
 
-export const fetchTodoListsTC = () => async (dispatch: AppDispatch) => {
+export const _fetchTodoListsTC = () => async (dispatch: AppDispatch) => {
   // dispatch(setAppStatusAC('loading'))
   try {
     const res = await Api.getTodoLists();

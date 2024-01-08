@@ -1,7 +1,7 @@
 import {
   addTaskAC,
-  removeTaskAC,
-  setTasksAC,
+  fetchTasksTC,
+  removeTaskTC,
   TasksReducer,
   TasksStateType,
   updateTaskAC,
@@ -93,7 +93,8 @@ beforeEach(() => {
 });
 
 test("correct task should be removed", () => {
-  const action = removeTaskAC({ todoId: "todolistId2", taskId: "3" });
+  let parameters = { todoId: "todolistId2", taskId: "3" };
+  const action = removeTaskTC.fulfilled(parameters, "", parameters);
   const endState = TasksReducer(startState, action);
 
   expect(endState["todolistId1"].length).toBe(3);
@@ -174,10 +175,14 @@ test("todoLists should be added", () => {
   expect(endState["2"]).toStrictEqual([]);
 });
 test("tasks should be set", () => {
-  const action = setTasksAC({
-    todoId: "todolistId1",
-    tasks: startState["todolistId1"],
-  });
+  const action = fetchTasksTC.fulfilled(
+    {
+      todoId: "todolistId1",
+      tasks: startState["todolistId1"],
+    },
+    "",
+    "todolistId1",
+  );
   const endState = TasksReducer({ todolistId1: [], todolistId2: [] }, action);
 
   expect(endState["todolistId1"].length).toBe(3);
