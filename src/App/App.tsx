@@ -1,55 +1,58 @@
-import React, {useEffect} from 'react';
-import './App.css';
+import React, { useEffect } from "react";
+import "./App.css";
 import ButtonAppBar from "../components/Elements/NavBar";
-import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSneckBar";
-import {TodoListBox} from "../components/TodoList/TodoListsBox";
-import {Route, Routes} from "react-router-dom";
-import {Login} from "../components/Login/Login";
-import {useAppDispatch, useAppSelector} from "../components/hooks/Hooks";
-import CircularProgress from '@mui/material/CircularProgress';
-import {initialization} from "./AppReducer";
+import { ErrorSnackbar } from "../components/ErrorSnackbar/ErrorSneckBar";
+import { TodoListBox } from "../components/TodoList/TodoListsBox";
+import { Route, Routes } from "react-router-dom";
+import { Login } from "../components/Login/Login";
+import { useAppDispatch, useAppSelector } from "../components/hooks/Hooks";
+import CircularProgress from "@mui/material/CircularProgress";
+import { initialization } from "./AppReducer";
+import { getIsInitialized } from "../components/utils/Selectors";
 
 type PropsType = {
-    demo?: boolean
-}
-function App({demo = false}: PropsType) {
-    const dispatch = useAppDispatch()
-    const isInitialized = useAppSelector(state => state.app.isInitialized)
+  demo?: boolean;
+};
+function App({ demo = false }: PropsType) {
+  const dispatch = useAppDispatch();
+  const isInitialized = useAppSelector(getIsInitialized);
 
+  useEffect(() => {
+    dispatch(initialization());
+  }, []);
 
-    useEffect(() => {
-        dispatch(initialization())
-    }, []);
-
-    if(!isInitialized) {
-        return (
-            <div style={{width: '100%', top: '30%', position: 'fixed', textAlign: 'center'}}>
-                <CircularProgress color="secondary"/>
-            </div>)
-    }
-
-
+  if (!isInitialized) {
     return (
-        <div className="App">
-            <ErrorSnackbar/>
-            <ButtonAppBar/>
-            <div>
-                <Routes>
-                    <Route path={'/login'} element={<Login/>}/>
-                    <Route path={'/'} element={<TodoListBox/>}/>
-                    <Route path = '/404' element = {<h1>404: PAGE NOTFOUND</h1>}/>
-                    <Route path='*' element={<h1>404: PAGE NOT FOUND</h1>}/>
-                </Routes>
-            </div>
-        </div>
+      <div
+        style={{
+          width: "100%",
+          top: "30%",
+          position: "fixed",
+          textAlign: "center",
+        }}
+      >
+        <CircularProgress color="secondary" />
+      </div>
     );
+  }
+
+  return (
+    <div className="App">
+      <ErrorSnackbar />
+      <ButtonAppBar />
+      <div>
+        <Routes>
+          <Route path={"/login"} element={<Login />} />
+          <Route path={"/"} element={<TodoListBox />} />
+          <Route path="/404" element={<h1>404: PAGE NOTFOUND</h1>} />
+          <Route path="*" element={<h1>404: PAGE NOT FOUND</h1>} />
+        </Routes>
+      </div>
+    </div>
+  );
 }
 
 export default App;
-
-
-
-
 
 //         <div className="App">
 //             <ButtonAppBar/>

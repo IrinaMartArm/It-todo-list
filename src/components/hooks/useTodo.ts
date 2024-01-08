@@ -6,12 +6,14 @@ import {
   TodoListActions,
 } from "../TodoList/ReduserTodoLists";
 import { useAppDispatch, useAppSelector } from "./Hooks";
+import { getIsAuth, getTasks } from "../utils/Selectors";
 
 export const useTodo = (id: string) => {
   const dispatch = useAppDispatch();
 
-  const tasks = useAppSelector((state) => state.tasks[id]);
-  const isAuth = useAppSelector((state) => state.auth.isAuth);
+  const tasks = useAppSelector(getTasks)[id];
+
+  const isAuth = useAppSelector(getIsAuth);
 
   const addTask = useCallback(
     (title: string) => {

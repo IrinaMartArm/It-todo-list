@@ -1,17 +1,18 @@
-import {useCallback} from "react";
-import {addTodoListTC} from "../TodoList/ReduserTodoLists";
-import {useAppDispatch, useAppSelector} from "./Hooks";
-
+import { useCallback } from "react";
+import { addTodoListTC } from "../TodoList/ReduserTodoLists";
+import { useAppDispatch, useAppSelector } from "./Hooks";
+import { getTodoLists } from "../utils/Selectors";
 
 export const useApp = () => {
+  const dispatch = useAppDispatch();
+  const todoLists = useAppSelector(getTodoLists);
 
-    const dispatch = useAppDispatch()
-    const todoLists = useAppSelector(state => state.todoLists)
+  const addTodoList = useCallback(
+    (title: string) => {
+      dispatch(addTodoListTC(title));
+    },
+    [dispatch],
+  );
 
-
-    const addTodoList = useCallback((title: string) => {
-        dispatch(addTodoListTC(title))
-    }, [dispatch])
-
-    return {todoLists, addTodoList}
-}
+  return { todoLists, addTodoList };
+};
