@@ -6,6 +6,7 @@ import axios from "axios";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clearTodosTasks } from "common/Actions";
 import { tasksThunks } from "components/TodoList/TasksReducer";
+import { createAppAsyncThunk } from "components/utils/createAppAsyncThunk";
 
 export type FilterValuesType = "all" | "completed" | "active";
 
@@ -14,7 +15,7 @@ export type TogoDomainType = TodoListsTypeOfResponse & {
   entityStatus: RequestStatus;
 };
 
-const fetchTodoListsTC = createAsyncThunk(
+const fetchTodoListsTC = createAppAsyncThunk(
   "todoLists/fetchTodoListsTC",
   async (arg, thunkAPI) => {
     thunkAPI.dispatch(AppActions.setAppStatusAC({ status: "loading" }));
@@ -29,16 +30,16 @@ const fetchTodoListsTC = createAsyncThunk(
           ? err.response?.data.messages[0]
           : err.message;
         handleNetworkError(error, thunkAPI.dispatch);
-        return thunkAPI.rejectWithValue("error");
+        return thunkAPI.rejectWithValue(null);
       } else {
         handleNetworkError((err as Error).message, thunkAPI.dispatch);
-        return thunkAPI.rejectWithValue("error");
+        return thunkAPI.rejectWithValue(null);
       }
     }
   },
 );
 
-const removeTodoTC = createAsyncThunk(
+const removeTodoTC = createAppAsyncThunk(
   "todoLists/removeTodoTC",
   async (id: string, { dispatch, rejectWithValue }) => {
     dispatch(AppActions.setAppStatusAC({ status: "loading" }));
@@ -52,7 +53,7 @@ const removeTodoTC = createAsyncThunk(
         return { todolistId: id };
       } else {
         handleAppError(res.data, dispatch);
-        return rejectWithValue("error");
+        return rejectWithValue(null);
       }
     } catch (err) {
       dispatch(
@@ -63,16 +64,16 @@ const removeTodoTC = createAsyncThunk(
           ? err.response?.data.messages[0]
           : err.message;
         handleNetworkError(error, dispatch);
-        return rejectWithValue("error");
+        return rejectWithValue(null);
       } else {
         handleNetworkError((err as Error).message, dispatch);
-        return rejectWithValue("error");
+        return rejectWithValue(null);
       }
     }
   },
 );
 
-const addTodoListTC = createAsyncThunk(
+const addTodoListTC = createAppAsyncThunk(
   "todoLists/addTodoListTC",
   async (title: string, { dispatch, rejectWithValue }) => {
     dispatch(AppActions.setAppStatusAC({ status: "loading" }));
@@ -83,7 +84,7 @@ const addTodoListTC = createAsyncThunk(
         return { todoList: res.data.data.item };
       } else {
         handleAppError(res.data, dispatch);
-        return rejectWithValue("error");
+        return rejectWithValue(null);
       }
     } catch (err) {
       if (axios.isAxiosError<ResponseType>(err)) {
@@ -91,10 +92,10 @@ const addTodoListTC = createAsyncThunk(
           ? err.response?.data.messages[0]
           : err.message;
         handleNetworkError(error, dispatch);
-        return rejectWithValue("error");
+        return rejectWithValue(null);
       } else {
         handleNetworkError((err as Error).message, dispatch);
-        return rejectWithValue("error");
+        return rejectWithValue(null);
       }
     }
   },

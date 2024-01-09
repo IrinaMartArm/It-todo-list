@@ -13,12 +13,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { TodoListActions, todoThunks } from "./ReduserTodoLists";
 import { AppActions } from "App/AppReducer";
 import { clearTodosTasks } from "common/Actions";
+import { createAppAsyncThunk } from "components/utils/createAppAsyncThunk";
 
 export type TasksStateType = {
   [key: string]: Array<TaskTypeOfResponse>;
 };
 
-const fetchTasksTC = createAsyncThunk(
+const fetchTasksTC = createAppAsyncThunk(
   "Tasks/fetchTasksTC",
   async (todoId: string, thunkAPI) => {
     thunkAPI.dispatch(AppActions.setAppStatusAC({ status: "loading" }));
@@ -28,7 +29,7 @@ const fetchTasksTC = createAsyncThunk(
   },
 );
 
-const removeTaskTC = createAsyncThunk(
+const removeTaskTC = createAppAsyncThunk(
   "Tasks/removeTaskTC",
   async (
     param: {
@@ -56,7 +57,7 @@ const removeTaskTC = createAsyncThunk(
   },
 );
 
-const addTaskTC = createAsyncThunk(
+const addTaskTC = createAppAsyncThunk(
   "Tasks/addTaskTC",
   async (
     arg: { todoId: string; title: string },
@@ -85,7 +86,7 @@ const addTaskTC = createAsyncThunk(
   },
 );
 
-const updateTaskTC = createAsyncThunk(
+const updateTaskTC = createAppAsyncThunk(
   "Tasks/updateTaskTC",
   async (
     arg: { todoId: string; taskId: string; domainModel: UpdateDomainModelType },
@@ -95,7 +96,7 @@ const updateTaskTC = createAsyncThunk(
     const state = thunkAPI.getState() as RootReducerType;
     const task = state.tasks[arg.todoId].find((t) => t.id === arg.taskId);
     if (!task) {
-      return thunkAPI.rejectWithValue("error");
+      return thunkAPI.rejectWithValue(null);
     }
     const apiModel: UpdateApiModelType = {
       description: task.description,
@@ -118,7 +119,7 @@ const updateTaskTC = createAsyncThunk(
         };
       } else {
         handleAppError(res.data, thunkAPI.dispatch);
-        return thunkAPI.rejectWithValue("error");
+        return thunkAPI.rejectWithValue(null);
       }
     } catch (err) {
       if (axios.isAxiosError<ResponseType>(err)) {
@@ -126,10 +127,10 @@ const updateTaskTC = createAsyncThunk(
           ? err.response?.data.messages[0]
           : err.message;
         handleNetworkError(error, thunkAPI.dispatch);
-        return thunkAPI.rejectWithValue("error");
+        return thunkAPI.rejectWithValue(null);
       } else {
         handleNetworkError((err as Error).message, thunkAPI.dispatch);
-        return thunkAPI.rejectWithValue("error");
+        return thunkAPI.rejectWithValue(null);
       }
     }
   },
