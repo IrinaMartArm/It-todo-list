@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from "react";
-import { removeTaskTC, updateTaskTC } from "./TasksReducer";
 import { CheckBox } from "../Elements/CheckBox";
 import { EditableSpan } from "../EditableSpan/EditableSpan";
 import Delete from "@mui/icons-material/Delete";
 import { TaskStatuses, TaskTypeOfResponse } from "api/Api";
 import { useAppDispatch } from "../hooks/Hooks";
 import IconButton from "@mui/material/IconButton";
+import { tasksThunks } from "components/TodoList/TasksReducer";
 
 type TaskProps = {
   todoId: string;
@@ -19,7 +19,7 @@ export const Task = React.memo((props: TaskProps) => {
 
   const onRemoveTask = useCallback(() => {
     setIsDisabled(true);
-    dispatch(removeTaskTC({ todoId, taskId: task.id })).then(() =>
+    dispatch(tasksThunks.removeTaskTC({ todoId, taskId: task.id })).then(() =>
       setIsDisabled(false),
     );
   }, [todoId, task.id]); // props.removeTask(props.id, t.id)
@@ -27,7 +27,7 @@ export const Task = React.memo((props: TaskProps) => {
   const onChangeStatusHandler = useCallback(
     (status: TaskStatuses) => {
       dispatch(
-        updateTaskTC({
+        tasksThunks.updateTaskTC({
           todoId,
           taskId: task.id,
           domainModel: { status: status },
@@ -40,7 +40,11 @@ export const Task = React.memo((props: TaskProps) => {
   const onChangeTitle = useCallback(
     (title: string) => {
       dispatch(
-        updateTaskTC({ todoId, taskId: task.id, domainModel: { title } }),
+        tasksThunks.updateTaskTC({
+          todoId,
+          taskId: task.id,
+          domainModel: { title },
+        }),
       );
     },
     [todoId, task.id],

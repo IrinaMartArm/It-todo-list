@@ -1,12 +1,12 @@
 import { useCallback } from "react";
-import { addTaskTC } from "../TodoList/TasksReducer";
 import {
   changeTodoTitleTC,
-  removeTodoTC,
   TodoListActions,
+  todoThunks,
 } from "../TodoList/ReduserTodoLists";
 import { useAppDispatch, useAppSelector } from "./Hooks";
 import { getIsAuth, getTasks } from "../utils/Selectors";
+import { tasksThunks } from "components/TodoList/TasksReducer";
 
 export const useTodo = (todoId: string) => {
   const dispatch = useAppDispatch();
@@ -17,13 +17,13 @@ export const useTodo = (todoId: string) => {
 
   const addTask = useCallback(
     (title: string) => {
-      dispatch(addTaskTC({ todoId, title }));
+      dispatch(tasksThunks.addTaskTC({ todoId, title }));
     },
     [todoId],
   );
 
   const removeTodoHandler = useCallback(() => {
-    dispatch(removeTodoTC(todoId));
+    dispatch(todoThunks.removeTodoTC(todoId));
   }, [todoId]);
 
   const changeTodoListTitle = useCallback(

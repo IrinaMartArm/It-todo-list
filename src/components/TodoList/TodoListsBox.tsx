@@ -1,50 +1,48 @@
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import {TodoListForm} from "../addItemForm/TodoListForm";
-import {TodoList} from "./TodoList";
-import React, {useEffect} from "react";
-import {useApp} from "../hooks/useApp";
-import {useAppDispatch} from "../hooks/Hooks";
-import {fetchTodoListsTC} from "./ReduserTodoLists";
+import { TodoListForm } from "../addItemForm/TodoListForm";
+import { TodoList } from "./TodoList";
+import React, { useEffect } from "react";
+import { useApp } from "../hooks/useApp";
+import { useAppDispatch } from "../hooks/Hooks";
+import { todoThunks } from "components/TodoList/ReduserTodoLists";
 
 type PropsType = {
-    demo?: boolean
-}
+  demo?: boolean;
+};
 
-export const TodoListBox = ({demo = false}: PropsType) => {
+export const TodoListBox = ({ demo = false }: PropsType) => {
+  const { todoLists, addTodoList } = useApp();
+  const dispatch = useAppDispatch();
 
-    const {todoLists, addTodoList} = useApp()
-    const dispatch = useAppDispatch()
+  useEffect(() => {
+    if (demo) {
+      return;
+    }
+    dispatch(todoThunks.fetchTodoListsTC());
+  }, []);
 
-    useEffect(() => {
-        if(demo){
-            return
-        }
-        dispatch(fetchTodoListsTC())
-    }, []);
-
-    return (
-        <Container fixed>
-                <Grid container style={{padding: "20px", justifyContent: "center"}}>
-                    <TodoListForm addText={addTodoList}/>
-                </Grid>
-                <Grid container spacing={3} style={{justifyContent: "center"}}>
-                    {
-                        todoLists.map(tl => {
-
-                            return <Grid key={tl.id} item>
-                                <Paper>
-                                    <TodoList key={tl.id}
-                                              todoList={tl}
-                                              // demo={demo}
-                                    />
-                                </Paper>
-                            </Grid>
-                        })
-                    }
-                </Grid>
-        </Container>
-
-    )
-}
+  return (
+    <Container fixed>
+      <Grid container style={{ padding: "20px", justifyContent: "center" }}>
+        <TodoListForm addText={addTodoList} />
+      </Grid>
+      <Grid container spacing={3} style={{ justifyContent: "center" }}>
+        {todoLists.map((tl) => {
+          return (
+            <Grid key={tl.id} item>
+              <Paper>
+                <TodoList
+                  key={tl.id}
+                  todoList={tl}
+                  // demo={demo}
+                />
+              </Paper>
+            </Grid>
+          );
+        })}
+      </Grid>
+    </Container>
+  );
+};

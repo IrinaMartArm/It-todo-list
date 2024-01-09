@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import { addTodoListTC } from "../TodoList/ReduserTodoLists";
 import { useAppDispatch, useAppSelector } from "./Hooks";
 import { getTodoLists } from "../utils/Selectors";
+import { todoThunks } from "components/TodoList/ReduserTodoLists";
 
 export const useApp = () => {
   const dispatch = useAppDispatch();
@@ -9,7 +9,7 @@ export const useApp = () => {
 
   const addTodoList = useCallback(
     (title: string) => {
-      dispatch(addTodoListTC(title));
+      dispatch(todoThunks.addTodoListTC(title));
     },
     [dispatch],
   );

@@ -4,8 +4,8 @@ import { AppActions, RequestStatus } from "App/AppReducer";
 import { handleAppError, handleNetworkError } from "../utils/ErrorUtils";
 import axios from "axios";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchTasksTC } from "./TasksReducer";
 import { clearTodosTasks } from "common/Actions";
+import { tasksThunks } from "components/TodoList/TasksReducer";
 
 export type FilterValuesType = "all" | "completed" | "active";
 
@@ -14,13 +14,13 @@ export type TogoDomainType = TodoListsTypeOfResponse & {
   entityStatus: RequestStatus;
 };
 
-export const fetchTodoListsTC = createAsyncThunk(
+const fetchTodoListsTC = createAsyncThunk(
   "todoLists/fetchTodoListsTC",
   async (arg, thunkAPI) => {
     thunkAPI.dispatch(AppActions.setAppStatusAC({ status: "loading" }));
     try {
       const res = await Api.getTodoLists();
-      res.forEach((t) => thunkAPI.dispatch(fetchTasksTC(t.id)));
+      res.forEach((t) => thunkAPI.dispatch(tasksThunks.fetchTasksTC(t.id)));
       thunkAPI.dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
       return { todoLists: res };
     } catch (err) {
@@ -38,7 +38,7 @@ export const fetchTodoListsTC = createAsyncThunk(
   },
 );
 
-export const removeTodoTC = createAsyncThunk(
+const removeTodoTC = createAsyncThunk(
   "todoLists/removeTodoTC",
   async (id: string, { dispatch, rejectWithValue }) => {
     dispatch(AppActions.setAppStatusAC({ status: "loading" }));
@@ -72,7 +72,7 @@ export const removeTodoTC = createAsyncThunk(
   },
 );
 
-export const addTodoListTC = createAsyncThunk(
+const addTodoListTC = createAsyncThunk(
   "todoLists/addTodoListTC",
   async (title: string, { dispatch, rejectWithValue }) => {
     dispatch(AppActions.setAppStatusAC({ status: "loading" }));
@@ -154,7 +154,6 @@ const slice = createSlice({
     ) {
       const index = state.findIndex((tl) => tl.id === action.payload.id);
       if (index > -1) {
-        console.log(action.payload.entityStatus);
         state[index].entityStatus = action.payload.entityStatus;
       }
     },
@@ -190,6 +189,7 @@ const slice = createSlice({
 
 export const ReducerTodoLists = slice.reducer;
 export const TodoListActions = slice.actions;
+export const todoThunks = { fetchTodoListsTC, removeTodoTC, addTodoListTC };
 
 // export const _fetchTodoListsTC = () => async (dispatch: AppDispatch) => {
 //   // dispatch(setAppStatusAC('loading'))
