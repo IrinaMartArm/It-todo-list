@@ -1,11 +1,11 @@
-import { AuthApi, ResponseType } from "../api/Api";
+import { AuthApi, ResponseType } from "api/Api";
 import axios from "axios";
 import {
   handleAppError,
   handleNetworkError,
-} from "../components/utils/ErrorUtils";
+} from "components/utils/ErrorUtils";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AuthAction } from "../components/Login/AuthReducer";
+import { AuthAction } from "components/Login/AuthReducer";
 
 export const initialization = createAsyncThunk(
   "app/initialization",

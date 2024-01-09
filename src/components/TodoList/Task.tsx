@@ -3,7 +3,7 @@ import { removeTaskTC, updateTaskTC } from "./TasksReducer";
 import { CheckBox } from "../Elements/CheckBox";
 import { EditableSpan } from "../EditableSpan/EditableSpan";
 import Delete from "@mui/icons-material/Delete";
-import { TaskStatuses, TaskTypeOfResponse } from "../../api/Api";
+import { TaskStatuses, TaskTypeOfResponse } from "api/Api";
 import { useAppDispatch } from "../hooks/Hooks";
 import IconButton from "@mui/material/IconButton";
 
@@ -26,25 +26,33 @@ export const Task = React.memo((props: TaskProps) => {
 
   const onChangeStatusHandler = useCallback(
     (status: TaskStatuses) => {
-      dispatch(updateTaskTC(props.todoId, props.task.id, { status: status }));
+      dispatch(
+        updateTaskTC({
+          todoId,
+          taskId: task.id,
+          domainModel: { status: status },
+        }),
+      );
     },
-    [props.todoId, props.task.id],
+    [todoId, task.id],
   );
 
   const onChangeTitle = useCallback(
     (title: string) => {
-      dispatch(updateTaskTC(props.todoId, props.task.id, { title }));
+      dispatch(
+        updateTaskTC({ todoId, taskId: task.id, domainModel: { title } }),
+      );
     },
-    [props.todoId, props.task.id],
+    [todoId, task.id],
   );
 
   return (
     <li
-      key={props.task.id}
-      className={props.task.status === TaskStatuses.Completed ? "is-done" : ""}
+      key={task.id}
+      className={task.status === TaskStatuses.Completed ? "is-done" : ""}
     >
-      <CheckBox status={props.task.status} onChange={onChangeStatusHandler} />
-      <EditableSpan title={props.task.title} onChange={onChangeTitle} />
+      <CheckBox status={task.status} onChange={onChangeStatusHandler} />
+      <EditableSpan title={task.title} onChange={onChangeTitle} />
       <IconButton onClick={onRemoveTask} disabled={isDisabled}>
         <Delete />
       </IconButton>

@@ -5,15 +5,19 @@ import {
   TaskTypeOfResponse,
   Api,
   UpdateApiModelType,
-} from "../../api/Api";
-import { Dispatch } from "redux";
-import { AppDispatch, RootReducerType } from "../../App/Store";
+} from "api/Api";
+import { RootReducerType } from "App/Store";
 import { handleAppError, handleNetworkError } from "../utils/ErrorUtils";
 import axios from "axios";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TodoListActions } from "./ReduserTodoLists";
-import { AppActions } from "../../App/AppReducer";
-import { clearTodosTasks } from "../../common/Actions";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  addTodoListTC,
+  fetchTodoListsTC,
+  removeTodoTC,
+  TodoListActions,
+} from "./ReduserTodoLists";
+import { AppActions } from "App/AppReducer";
+import { clearTodosTasks } from "common/Actions";
 
 export type TasksStateType = {
   [key: string]: Array<TaskTypeOfResponse>;
@@ -115,7 +119,7 @@ export const updateTaskTC = createAsyncThunk(
         return {
           todoId: arg.todoId,
           taskId: arg.taskId,
-          model: arg.domainModel,
+          domainModel: arg.domainModel,
         };
       } else {
         handleAppError(res.data, thunkAPI.dispatch);
@@ -127,8 +131,10 @@ export const updateTaskTC = createAsyncThunk(
           ? err.response?.data.messages[0]
           : err.message;
         handleNetworkError(error, thunkAPI.dispatch);
+        return thunkAPI.rejectWithValue("error");
       } else {
         handleNetworkError((err as Error).message, thunkAPI.dispatch);
+        return thunkAPI.rejectWithValue("error");
       }
     }
   },
@@ -137,30 +143,15 @@ export const updateTaskTC = createAsyncThunk(
 const slice = createSlice({
   name: "Tasks",
   initialState: {} as TasksStateType,
-  reducers: {
-    updateTaskAC(
-      state,
-      action: PayloadAction<{
-        todoId: string;
-        taskId: string;
-        model: UpdateDomainModelType;
-      }>,
-    ) {
-      const tasks = state[action.payload.todoId];
-      const task = tasks.findIndex((t) => t.id === action.payload.taskId);
-      if (task > -1) {
-        tasks[task] = { ...tasks[task], ...action.payload.model };
-      }
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(TodoListActions.addTodolistAC, (state, action) => {
+    builder.addCase(addTodoListTC.fulfilled, (state, action) => {
       state[action.payload.todoList.id] = [];
     });
-    builder.addCase(TodoListActions.removeTodolistAC, (state, action) => {
+    builder.addCase(removeTodoTC.fulfilled, (state, action) => {
       delete state[action.payload.todolistId];
     });
-    builder.addCase(TodoListActions.setTodoAC, (state, action) => {
+    builder.addCase(fetchTodoListsTC.fulfilled, (state, action) => {
       action.payload.todoLists.forEach((tl) => {
         state[tl.id] = [];
       });
@@ -183,11 +174,27 @@ const slice = createSlice({
       if (action.payload)
         state[action.payload.todoListId].unshift(action.payload);
     });
+    builder.addCase(updateTaskTC.fulfilled, (state, action) => {
+      const tasks = state[action.payload.todoId];
+      const task = tasks.findIndex((t) => t.id === action.payload.taskId);
+      if (task > -1) {
+        tasks[task] = { ...tasks[task], ...action.payload.domainModel };
+      }
+    });
   },
 });
 
 export const TasksReducer = slice.reducer;
-export const { updateTaskAC } = slice.actions;
+export const {} = slice.actions;
+
+export type UpdateDomainModelType = {
+  description?: string;
+  title?: string;
+  status?: TaskStatuses;
+  priority?: TaskPriorities;
+  startDate?: string;
+  deadline?: string;
+};
 
 // export const _fetchTasksTC = (todoId: string) => async (dispatch: Dispatch) => {
 //   dispatch(AppActions.setAppStatusAC({ status: "loading" }));
@@ -273,53 +280,44 @@ export const { updateTaskAC } = slice.actions;
 //     }
 //   };
 
-export type UpdateDomainModelType = {
-  description?: string;
-  title?: string;
-  status?: TaskStatuses;
-  priority?: TaskPriorities;
-  startDate?: string;
-  deadline?: string;
-};
-
-export const updateTaskTC_ =
-  (todoId: string, taskId: string, domainModel: UpdateDomainModelType) =>
-  async (dispatch: Dispatch, getState: () => RootReducerType) => {
-    dispatch(AppActions.setAppStatusAC({ status: "loading" }));
-    let state = getState();
-    const task = state.tasks[todoId].find((t) => t.id === taskId);
-    if (!task) {
-      console.log("error");
-      return;
-    }
-    const apiModel: UpdateApiModelType = {
-      description: task.description,
-      title: task.title,
-      status: task.status,
-      priority: task.priority,
-      startDate: task.startDate,
-      deadline: task.deadline,
-      ...domainModel,
-    };
-    try {
-      const res = await Api.updateTask(todoId, taskId, apiModel);
-      if (res.data.resultCode === 0) {
-        dispatch(updateTaskAC({ todoId, taskId, model: domainModel }));
-        dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
-      } else {
-        handleAppError(res.data, dispatch);
-      }
-    } catch (err) {
-      if (axios.isAxiosError<ResponseType>(err)) {
-        const error = err.response?.data
-          ? err.response?.data.messages[0]
-          : err.message;
-        handleNetworkError(error, dispatch);
-      } else {
-        handleNetworkError((err as Error).message, dispatch);
-      }
-    }
-  };
+// export const updateTaskTC_ =
+//   (todoId: string, taskId: string, domainModel: UpdateDomainModelType) =>
+//   async (dispatch: Dispatch, getState: () => RootReducerType) => {
+//     dispatch(AppActions.setAppStatusAC({ status: "loading" }));
+//     let state = getState();
+//     const task = state.tasks[todoId].find((t) => t.id === taskId);
+//     if (!task) {
+//       console.log("error");
+//       return;
+//     }
+//     const apiModel: UpdateApiModelType = {
+//       description: task.description,
+//       title: task.title,
+//       status: task.status,
+//       priority: task.priority,
+//       startDate: task.startDate,
+//       deadline: task.deadline,
+//       ...domainModel,
+//     };
+//     try {
+//       const res = await Api.updateTask(todoId, taskId, apiModel);
+//       if (res.data.resultCode === 0) {
+//         dispatch(updateTaskAC({ todoId, taskId, model: domainModel }));
+//         dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
+//       } else {
+//         handleAppError(res.data, dispatch);
+//       }
+//     } catch (err) {
+//       if (axios.isAxiosError<ResponseType>(err)) {
+//         const error = err.response?.data
+//           ? err.response?.data.messages[0]
+//           : err.message;
+//         handleNetworkError(error, dispatch);
+//       } else {
+//         handleNetworkError((err as Error).message, dispatch);
+//       }
+//     }
+//   };
 
 // export const TasksReducer = (state: TasksStateType = initState, action: TasksActionsType): TasksStateType => {
 //     switch (action.type) {

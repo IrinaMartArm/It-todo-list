@@ -1,11 +1,14 @@
 import {
+  addTodoListTC,
+  fetchTodoListsTC,
   FilterValuesType,
   ReducerTodoLists,
+  removeTodoTC,
   TodoListActions,
   TogoDomainType,
 } from "./ReduserTodoLists";
 import { v1 } from "uuid";
-import { RequestStatus } from "../../App/AppReducer";
+import { RequestStatus } from "App/AppReducer";
 
 let todolistId1 = v1();
 let todolistId2 = v1();
@@ -36,7 +39,7 @@ beforeEach(() => {
 test("correct todolist should be removed", () => {
   const endState = ReducerTodoLists(
     startState,
-    TodoListActions.removeTodolistAC({ todolistId: todolistId1 }),
+    removeTodoTC.fulfilled({ todolistId: todolistId1 }, "", ""),
   );
 
   expect(endState.length).toBe(1);
@@ -53,7 +56,7 @@ test("should add TodoList", () => {
 
   const endState = ReducerTodoLists(
     startState,
-    TodoListActions.addTodolistAC({ todoList: newTodoList }),
+    addTodoListTC.fulfilled({ todoList: newTodoList }, "", ""),
   );
 
   expect(endState.length).toBe(3);
@@ -103,7 +106,7 @@ test("correct todolist status should be changed", () => {
 });
 
 test("correct state", () => {
-  const action = TodoListActions.setTodoAC({ todoLists: startState });
+  const action = fetchTodoListsTC.fulfilled({ todoLists: startState }, "");
 
   const endState = ReducerTodoLists([], action);
 
