@@ -1,4 +1,4 @@
-import { RootReducerType } from "../../App/Store";
+import { RootReducerType } from "App/Store";
 
 export const getTasks = (state: RootReducerType) => {
   return state.tasks;

@@ -1,5 +1,4 @@
 import {
-  ResponseType,
   TaskPriorities,
   TaskStatuses,
   TaskTypeOfResponse,
@@ -8,14 +7,15 @@ import {
   Arg,
 } from "api/Api";
 import { RootReducerType } from "App/Store";
-import { handleAppError } from "components/utils/handleAppError";
-import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
 import { TodoListActions, todoThunks } from "./ReduserTodoLists";
 import { AppActions } from "App/AppReducer";
 import { clearTodosTasks } from "common/Actions";
-import { createAppAsyncThunk } from "components/utils/createAppAsyncThunk";
-import { handleServerNetworkError } from "components/utils/handleServerNetworkError";
+import {
+  createAppAsyncThunk,
+  handleAppError,
+  handleServerNetworkError,
+} from "components/utils";
 
 export type TasksStateType = {
   [key: string]: Array<TaskTypeOfResponse>;

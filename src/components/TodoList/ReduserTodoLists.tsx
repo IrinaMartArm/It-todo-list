@@ -1,12 +1,14 @@
 import { Api, TodoListsTypeOfResponse } from "api/Api";
 import { Dispatch } from "redux";
 import { AppActions, RequestStatus } from "App/AppReducer";
-import { handleAppError } from "components/utils/handleAppError";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clearTodosTasks } from "common/Actions";
 import { tasksThunks } from "components/TodoList/TasksReducer";
-import { createAppAsyncThunk } from "components/utils/createAppAsyncThunk";
-import { handleServerNetworkError } from "components/utils/handleServerNetworkError";
+import {
+  createAppAsyncThunk,
+  handleAppError,
+  handleServerNetworkError,
+} from "components/utils";
 
 export type FilterValuesType = "all" | "completed" | "active";
 

@@ -1,9 +1,8 @@
 import { AuthApi, Params } from "api/Api";
-import { handleAppError } from "components/utils/handleAppError";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppActions } from "App/AppReducer";
 import { clearTodosTasks } from "common/Actions";
-import { handleServerNetworkError } from "components/utils/handleServerNetworkError";
+import { handleAppError, handleServerNetworkError } from "components/utils";
 
 export type AuthState = ReturnType<typeof slice.getInitialState>;
 
