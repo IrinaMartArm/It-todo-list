@@ -2,10 +2,10 @@ import React, { useCallback, useState } from "react";
 import { CheckBox } from "../Elements/CheckBox";
 import { EditableSpan } from "../EditableSpan/EditableSpan";
 import Delete from "@mui/icons-material/Delete";
-import { TaskStatuses, TaskTypeOfResponse } from "api/Api";
-import { useAppDispatch } from "../hooks/Hooks";
+import { useAppDispatch } from "common/hooks/Hooks";
 import IconButton from "@mui/material/IconButton";
 import { tasksThunks } from "components/TodoList/TasksReducer";
+import { TaskStatuses, TaskTypeOfResponse } from "common/api";
 
 type TaskProps = {
   todoId: string;

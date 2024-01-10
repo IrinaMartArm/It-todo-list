@@ -4,8 +4,8 @@ import Paper from "@mui/material/Paper";
 import { TodoListForm } from "../addItemForm/TodoListForm";
 import { TodoList } from "./TodoList";
 import React, { useEffect } from "react";
-import { useApp } from "../hooks/useApp";
-import { useAppDispatch } from "../hooks/Hooks";
+import { useApp } from "../../common/hooks/useApp";
+import { useAppDispatch } from "../../common/hooks/Hooks";
 import { todoThunks } from "components/TodoList/ReduserTodoLists";
 
 type PropsType = {

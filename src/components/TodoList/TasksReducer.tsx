@@ -1,11 +1,3 @@
-import {
-  TaskPriorities,
-  TaskStatuses,
-  TaskTypeOfResponse,
-  Api,
-  UpdateApiModelType,
-  Arg,
-} from "api/Api";
 import { RootReducerType } from "App/Store";
 import { createSlice } from "@reduxjs/toolkit";
 import { TodoListActions, todoThunks } from "./ReduserTodoLists";
@@ -15,7 +7,15 @@ import {
   createAppAsyncThunk,
   handleAppError,
   handleServerNetworkError,
-} from "components/utils";
+} from "common/utils";
+import {
+  AddTaskArg,
+  TaskPriorities,
+  TaskStatuses,
+  TaskTypeOfResponse,
+  UpdateApiModelType,
+} from "common/api";
+import { TodoListApi } from "common/api/Api";
 
 export type TasksStateType = {
   [key: string]: Array<TaskTypeOfResponse>;
@@ -26,7 +26,7 @@ const fetchTasksTC = createAppAsyncThunk(
   async (todoId: string, thunkAPI) => {
     thunkAPI.dispatch(AppActions.setAppStatusAC({ status: "loading" }));
     try {
-      const res = await Api.getTasks(todoId);
+      const res = await TodoListApi.getTasks(todoId);
       return { todoId, tasks: res };
     } catch (err) {
       handleServerNetworkError(err, thunkAPI.dispatch);
@@ -54,7 +54,7 @@ const removeTaskTC = createAppAsyncThunk(
       }),
     );
     try {
-      await Api.removeTask(param.todoId, param.taskId);
+      await TodoListApi.removeTask(param.todoId, param.taskId);
       return { todoId: param.todoId, taskId: param.taskId };
     } catch (err) {
       handleServerNetworkError(err, thunkAPI.dispatch);
@@ -73,10 +73,10 @@ const removeTaskTC = createAppAsyncThunk(
 
 const addTaskTC = createAppAsyncThunk<any, { todoId: string; title: string }>(
   "Tasks/addTaskTC",
-  async (arg: Arg, { dispatch, rejectWithValue }) => {
+  async (arg: AddTaskArg, { dispatch, rejectWithValue }) => {
     dispatch(AppActions.setAppStatusAC({ status: "loading" }));
     try {
-      const res = await Api.createTask(arg);
+      const res = await TodoListApi.createTask(arg);
       if (res.resultCode === 0) {
         return res.data.item;
       } else {
@@ -114,7 +114,11 @@ const updateTaskTC = createAppAsyncThunk(
       ...arg.domainModel,
     };
     try {
-      const res = await Api.updateTask(arg.todoId, arg.taskId, apiModel);
+      const res = await TodoListApi.updateTask(
+        arg.todoId,
+        arg.taskId,
+        apiModel,
+      );
       if (res.data.resultCode === 0) {
         return {
           todoId: arg.todoId,

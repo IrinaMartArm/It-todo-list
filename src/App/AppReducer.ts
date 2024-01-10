@@ -1,7 +1,7 @@
-import { AuthApi } from "api/Api";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthAction } from "components/Login/AuthReducer";
-import { handleAppError, handleServerNetworkError } from "components/utils";
+import { handleAppError, handleServerNetworkError } from "common/utils";
+import { AuthApi } from "common/api/AuthApi";
 
 export const initialization = createAsyncThunk(
   "app/initialization",

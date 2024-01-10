@@ -5,10 +5,10 @@ import { ErrorSnackbar } from "../components/ErrorSnackbar/ErrorSneckBar";
 import { TodoListBox } from "../components/TodoList/TodoListsBox";
 import { Route, Routes } from "react-router-dom";
 import { Login } from "../components/Login/Login";
-import { useAppDispatch, useAppSelector } from "../components/hooks/Hooks";
+import { useAppDispatch, useAppSelector } from "../common/hooks/Hooks";
 import CircularProgress from "@mui/material/CircularProgress";
 import { initialization } from "./AppReducer";
-import { getIsInitialized } from "../components/utils/Selectors";
+import { getIsInitialized } from "../common/utils/Selectors";
 
 type PropsType = {
   demo?: boolean;

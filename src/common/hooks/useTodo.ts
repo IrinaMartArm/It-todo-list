@@ -3,9 +3,9 @@ import {
   changeTodoTitleTC,
   TodoListActions,
   todoThunks,
-} from "../TodoList/ReduserTodoLists";
-import { useAppDispatch, useAppSelector } from "./Hooks";
-import { getIsAuth, getTasks } from "../utils/Selectors";
+} from "components/TodoList/ReduserTodoLists";
+import { useAppDispatch, useAppSelector } from "common/hooks/Hooks";
+import { getIsAuth, getTasks } from "common/utils/Selectors";
 import { tasksThunks } from "components/TodoList/TasksReducer";
 
 export const useTodo = (todoId: string) => {

@@ -4,11 +4,11 @@ import Delete from "@mui/icons-material/Delete";
 import React from "react";
 import { Task } from "./Task";
 import { ButtonUI } from "../Elements/ButtonUI";
-import { useTodo } from "../hooks/useTodo";
-import { TaskStatuses } from "../../api/Api";
+import { useTodo } from "common/hooks/useTodo";
 import IconButton from "@mui/material/IconButton";
 import { TogoDomainType } from "./ReduserTodoLists";
 import { Navigate } from "react-router-dom";
+import { TaskStatuses } from "common/api";
 
 export type PropsType = {
   todoList: TogoDomainType;

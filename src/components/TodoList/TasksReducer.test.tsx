@@ -1,6 +1,6 @@
 import { TasksReducer, TasksStateType, tasksThunks } from "./TasksReducer";
-import { TaskPriorities, TaskStatuses } from "api/Api";
 import { todoThunks } from "components/TodoList/ReduserTodoLists";
+import { TaskPriorities, TaskStatuses } from "common/api";
 
 let startState: TasksStateType;
 

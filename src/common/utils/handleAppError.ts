@@ -1,6 +1,6 @@
-import { ResponseType } from "api/Api";
 import { AppDispatch } from "App/Store";
 import { AppActions } from "App/AppReducer";
+import { ResponseType } from "common/api";
 
 export const handleAppError = <D>(
   res: ResponseType<D>,

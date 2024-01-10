@@ -1,41 +1,37 @@
-import React from "react"
-import { Add } from "@mui/icons-material"
-import {useForm} from "../hooks/useForm";
-import {IconButton, TextField} from "@mui/material";
-
+import React from "react";
+import { Add } from "@mui/icons-material";
+import { useForm } from "../../common/hooks/useForm";
+import { IconButton, TextField } from "@mui/material";
 
 export type TodoListFormType = {
-    addText: (title: string) => void
-    disabled?: boolean
-}
+  addText: (title: string) => void;
+  disabled?: boolean;
+};
 
-export const TodoListForm = React.memo(({addText, disabled = false}: TodoListFormType) => {
-
-    const {text,
-            error,
-            addTask,
-            onKeyDownHandler,
-            onChangeHandler} = useForm(addText)
-
+export const TodoListForm = React.memo(
+  ({ addText, disabled = false }: TodoListFormType) => {
+    const { text, error, addTask, onKeyDownHandler, onChangeHandler } =
+      useForm(addText);
 
     return (
-        <div>
-            <TextField value={text}
-                       variant="outlined"
-                       label={error ? error : 'Type value'}
-                       size="small"
-                       onChange={onChangeHandler}
-                       onKeyDown={onKeyDownHandler}
-                       error={!!error}
-                       disabled={disabled}
-            />
-            <IconButton color="inherit" onClick={addTask} disabled={disabled}>
-                <Add/>
-            </IconButton>
-        </div>
-    )
-})
-
+      <div>
+        <TextField
+          value={text}
+          variant="outlined"
+          label={error ? error : "Type value"}
+          size="small"
+          onChange={onChangeHandler}
+          onKeyDown={onKeyDownHandler}
+          error={!!error}
+          disabled={disabled}
+        />
+        <IconButton color="inherit" onClick={addTask} disabled={disabled}>
+          <Add />
+        </IconButton>
+      </div>
+    );
+  },
+);
 
 // const [text, setText] = useState('')
 // const [error, setError] = useState<string | null>(null)
