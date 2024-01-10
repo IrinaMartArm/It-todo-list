@@ -1,35 +1,24 @@
-import { AuthApi, ResponseType } from "api/Api";
-import axios from "axios";
-import {
-  handleAppError,
-  handleNetworkError,
-} from "components/utils/handleAppError";
+import { AuthApi } from "api/Api";
+import { handleAppError } from "components/utils/handleAppError";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthAction } from "components/Login/AuthReducer";
+import { handleServerNetworkError } from "components/utils/handleServerNetworkError";
 
 export const initialization = createAsyncThunk(
   "app/initialization",
-  async (arg, { dispatch }) => {
+  async (arg, { dispatch, rejectWithValue }) => {
     try {
       const res = await AuthApi.me();
       if (res.data.resultCode === 0) {
         dispatch(AuthAction.setAuthAC({ isAuth: true }));
+        return { isInitialized: true };
       } else {
         handleAppError(res.data, dispatch);
       }
     } catch (err) {
-      if (axios.isAxiosError<ResponseType>(err)) {
-        const error = err.response?.data
-          ? err.response?.data.messages[0]
-          : err.message;
-        handleNetworkError(error, dispatch);
-      } else {
-        handleNetworkError((err as Error).message, dispatch);
-      }
+      handleServerNetworkError(err, dispatch);
+      return rejectWithValue(null);
     }
-    // finally {
-    //   dispatch(AppActions.setInitialized({ isInitialized: true }));
-    // }
   },
 );
 

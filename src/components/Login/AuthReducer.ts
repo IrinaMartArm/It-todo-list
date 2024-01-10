@@ -1,12 +1,9 @@
-import { AuthApi, Params, ResponseType } from "../../api/Api";
-import {
-  handleAppError,
-  handleNetworkError,
-} from "components/utils/handleAppError";
-import axios from "axios";
+import { AuthApi, Params } from "api/Api";
+import { handleAppError } from "components/utils/handleAppError";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppActions } from "../../App/AppReducer";
-import { clearTodosTasks } from "../../common/Actions";
+import { AppActions } from "App/AppReducer";
+import { clearTodosTasks } from "common/Actions";
+import { handleServerNetworkError } from "components/utils/handleServerNetworkError";
 
 export type AuthState = ReturnType<typeof slice.getInitialState>;
 
@@ -17,7 +14,6 @@ export const LogIn = createAsyncThunk(
     try {
       const res = await AuthApi.authMe(params);
       if (res.data.resultCode === 0) {
-        thunkAPI.dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
         return;
       } else {
         handleAppError(res.data, thunkAPI.dispatch);
@@ -27,16 +23,10 @@ export const LogIn = createAsyncThunk(
         });
       }
     } catch (err) {
-      if (axios.isAxiosError<ResponseType>(err)) {
-        const error = err.response?.data
-          ? err.response?.data.messages[0]
-          : err.message;
-        handleNetworkError(error, thunkAPI.dispatch);
-        return thunkAPI.rejectWithValue({});
-      } else {
-        handleNetworkError((err as Error).message, thunkAPI.dispatch);
-        return thunkAPI.rejectWithValue({});
-      }
+      handleServerNetworkError(err, thunkAPI.dispatch);
+      return thunkAPI.rejectWithValue(null);
+    } finally {
+      thunkAPI.dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
     }
   },
 );
@@ -55,16 +45,8 @@ export const logoutTC = createAsyncThunk("", async (arg, thunkAPI) => {
       return thunkAPI.rejectWithValue({});
     }
   } catch (err) {
-    if (axios.isAxiosError<ResponseType>(err)) {
-      const error = err.response?.data
-        ? err.response?.data.messages[0]
-        : err.message;
-      handleNetworkError(error, thunkAPI.dispatch);
-      return thunkAPI.rejectWithValue({});
-    } else {
-      handleNetworkError((err as Error).message, thunkAPI.dispatch);
-      return thunkAPI.rejectWithValue({});
-    }
+    handleServerNetworkError(err, thunkAPI.dispatch);
+    return thunkAPI.rejectWithValue(null);
   }
 });
 
