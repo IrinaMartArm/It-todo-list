@@ -3,7 +3,7 @@ import axios from "axios";
 import {
   handleAppError,
   handleNetworkError,
-} from "components/utils/ErrorUtils";
+} from "components/utils/handleAppError";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthAction } from "components/Login/AuthReducer";
 

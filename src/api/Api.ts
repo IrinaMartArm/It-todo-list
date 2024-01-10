@@ -22,6 +22,11 @@ export enum TaskPriorities {
   Urgently,
   Later,
 }
+export const ResultCode = {
+  success: 0,
+  error: 1,
+  captcha: 10,
+} as const;
 
 export type TodoListsTypeOfResponse = {
   id: string;
@@ -93,12 +98,12 @@ export const Api = {
       `todo-lists/${todoId}/tasks/${taskId}`,
     );
   },
-  async createTask(todoId: string, title: string) {
+  async createTask(arg: Arg) {
     const resp = await instance.post<
       ResponseType<{ item: TaskTypeOfResponse }>,
       AxiosResponse<ResponseType<{ item: TaskTypeOfResponse }>>,
       { title: string }
-    >(`todo-lists/${todoId}/tasks`, { title });
+    >(`todo-lists/${arg.todoId}/tasks`, { title: arg.title });
     return resp.data;
   },
   updateTask(todoId: string, taskId: string, model: UpdateApiModelType) {
@@ -132,4 +137,9 @@ export const AuthApi = {
   logout() {
     return instance.delete<ResponseType>("auth/login");
   },
+};
+
+export type Arg = {
+  todoId: string;
+  title: string;
 };

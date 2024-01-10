@@ -5,15 +5,17 @@ import {
   TaskTypeOfResponse,
   Api,
   UpdateApiModelType,
+  Arg,
 } from "api/Api";
 import { RootReducerType } from "App/Store";
-import { handleAppError, handleNetworkError } from "../utils/ErrorUtils";
+import { handleAppError } from "components/utils/handleAppError";
 import axios from "axios";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { TodoListActions, todoThunks } from "./ReduserTodoLists";
 import { AppActions } from "App/AppReducer";
 import { clearTodosTasks } from "common/Actions";
 import { createAppAsyncThunk } from "components/utils/createAppAsyncThunk";
+import { handleServerNetworkError } from "components/utils/handleServerNetworkError";
 
 export type TasksStateType = {
   [key: string]: Array<TaskTypeOfResponse>;
@@ -23,9 +25,15 @@ const fetchTasksTC = createAppAsyncThunk(
   "Tasks/fetchTasksTC",
   async (todoId: string, thunkAPI) => {
     thunkAPI.dispatch(AppActions.setAppStatusAC({ status: "loading" }));
-    const res = await Api.getTasks(todoId);
-    thunkAPI.dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
-    return { todoId, tasks: res };
+    try {
+      const res = await Api.getTasks(todoId);
+      return { todoId, tasks: res };
+    } catch (err) {
+      handleServerNetworkError(err, thunkAPI.dispatch);
+      return thunkAPI.rejectWithValue(null);
+    } finally {
+      thunkAPI.dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
+    }
   },
 );
 
@@ -45,43 +53,41 @@ const removeTaskTC = createAppAsyncThunk(
         entityStatus: "loading",
       }),
     );
-    await Api.removeTask(param.todoId, param.taskId);
-    thunkAPI.dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
-    thunkAPI.dispatch(
-      TodoListActions.changeEntityStatusAC({
-        id: param.todoId,
-        entityStatus: "succeeded",
-      }),
-    );
-    return { todoId: param.todoId, taskId: param.taskId };
+    try {
+      await Api.removeTask(param.todoId, param.taskId);
+      return { todoId: param.todoId, taskId: param.taskId };
+    } catch (err) {
+      handleServerNetworkError(err, thunkAPI.dispatch);
+      return thunkAPI.rejectWithValue(null);
+    } finally {
+      thunkAPI.dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
+      thunkAPI.dispatch(
+        TodoListActions.changeEntityStatusAC({
+          id: param.todoId,
+          entityStatus: "succeeded",
+        }),
+      );
+    }
   },
 );
 
-const addTaskTC = createAppAsyncThunk(
+const addTaskTC = createAppAsyncThunk<any, { todoId: string; title: string }>(
   "Tasks/addTaskTC",
-  async (
-    arg: { todoId: string; title: string },
-    { dispatch, rejectWithValue },
-  ) => {
+  async (arg: Arg, { dispatch, rejectWithValue }) => {
     dispatch(AppActions.setAppStatusAC({ status: "loading" }));
     try {
-      const res = await Api.createTask(arg.todoId, arg.title);
+      const res = await Api.createTask(arg);
       if (res.resultCode === 0) {
-        dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
         return res.data.item;
       } else {
         handleAppError(res, dispatch);
         return rejectWithValue(null);
       }
     } catch (err) {
-      if (axios.isAxiosError<ResponseType>(err)) {
-        const error = err.response?.data
-          ? err.response?.data.messages[0]
-          : err.message;
-        handleNetworkError(error, dispatch);
-      } else {
-        handleNetworkError((err as Error).message, dispatch);
-      }
+      handleServerNetworkError(err, dispatch);
+      return rejectWithValue(null);
+    } finally {
+      dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
     }
   },
 );
@@ -110,8 +116,6 @@ const updateTaskTC = createAppAsyncThunk(
     try {
       const res = await Api.updateTask(arg.todoId, arg.taskId, apiModel);
       if (res.data.resultCode === 0) {
-        // thunkAPI.dispatch(updateTaskAC({ arg.todoId, arg.taskId, model: arg.domainModel }));
-        thunkAPI.dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
         return {
           todoId: arg.todoId,
           taskId: arg.taskId,
@@ -122,16 +126,10 @@ const updateTaskTC = createAppAsyncThunk(
         return thunkAPI.rejectWithValue(null);
       }
     } catch (err) {
-      if (axios.isAxiosError<ResponseType>(err)) {
-        const error = err.response?.data
-          ? err.response?.data.messages[0]
-          : err.message;
-        handleNetworkError(error, thunkAPI.dispatch);
-        return thunkAPI.rejectWithValue(null);
-      } else {
-        handleNetworkError((err as Error).message, thunkAPI.dispatch);
-        return thunkAPI.rejectWithValue(null);
-      }
+      handleServerNetworkError(err, thunkAPI.dispatch);
+      return thunkAPI.rejectWithValue(null);
+    } finally {
+      thunkAPI.dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
     }
   },
 );

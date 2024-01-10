@@ -1,12 +1,12 @@
-import { Api, ResponseType, TodoListsTypeOfResponse } from "api/Api";
+import { Api, TodoListsTypeOfResponse } from "api/Api";
 import { Dispatch } from "redux";
 import { AppActions, RequestStatus } from "App/AppReducer";
-import { handleAppError, handleNetworkError } from "../utils/ErrorUtils";
-import axios from "axios";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { handleAppError } from "components/utils/handleAppError";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clearTodosTasks } from "common/Actions";
 import { tasksThunks } from "components/TodoList/TasksReducer";
 import { createAppAsyncThunk } from "components/utils/createAppAsyncThunk";
+import { handleServerNetworkError } from "components/utils/handleServerNetworkError";
 
 export type FilterValuesType = "all" | "completed" | "active";
 
@@ -25,16 +25,8 @@ const fetchTodoListsTC = createAppAsyncThunk(
       thunkAPI.dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
       return { todoLists: res };
     } catch (err) {
-      if (axios.isAxiosError<ResponseType>(err)) {
-        const error = err.response?.data
-          ? err.response?.data.messages[0]
-          : err.message;
-        handleNetworkError(error, thunkAPI.dispatch);
-        return thunkAPI.rejectWithValue(null);
-      } else {
-        handleNetworkError((err as Error).message, thunkAPI.dispatch);
-        return thunkAPI.rejectWithValue(null);
-      }
+      handleServerNetworkError(err, thunkAPI.dispatch);
+      return thunkAPI.rejectWithValue(null);
     }
   },
 );
@@ -49,26 +41,19 @@ const removeTodoTC = createAppAsyncThunk(
     try {
       const res = await Api.removeTodoList(id);
       if (res.data.resultCode === 0) {
-        dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
         return { todolistId: id };
       } else {
         handleAppError(res.data, dispatch);
         return rejectWithValue(null);
       }
     } catch (err) {
+      handleServerNetworkError(err, dispatch);
+      return rejectWithValue(null);
+    } finally {
       dispatch(
         TodoListActions.changeEntityStatusAC({ id, entityStatus: "idle" }),
       );
-      if (axios.isAxiosError<ResponseType>(err)) {
-        const error = err.response?.data
-          ? err.response?.data.messages[0]
-          : err.message;
-        handleNetworkError(error, dispatch);
-        return rejectWithValue(null);
-      } else {
-        handleNetworkError((err as Error).message, dispatch);
-        return rejectWithValue(null);
-      }
+      dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
     }
   },
 );
@@ -80,23 +65,16 @@ const addTodoListTC = createAppAsyncThunk(
     try {
       const res = await Api.createTodoList(title);
       if (res.data.resultCode === 0) {
-        dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
         return { todoList: res.data.data.item };
       } else {
         handleAppError(res.data, dispatch);
         return rejectWithValue(null);
       }
     } catch (err) {
-      if (axios.isAxiosError<ResponseType>(err)) {
-        const error = err.response?.data
-          ? err.response?.data.messages[0]
-          : err.message;
-        handleNetworkError(error, dispatch);
-        return rejectWithValue(null);
-      } else {
-        handleNetworkError((err as Error).message, dispatch);
-        return rejectWithValue(null);
-      }
+      handleServerNetworkError(err, dispatch);
+      return rejectWithValue(null);
+    } finally {
+      dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
     }
   },
 );
@@ -274,13 +252,6 @@ export const changeTodoTitleTC =
         handleAppError(res.data, dispatch);
       }
     } catch (err) {
-      if (axios.isAxiosError<ResponseType>(err)) {
-        const error = err.response?.data
-          ? err.response?.data.messages[0]
-          : err.message;
-        handleNetworkError(error, dispatch);
-      } else {
-        handleNetworkError((err as Error).message, dispatch);
-      }
+      handleServerNetworkError(err, dispatch);
     }
   };

@@ -1,5 +1,8 @@
 import { AuthApi, Params, ResponseType } from "../../api/Api";
-import { handleAppError, handleNetworkError } from "../utils/ErrorUtils";
+import {
+  handleAppError,
+  handleNetworkError,
+} from "components/utils/handleAppError";
 import axios from "axios";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppActions } from "../../App/AppReducer";
