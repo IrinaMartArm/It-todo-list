@@ -8,11 +8,11 @@ import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { FormikHelpers, useFormik } from "formik";
-import { LogIn } from "./AuthReducer";
-import { useAppDispatch, useAppSelector } from "../../common/hooks/Hooks";
+import { useAppDispatch, useAppSelector } from "common/hooks/Hooks";
 import { Navigate } from "react-router-dom";
 import * as Yup from "yup";
 import { getIsAuth } from "common/utils";
+import { AuthThunks } from "components/Login/AuthReducer";
 
 type FormDataType = {
   email: string;
@@ -57,8 +57,8 @@ export const Login = () => {
       values: FormDataType,
       formikHelpers: FormikHelpers<FormDataType>,
     ) => {
-      const res = await dispatch(LogIn(values));
-      if (res.type === LogIn.rejected.type) {
+      const res = await dispatch(AuthThunks.LogIn(values));
+      if (res.type === AuthThunks.LogIn.rejected.type) {
       }
       formikHelpers.setFieldError("email", "oops");
       // .then((data) => {

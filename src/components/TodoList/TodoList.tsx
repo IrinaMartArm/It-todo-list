@@ -12,7 +12,6 @@ import { TaskStatuses } from "common/api";
 
 export type PropsType = {
   todoList: TogoDomainType;
-  // demo?: boolean
 };
 
 export const TodoList = React.memo(({ todoList }: PropsType) => {
@@ -26,12 +25,6 @@ export const TodoList = React.memo(({ todoList }: PropsType) => {
     completedFilterHandler,
     isAuth,
   } = useTodo(todoList.id);
-
-  // useEffect(() => {
-  //     if(isAuth) {
-  //         dispatch(fetchTasksTC(todoList.id))
-  //     }
-  // }, [dispatch]);
 
   if (todoList.filter === "completed") {
     tasks = tasks.filter((t) => t.status === TaskStatuses.Completed);

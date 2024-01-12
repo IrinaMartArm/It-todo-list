@@ -1,11 +1,7 @@
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import { TodoListForm } from "../addItemForm/TodoListForm";
 import { TodoList } from "./TodoList";
 import React, { useEffect } from "react";
-import { useApp } from "../../common/hooks/useApp";
-import { useAppDispatch } from "../../common/hooks/Hooks";
+import { useApp } from "common/hooks/useApp";
 import { todoThunks } from "components/TodoList/ReduserTodoLists";
 
 type PropsType = {
@@ -13,8 +9,7 @@ type PropsType = {
 };
 
 export const TodoListBox = ({ demo = false }: PropsType) => {
-  const { todoLists, addTodoList } = useApp();
-  const dispatch = useAppDispatch();
+  const { todoLists, addTodoList, dispatch } = useApp();
 
   useEffect(() => {
     if (demo) {
@@ -24,25 +19,19 @@ export const TodoListBox = ({ demo = false }: PropsType) => {
   }, []);
 
   return (
-    <Container fixed>
-      <Grid container style={{ padding: "20px", justifyContent: "center" }}>
+    <div>
+      <div className={"todoListForm-wrapper"}>
         <TodoListForm addText={addTodoList} />
-      </Grid>
-      <Grid container spacing={3} style={{ justifyContent: "center" }}>
+      </div>
+      <div className={"todos-wrapper"}>
         {todoLists.map((tl) => {
           return (
-            <Grid key={tl.id} item>
-              <Paper>
-                <TodoList
-                  key={tl.id}
-                  todoList={tl}
-                  // demo={demo}
-                />
-              </Paper>
-            </Grid>
+            <div key={tl.id}>
+              <TodoList key={tl.id} todoList={tl} />
+            </div>
           );
         })}
-      </Grid>
-    </Container>
+      </div>
+    </div>
   );
 };

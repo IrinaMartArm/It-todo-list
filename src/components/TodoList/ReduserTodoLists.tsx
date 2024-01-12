@@ -34,7 +34,7 @@ const fetchTodoListsTC = createAppAsyncThunk(
   },
 );
 
-const removeTodoTC = createAppAsyncThunk(
+const removeTodoTC = createAppAsyncThunk<{ todolistId: string }, string>(
   "todoLists/removeTodoTC",
   async (id: string, { dispatch, rejectWithValue }) => {
     dispatch(AppActions.setAppStatusAC({ status: "loading" }));

@@ -1,11 +1,12 @@
 import { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "common/hooks/Hooks";
-import { getTodoLists } from "common/utils/Selectors";
+import { getIsInitialized, getTodoLists } from "common/utils/Selectors";
 import { todoThunks } from "components/TodoList/ReduserTodoLists";
 
 export const useApp = () => {
   const dispatch = useAppDispatch();
   const todoLists = useAppSelector(getTodoLists);
+  const isInitialized = useAppSelector(getIsInitialized);
 
   const addTodoList = useCallback(
     (title: string) => {
@@ -14,5 +15,5 @@ export const useApp = () => {
     [dispatch],
   );
 
-  return { todoLists, addTodoList };
+  return { todoLists, addTodoList, isInitialized, dispatch };
 };

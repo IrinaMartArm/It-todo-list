@@ -7,10 +7,10 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import LinearProgress from "@mui/material/LinearProgress";
-import { useAppDispatch, useAppSelector } from "../../common/hooks/Hooks";
-import { logoutTC } from "../Login/AuthReducer";
+import { useAppDispatch, useAppSelector } from "common/hooks/Hooks";
 import { useCallback } from "react";
-import { RequestStatus } from "../../App/AppReducer";
+import { RequestStatus } from "App/AppReducer";
+import { AuthThunks } from "components/Login/AuthReducer";
 
 export default function ButtonAppBar() {
   const dispatch = useAppDispatch();
@@ -18,7 +18,7 @@ export default function ButtonAppBar() {
   const isAuth = useAppSelector((state) => state.auth.isAuth);
 
   const logoutHandler = useCallback(() => {
-    dispatch(logoutTC());
+    dispatch(AuthThunks.logout());
   }, []);
 
   return (

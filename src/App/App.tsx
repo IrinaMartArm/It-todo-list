@@ -5,17 +5,12 @@ import { ErrorSnackbar } from "components/ErrorSnackbar/ErrorSneckBar";
 import { TodoListBox } from "components/TodoList/TodoListsBox";
 import { Route, Routes } from "react-router-dom";
 import { Login } from "components/Login/Login";
-import { useAppDispatch, useAppSelector } from "common/hooks/Hooks";
 import CircularProgress from "@mui/material/CircularProgress";
 import { initialization } from "./AppReducer";
-import { getIsInitialized } from "common/utils";
+import { useApp } from "common/hooks/useApp";
 
-type PropsType = {
-  demo?: boolean;
-};
-function App({ demo = false }: PropsType) {
-  const dispatch = useAppDispatch();
-  const isInitialized = useAppSelector(getIsInitialized);
+function App() {
+  let { isInitialized, dispatch } = useApp();
 
   useEffect(() => {
     dispatch(initialization());
@@ -23,14 +18,7 @@ function App({ demo = false }: PropsType) {
 
   if (!isInitialized) {
     return (
-      <div
-        style={{
-          width: "100%",
-          top: "30%",
-          position: "fixed",
-          textAlign: "center",
-        }}
-      >
+      <div className={"progress"} style={{ textAlign: "center" }}>
         <CircularProgress color="secondary" />
       </div>
     );
@@ -53,100 +41,3 @@ function App({ demo = false }: PropsType) {
 }
 
 export default App;
-
-//         <div className="App">
-//             <ButtonAppBar/>
-//             <Grid container spacing={3} style={{ backgroundColor: 'lemonchiffon', minHeight: '100vh', padding: '30px',      alignItems: 'start',  flexWrap: 'wrap'}}>
-//                 <Grid item xs={12}>
-//                     <TodoListForm addText={addTodoList}/>
-//                 </Grid>
-//                 <Grid item container spacing={5} style={{justifyContent: 'center'}}>
-//
-//                     {todoLists.map((tl)=>{
-//
-//                     return (
-//                         <Grid item key={tl.todolistId}>
-//                             <Paper  style={{backgroundColor: 'beige', padding: '20px', border: '2px solid gray'}}> //elevation={6}
-//                                 <TodoList key={tl.todolistId}
-//                                             id={tl.todolistId}
-//                                             title={tl.title}
-//                                             removeTodoList={removeTodoList}
-//                                             changeFilter={changeFilter}
-//                                             filter={tl.filter}
-//                                             changeTodoTitle={changeTodoTitle}
-//                                 />
-//                             </Paper>
-//                         </Grid>
-//                     )
-//                 })}
-//                 </Grid>
-//             </Grid>
-//         </div>
-//     );
-// }
-
-// <div className="App">
-//     <AppBar position="static">
-//         <Toolbar>
-//             <IconButton edge="start" color="inherit" aria-label="menu">
-//                 <Menu/>
-//             </IconButton>
-//             <Typography variant="h6">
-//                 News
-//             </Typography>
-//             <Button color="inherit">Login</Button>
-//         </Toolbar>
-//     </AppBar>
-//     <Container fixed>
-//         <Grid container style={{padding: "20px"}}>
-//             <TodoListForm addText={addTodoList}/>
-//         </Grid>
-//         <Grid container spacing={3}>
-//             {
-//                 todolists.map(tl => {
-//
-//
-//                     return <Grid key={tl.id} item>
-//                         <Paper style={{padding: "10px"}}>
-//                            <TodoList key={tl.id}
-// //                            id={tl.id}
-// //                            title={tl.title}
-// //                            filter={tl.filter}
-//                             />
-//                         </Paper>
-//                     </Grid>
-//                 })
-//             }
-//         </Grid>
-//     </Container>
-// </div>
-
-// <div className="App">
-//     <TodoListForm addText={addTodoList}/>
-//     {todoLists.map((tl)=>{
-//         return (
-//             <TodoList key={tl.id}
-//                            id={tl.id}
-//                            title={tl.title}
-//                            filter={tl.filter}
-//                 // removeTodoList={removeTodoList}
-//                 // changeFilter={changeFilter}
-//                 // changeTodoTitle={changeTodoTitle}
-//             />
-//         )
-//     })}
-// </div>
-
-// const changeFilter = useCallback((todolistId: string, value: FilterValuesType) => {
-//     dispatch(changeTodolistFilterAC(todolistId, value))
-// }, [])
-//
-// const removeTodoList = useCallback((todolistId: string) => {
-//     dispatch(removeTodolistAC(todolistId))
-//     // dispatch(removeTodolistAC(todolistId))
-// }, [])
-//
-// const changeTodoTitle = useCallback((todolistId: string, title: string) => {
-//     const action = changeTodolistTitleAC(todolistId, title)
-//     dispatch(action)
-// }, [])

@@ -2,8 +2,9 @@
 .App > div {
   /*margin-right: 50px;*/
 }
+
+
 .App {
-  padding: 30px;
   display: flex;
   background-color: lemonchiffon;
   min-height: 100vh;
@@ -11,6 +12,10 @@
   justify-content: start;
 }
 
+.todoListForm-wrapper {
+  width: 500px;
+  margin: 30px auto;
+}
 
 .todolist {
   border: 2px solid rgb(128, 128, 128);
@@ -18,21 +23,29 @@
   border-radius: 5px;
   padding: 15px;
   height: max-content;
+  width: 250px;
+
 }
 
-.todoBox {
-  border: 1px solid red;
-  /*display: flex;*/
-  justify-content: space-around;
+.todos-wrapper {
+  overflow-x: scroll;
+  margin: 0 auto;
+  padding: 30px;
+  display: flex;
+  gap: 30px;
+  justify-content: start;
 }
+
 
 .active-filter {
   background-color: aquamarine;
 }
 
-/*.is-done {*/
-/*  opacity: 0.5;*/
-/*}*/
+.task {
+  list-style: none;
+  margin-left: -40px;
+  overflow: scroll;
+}
 
 .error {
   border: red 1px solid;
@@ -41,27 +54,8 @@
 .error-message {
   color: red;
 }
-/* import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-})); */
-
-
-/* export default function CenteredGrid() {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.root}>
-      <Grid container spacing={3}>
-        <Grid item xs={12}> */
+.progress {
+  width: 100%;
+  top: 30%;
+  position: fixed;
+}
