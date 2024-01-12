@@ -9,7 +9,7 @@ import {
   handleServerNetworkError,
 } from "common/utils";
 import { TodoListsTypeOfResponse } from "common/api";
-import { TodoListApi } from "common/api/Api";
+import { TodoListApi } from "common/api/TodoListApi";
 
 export type FilterValuesType = "all" | "completed" | "active";
 

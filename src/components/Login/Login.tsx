@@ -12,6 +12,7 @@ import { LogIn } from "./AuthReducer";
 import { useAppDispatch, useAppSelector } from "../../common/hooks/Hooks";
 import { Navigate } from "react-router-dom";
 import * as Yup from "yup";
+import { getIsAuth } from "common/utils";
 
 type FormDataType = {
   email: string;
@@ -29,7 +30,7 @@ const validationSchema = Yup.object().shape({
 
 export const Login = () => {
   const dispatch = useAppDispatch();
-  const isAuth = useAppSelector((state) => state.auth.isAuth);
+  const isAuth = useAppSelector(getIsAuth);
 
   const formik = useFormik<FormDataType>({
     initialValues: {

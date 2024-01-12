@@ -15,7 +15,7 @@ import {
   TaskTypeOfResponse,
   UpdateApiModelType,
 } from "common/api";
-import { TodoListApi } from "common/api/Api";
+import { TodoListApi } from "common/api/TodoListApi";
 
 export type TasksStateType = {
   [key: string]: Array<TaskTypeOfResponse>;
