@@ -18,10 +18,14 @@ const slice = createSlice({
       state.isInitialized = action.payload.isInitialized;
     },
   },
+  selectors: {
+    getIsInitialized: (sliceState) => sliceState.isInitialized,
+  },
 });
 
 export const AppReducer = slice.reducer;
 export const AppActions = slice.actions;
+export const isInitialized = slice.selectors;
 
 export type RequestStatus = "idle" | "loading" | "succeeded" | "failed";
 export type InitState = {

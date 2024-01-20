@@ -9,7 +9,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useAppDispatch, useAppSelector } from "common/hooks/Hooks";
 import { useCallback } from "react";
-import { RequestStatus } from "App/AppReducer";
+import { RequestStatus } from "App/bll/AppReducer";
 import { AuthThunks } from "components/Login/AuthReducer";
 
 export default function ButtonAppBar() {

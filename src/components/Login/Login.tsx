@@ -7,10 +7,10 @@ import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { useAppSelector } from "common/hooks/Hooks";
 import { Navigate } from "react-router-dom";
-import { getIsAuth } from "common/utils";
 import { useLogin } from "common/hooks/useLogin";
+import { useAppSelector } from "common/hooks/Hooks";
+import { getIsAuth } from "components/Login/AuthReducer";
 
 export const Login = () => {
   const isAuth = useAppSelector(getIsAuth);

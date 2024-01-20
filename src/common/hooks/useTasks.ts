@@ -1,8 +1,8 @@
 import { useAppDispatch } from "common/hooks/Hooks";
 import { useCallback, useState } from "react";
-import { tasksThunks } from "components/TodoList/TasksReducer";
+import { tasksThunks } from "components/TodoList/bll/TasksReducer";
 import { TaskStatuses } from "common/api";
-import { TaskProps } from "components/TodoList/Task";
+import { TaskProps } from "components/TodoList/ui/Task";
 
 export const useTask = (props: TaskProps) => {
   const { todoId, task } = props;

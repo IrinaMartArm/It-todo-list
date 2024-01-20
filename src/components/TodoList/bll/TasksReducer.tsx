@@ -1,7 +1,10 @@
 import { RootReducerType } from "App/Store";
 import { createSlice } from "@reduxjs/toolkit";
-import { TodoListActions, todoThunks } from "./ReduserTodoLists";
-import { AppActions } from "App/AppReducer";
+import {
+  TodoListActions,
+  todoThunks,
+} from "components/TodoList/bll/ReduserTodoLists";
+import { AppActions } from "App/bll/AppReducer";
 import { clearTodosTasks } from "common/Actions";
 import {
   createAppAsyncThunk,
@@ -124,7 +127,7 @@ const updateTaskTC = createAppAsyncThunk<
 );
 
 const slice = createSlice({
-  name: "Tasks",
+  name: "tasks",
   initialState: {} as TasksStateType,
   reducers: {},
   extraReducers: (builder) => {
@@ -165,9 +168,13 @@ const slice = createSlice({
       }
     });
   },
+  selectors: {
+    getTasks: (sliceState) => sliceState,
+  },
 });
 
 export const TasksReducer = slice.reducer;
+export const { getTasks } = slice.selectors;
 export const tasksThunks = {
   updateTaskTC,
   addTaskTC,

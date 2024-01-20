@@ -1,16 +1,14 @@
 import { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "common/hooks/Hooks";
 import {
-  getIsAuth,
-  getIsInitialized,
   getTodoLists,
-} from "common/utils/Selectors";
-import { todoThunks } from "components/TodoList/ReduserTodoLists";
+  todoThunks,
+} from "components/TodoList/bll/ReduserTodoLists";
+import { getIsAuth } from "components/Login/AuthReducer";
 
 export const useApp = () => {
   const dispatch = useAppDispatch();
   const todoLists = useAppSelector(getTodoLists);
-  const isInitialized = useAppSelector(getIsInitialized);
   const isAuth = useAppSelector(getIsAuth);
 
   const addTodoList = useCallback(
@@ -20,5 +18,5 @@ export const useApp = () => {
     [dispatch],
   );
 
-  return { todoLists, addTodoList, isInitialized, dispatch, isAuth };
+  return { todoLists, addTodoList, dispatch, isAuth };
 };

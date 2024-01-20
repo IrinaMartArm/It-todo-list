@@ -1,5 +1,9 @@
-import { TasksReducer, TasksStateType, tasksThunks } from "./TasksReducer";
-import { todoThunks } from "components/TodoList/ReduserTodoLists";
+import {
+  TasksReducer,
+  TasksStateType,
+  tasksThunks,
+} from "components/TodoList/bll/TasksReducer";
+import { todoThunks } from "components/TodoList/bll/ReduserTodoLists";
 import { TaskPriorities, TaskStatuses } from "common/api";
 
 let startState: TasksStateType;

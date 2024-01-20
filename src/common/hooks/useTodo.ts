@@ -3,10 +3,10 @@ import {
   changeTodoTitleTC,
   TodoListActions,
   todoThunks,
-} from "components/TodoList/ReduserTodoLists";
+} from "components/TodoList/bll/ReduserTodoLists";
 import { useAppDispatch, useAppSelector } from "common/hooks/Hooks";
-import { getIsAuth, getTasks } from "common/utils/Selectors";
-import { tasksThunks } from "components/TodoList/TasksReducer";
+import { getTasks, tasksThunks } from "components/TodoList/bll/TasksReducer";
+import { getIsAuth } from "components/Login/AuthReducer";
 
 export const useTodo = (todoId: string) => {
   const dispatch = useAppDispatch();
@@ -29,7 +29,6 @@ export const useTodo = (todoId: string) => {
   const changeTodoListTitle = useCallback(
     (value: string) => {
       dispatch(changeTodoTitleTC(todoId, value));
-      // props.changeTodoTitle(id, value)
     },
     [todoId],
   );

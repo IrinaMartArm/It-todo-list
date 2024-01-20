@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
-import "./App.css";
-import ButtonAppBar from "../components/Elements/NavBar";
+import "App/ui/App.css";
+import ButtonAppBar from "components/Elements/NavBar";
 import { ErrorSnackbar } from "components/ErrorSnackbar/ErrorSneckBar";
-import { TodoListBox } from "components/TodoList/TodoListsBox";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { TodoListBox } from "components/TodoList/ui/TodoListsBox";
+import { Route, Routes } from "react-router-dom";
 import { Login } from "components/Login/Login";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useApp } from "common/hooks/useApp";
 import { AuthThunks } from "components/Login/AuthReducer";
+import { isInitialized } from "App/bll/AppReducer";
 
 function App() {
-  let { isInitialized, isAuth, dispatch } = useApp();
+  let { dispatch } = useApp();
 
   useEffect(() => {
     dispatch(AuthThunks.initializeApp());

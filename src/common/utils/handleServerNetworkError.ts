@@ -1,5 +1,5 @@
 import { AppDispatch } from "App/Store";
-import { AppActions } from "App/AppReducer";
+import { AppActions } from "App/bll/AppReducer";
 import axios from "axios";
 
 export const handleServerNetworkError = (

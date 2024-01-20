@@ -1,21 +1,14 @@
-import { TodoListForm } from "../addItemForm/TodoListForm";
-import { TodoList } from "./TodoList";
+import { TodoListForm } from "components/addItemForm/TodoListForm";
+import { TodoList } from "components/TodoList/ui/TodoList";
 import React, { useEffect } from "react";
 import { useApp } from "common/hooks/useApp";
-import { todoThunks } from "components/TodoList/ReduserTodoLists";
+import { todoThunks } from "components/TodoList/bll/ReduserTodoLists";
 import { Navigate } from "react-router-dom";
 
-type PropsType = {
-  demo?: boolean;
-};
-
-export const TodoListBox = ({ demo = false }: PropsType) => {
+export const TodoListBox = () => {
   const { todoLists, addTodoList, isAuth, dispatch } = useApp();
 
   useEffect(() => {
-    if (demo) {
-      return;
-    }
     dispatch(todoThunks.fetchTodoListsTC());
   }, []);
 

@@ -4,9 +4,9 @@ import {
   TodoListActions,
   todoThunks,
   TogoDomainType,
-} from "./ReduserTodoLists";
+} from "components/TodoList/bll/ReduserTodoLists";
 import { v1 } from "uuid";
-import { RequestStatus } from "App/AppReducer";
+import { RequestStatus } from "App/bll/AppReducer";
 
 let todolistId1 = v1();
 let todolistId2 = v1();

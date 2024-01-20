@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { AppActions } from "App/AppReducer";
+import { AppActions } from "App/bll/AppReducer";
 import { clearTodosTasks } from "common/Actions";
 import {
   createAppAsyncThunk,
@@ -87,7 +87,11 @@ const slice = createSlice({
       state.isAuth = action.payload.isAuth;
     });
   },
+  selectors: {
+    getIsAuth: (sliceState) => sliceState.isAuth,
+  },
 });
 
 export const AuthReducer = slice.reducer;
 export const AuthThunks = { LogIn, logout, initializeApp };
+export const { getIsAuth } = slice.selectors;

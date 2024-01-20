@@ -1,6 +1,6 @@
-import { TasksReducer } from "components/TodoList/TasksReducer";
-import { ReducerTodoLists } from "components/TodoList/ReduserTodoLists";
-import { AppReducer } from "./AppReducer";
+import { TasksReducer } from "components/TodoList/bll/TasksReducer";
+import { ReducerTodoLists } from "components/TodoList/bll/ReduserTodoLists";
+import { AppReducer } from "App/bll/AppReducer";
 import { AuthReducer } from "components/Login/AuthReducer";
 import { configureStore } from "@reduxjs/toolkit";
 

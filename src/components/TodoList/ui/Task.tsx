@@ -1,6 +1,6 @@
 import React from "react";
-import { CheckBox } from "../Elements/CheckBox";
-import { EditableSpan } from "../EditableSpan/EditableSpan";
+import { CheckBox } from "components/Elements/CheckBox";
+import { EditableSpan } from "components/EditableSpan/EditableSpan";
 import Delete from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import { TaskTypeOfResponse } from "common/api";

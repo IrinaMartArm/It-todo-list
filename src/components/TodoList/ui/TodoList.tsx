@@ -1,12 +1,12 @@
-import { TodoListForm } from "../addItemForm/TodoListForm";
-import { EditableSpan } from "../EditableSpan/EditableSpan";
+import { TodoListForm } from "components/addItemForm/TodoListForm";
+import { EditableSpan } from "components/EditableSpan/EditableSpan";
 import Delete from "@mui/icons-material/Delete";
 import React from "react";
-import { Task } from "./Task";
-import { ButtonUI } from "../Elements/ButtonUI";
+import { Task } from "components/TodoList/ui/Task";
+import { ButtonUI } from "components/Elements/ButtonUI";
 import { useTodo } from "common/hooks/useTodo";
 import IconButton from "@mui/material/IconButton";
-import { TogoDomainType } from "./ReduserTodoLists";
+import { TogoDomainType } from "components/TodoList/bll/ReduserTodoLists";
 import { Navigate } from "react-router-dom";
 import { TaskStatuses } from "common/api";
 

@@ -2,8 +2,11 @@ import {
   ReducerTodoLists,
   todoThunks,
   TogoDomainType,
-} from "./ReduserTodoLists";
-import { TasksReducer, TasksStateType } from "./TasksReducer";
+} from "components/TodoList/bll/ReduserTodoLists";
+import {
+  TasksReducer,
+  TasksStateType,
+} from "components/TodoList/bll/TasksReducer";
 
 test("ids should be equals", () => {
   const startTasksState: TasksStateType = {};

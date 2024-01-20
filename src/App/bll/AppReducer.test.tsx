@@ -1,4 +1,4 @@
-import { AppActions, AppReducer, InitState } from "./AppReducer";
+import { AppActions, AppReducer, InitState } from "App/bll/AppReducer";
 
 let startState: InitState;
 beforeEach(() => {
