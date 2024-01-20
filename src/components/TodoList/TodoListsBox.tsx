@@ -3,13 +3,14 @@ import { TodoList } from "./TodoList";
 import React, { useEffect } from "react";
 import { useApp } from "common/hooks/useApp";
 import { todoThunks } from "components/TodoList/ReduserTodoLists";
+import { Navigate } from "react-router-dom";
 
 type PropsType = {
   demo?: boolean;
 };
 
 export const TodoListBox = ({ demo = false }: PropsType) => {
-  const { todoLists, addTodoList, dispatch } = useApp();
+  const { todoLists, addTodoList, isAuth, dispatch } = useApp();
 
   useEffect(() => {
     if (demo) {
@@ -17,6 +18,10 @@ export const TodoListBox = ({ demo = false }: PropsType) => {
     }
     dispatch(todoThunks.fetchTodoListsTC());
   }, []);
+
+  if (!isAuth) {
+    return <Navigate to={"/login"} />;
+  }
 
   return (
     <div>

@@ -4,5 +4,5 @@ import { AppDispatch, RootReducerType } from "App/Store";
 export const createAppAsyncThunk = createAsyncThunk.withTypes<{
   state: RootReducerType;
   dispatch: AppDispatch;
-  rejectValue: null;
+  rejectWithValue: null | ResponseType;
 }>();

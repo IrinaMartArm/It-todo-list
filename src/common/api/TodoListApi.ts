@@ -6,7 +6,7 @@ import {
   UpdateApiModelType,
   ResponseType,
   TaskResponseType,
-} from "common/api/types";
+} from "common/types";
 import { instance } from "common/api/instance";
 
 export const TodoListApi = {

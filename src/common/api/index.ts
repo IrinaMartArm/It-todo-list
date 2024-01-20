@@ -1,4 +1,4 @@
-export * from "./types";
+export * from "common/types";
 export enum TaskStatuses {
   New,
   InProgress,

@@ -1,6 +1,6 @@
 import { instance } from "common/api/instance";
 import { AxiosResponse } from "axios";
-import { Params, ResponseType } from "common/api/types";
+import { Params, ResponseType } from "common/types";
 
 export const AuthApi = {
   authMe(data: Params) {

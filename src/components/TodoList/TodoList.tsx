@@ -51,6 +51,7 @@ export const TodoList = React.memo(({ todoList }: PropsType) => {
         <IconButton
           onClick={removeTodoHandler}
           disabled={todoList.entityStatus === "loading"}
+          className={"removeTodo"}
         >
           <Delete />
         </IconButton>
@@ -83,33 +84,3 @@ export const TodoList = React.memo(({ todoList }: PropsType) => {
     </div>
   );
 });
-
-{
-  /*<Button onClick={allFilterHandler} name='All'  variant={filter === 'All' ? "outlined" : 'text'}>All</Button>*/
-}
-{
-  /*<Button onClick={activeFilterHandler} name='Active'  variant={filter === 'active' ? "outlined" : 'text'} color="primary">Active</Button>*/
-}
-{
-  /*<Button onClick={completedFilterHandler} name='Completed'  variant={filter === 'completed' ? "outlined" : 'text'} color="secondary">Completed</Button>*/
-}
-
-// const dispatch = useDispatch()
-//
-// const tasks = useSelector<RootReducerType, Array<TaskType>>(state => state.tasks[id])
-//
-//
-// const addText = useCallback((title: string) => {
-//     dispatch(addTaskAC(id, title))
-// }, [id])
-//
-// const removeTodoHandler = useCallback(() => {
-//     // props.removeTodoList(id)
-//     dispatch(removeTodolistAC(id))
-// }, [id])
-//
-// const changeTodoListTitle = useCallback((value: string) => {
-//
-//     dispatch(changeTodolistTitleAC(id, value))
-//     // props.changeTodoTitle(id, value)
-// }, [id])

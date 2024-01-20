@@ -1,4 +1,4 @@
-import { TaskPriorities, TaskStatuses } from "common/api/index";
+import { TaskPriorities, TaskStatuses } from "common/api";
 
 export type TodoListsTypeOfResponse = {
   id: string;

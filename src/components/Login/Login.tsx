@@ -13,6 +13,7 @@ import { Navigate } from "react-router-dom";
 import * as Yup from "yup";
 import { getIsAuth } from "common/utils";
 import { AuthThunks } from "components/Login/AuthReducer";
+import { ResponseType } from "common/types";
 
 type FormDataType = {
   email: string;
@@ -57,10 +58,14 @@ export const Login = () => {
       values: FormDataType,
       formikHelpers: FormikHelpers<FormDataType>,
     ) => {
-      const res = await dispatch(AuthThunks.LogIn(values));
-      if (res.type === AuthThunks.LogIn.rejected.type) {
-      }
-      formikHelpers.setFieldError("email", "oops");
+      dispatch(AuthThunks.LogIn(values))
+        .unwrap()
+        .catch((err: ResponseType) => {
+          err.fieldErrors?.forEach((fe) =>
+            formikHelpers.setFieldError(fe.field, fe.error),
+          );
+        });
+
       // .then((data) => {
       //     if(data?.resultCode === 0)
       //     formik.resetForm()
