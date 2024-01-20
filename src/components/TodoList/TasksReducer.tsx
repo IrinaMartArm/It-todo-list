@@ -9,19 +9,14 @@ import {
   handleServerNetworkError,
   thunkTryCatch,
 } from "common/utils";
-import {
-  AddTaskArg,
-  TaskPriorities,
-  TaskStatuses,
-  TaskTypeOfResponse,
-  UpdateApiModelType,
-} from "common/api";
+import { AddTaskArg, TaskTypeOfResponse, UpdateApiModelType } from "common/api";
 import { TodoListApi } from "common/api/TodoListApi";
 import { BaseThunkAPI } from "@reduxjs/toolkit/dist/createAsyncThunk";
 
 export type TasksStateType = {
   [key: string]: Array<TaskTypeOfResponse>;
 };
+export type TasksStateType2 = Record<string, TaskTypeOfResponse[]>;
 
 const fetchTasksTC = createAppAsyncThunk<any, string, BaseThunkAPI<any, any>>(
   "Tasks/fetchTasksTC",
@@ -180,32 +175,4 @@ export const tasksThunks = {
   removeTaskTC,
 };
 
-export type UpdateDomainModelType = {
-  description?: string;
-  title?: string;
-  status?: TaskStatuses;
-  priority?: TaskPriorities;
-  startDate?: string;
-  deadline?: string;
-};
-
-// const _addTaskTC = createAppAsyncThunk<any, { todoId: string; title: string }>(
-//   "Tasks/addTaskTC",
-//   async (arg: AddTaskArg, { dispatch, rejectWithValue }) => {
-//     dispatch(AppActions.setAppStatusAC({ status: "loading" }));
-//     try {
-//       const res = await TodoListApi.createTask(arg);
-//       if (res.resultCode === 0) {
-//         return res.data.item;
-//       } else {
-//         handleAppError(res, dispatch);
-//         return rejectWithValue(null);
-//       }
-//     } catch (err) {
-//       handleServerNetworkError(err, dispatch);
-//       return rejectWithValue(null);
-//     } finally {
-//       dispatch(AppActions.setAppStatusAC({ status: "succeeded" }));
-//     }
-//   },
-// );
+export type UpdateDomainModelType = Partial<UpdateApiModelType>;

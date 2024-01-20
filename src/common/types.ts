@@ -49,6 +49,8 @@ export type Params = {
   captcha?: string;
 };
 
+export type FormDataType = Omit<Params, "captcha">;
+
 export type AddTaskArg = {
   todoId: string;
   title: string;
