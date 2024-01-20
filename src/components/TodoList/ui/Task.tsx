@@ -14,12 +14,12 @@ export type TaskProps = {
 export const Task = React.memo((props: TaskProps) => {
   const { task } = props;
 
-  let { isDisabled, onRemoveTask, onChangeStatusHandler, onChangeTitle } =
+  let { isDisabled, onRemoveTask, onChangeStatus, onChangeTitle } =
     useTask(props);
 
   return (
     <li key={task.id} className={"task"}>
-      <CheckBox status={task.status} onChange={onChangeStatusHandler} />
+      <CheckBox status={task.status} onChange={onChangeStatus} />
       <EditableSpan title={task.title} onChange={onChangeTitle} />
       <IconButton onClick={onRemoveTask} disabled={isDisabled}>
         <Delete />

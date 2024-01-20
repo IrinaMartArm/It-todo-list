@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   TodoListActions,
   todoThunks,
-} from "components/TodoList/bll/ReduserTodoLists";
+} from "components/TodoList/bll/TodoListsReduser";
 import { AppActions } from "App/bll/AppReducer";
 import { clearTodosTasks } from "common/Actions";
 import {

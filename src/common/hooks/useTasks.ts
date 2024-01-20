@@ -16,7 +16,7 @@ export const useTask = (props: TaskProps) => {
     );
   }, [todoId, task.id]); // props.removeTask(props.id, t.id)
 
-  const onChangeStatusHandler = useCallback(
+  const onChangeStatus = useCallback(
     (status: TaskStatuses) => {
       dispatch(
         tasksThunks.updateTaskTC({
@@ -47,7 +47,7 @@ export const useTask = (props: TaskProps) => {
     isDisabled,
     setIsDisabled,
     onRemoveTask,
-    onChangeStatusHandler,
+    onChangeStatus,
     onChangeTitle,
   };
 };

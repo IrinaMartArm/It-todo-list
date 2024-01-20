@@ -6,7 +6,7 @@ import { Task } from "components/TodoList/ui/Task";
 import { ButtonUI } from "components/Elements/ButtonUI";
 import { useTodo } from "common/hooks/useTodo";
 import IconButton from "@mui/material/IconButton";
-import { TogoDomainType } from "components/TodoList/bll/ReduserTodoLists";
+import { TogoDomainType } from "components/TodoList/bll/TodoListsReduser";
 import { Navigate } from "react-router-dom";
 import { TaskStatuses } from "common/api";
 

@@ -3,7 +3,7 @@ import {
   TasksStateType,
   tasksThunks,
 } from "components/TodoList/bll/TasksReducer";
-import { todoThunks } from "components/TodoList/bll/ReduserTodoLists";
+import { todoThunks } from "components/TodoList/bll/TodoListsReduser";
 import { TaskPriorities, TaskStatuses } from "common/api";
 
 let startState: TasksStateType;

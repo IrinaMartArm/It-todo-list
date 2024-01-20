@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "common/hooks/Hooks";
 import {
   getTodoLists,
   todoThunks,
-} from "components/TodoList/bll/ReduserTodoLists";
+} from "components/TodoList/bll/TodoListsReduser";
 import { getIsAuth } from "components/Login/AuthReducer";
 
 export const useApp = () => {

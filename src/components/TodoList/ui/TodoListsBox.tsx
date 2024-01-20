@@ -2,7 +2,7 @@ import { TodoListForm } from "components/addItemForm/TodoListForm";
 import { TodoList } from "components/TodoList/ui/TodoList";
 import React, { useEffect } from "react";
 import { useApp } from "common/hooks/useApp";
-import { todoThunks } from "components/TodoList/bll/ReduserTodoLists";
+import { todoThunks } from "components/TodoList/bll/TodoListsReduser";
 import { Navigate } from "react-router-dom";
 
 export const TodoListBox = () => {

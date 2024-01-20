@@ -4,7 +4,7 @@ import {
   TodoListActions,
   todoThunks,
   TogoDomainType,
-} from "components/TodoList/bll/ReduserTodoLists";
+} from "components/TodoList/bll/TodoListsReduser";
 import { v1 } from "uuid";
 import { RequestStatus } from "App/bll/AppReducer";
 

@@ -2,7 +2,7 @@ import {
   ReducerTodoLists,
   todoThunks,
   TogoDomainType,
-} from "components/TodoList/bll/ReduserTodoLists";
+} from "components/TodoList/bll/TodoListsReduser";
 import {
   TasksReducer,
   TasksStateType,

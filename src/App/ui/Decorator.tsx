@@ -3,7 +3,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import { combineReducers } from "redux";
 import { TasksReducer } from "components/TodoList/bll/TasksReducer";
-import { ReducerTodoLists } from "components/TodoList/bll/ReduserTodoLists";
+import { ReducerTodoLists } from "components/TodoList/bll/TodoListsReduser";
 import { AppReducer } from "App/bll/AppReducer";
 import { AuthReducer } from "components/Login/AuthReducer";
 import { configureStore } from "@reduxjs/toolkit";
