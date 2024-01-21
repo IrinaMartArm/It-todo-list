@@ -97,9 +97,9 @@ const slice = createSlice({
     },
     changeTodolistFilterAC(
       state,
-      action: PayloadAction<{ todoId: string; filter: FilterValuesType }>,
+      action: PayloadAction<{ id: string; filter: FilterValuesType }>,
     ) {
-      const todoList = state.find((tl) => tl.id === action.payload.todoId);
+      const todoList = state.find((tl) => tl.id === action.payload.id);
       if (todoList) {
         todoList.filter = action.payload.filter;
       }

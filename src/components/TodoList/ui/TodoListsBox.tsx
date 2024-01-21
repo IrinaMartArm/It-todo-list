@@ -1,4 +1,4 @@
-import { TodoListForm } from "components/addItemForm/TodoListForm";
+import { AddItemForm } from "components/addItemForm/AddItemForm";
 import { TodoList } from "components/TodoList/ui/TodoList";
 import React, { useEffect } from "react";
 import { useApp } from "common/hooks/useApp";
@@ -19,7 +19,7 @@ export const TodoListBox = () => {
   return (
     <div>
       <div className={"todoListForm-wrapper"}>
-        <TodoListForm addText={addTodoList} />
+        <AddItemForm addText={addTodoList} />
       </div>
       <div className={"todos-wrapper"}>
         {todoLists.map((tl) => {

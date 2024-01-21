@@ -1,24 +1,26 @@
-import {TodoListForm, TodoListFormType} from "./TodoListForm";
-import type {Meta, StoryObj} from '@storybook/react';
-import {action} from '@storybook/addon-actions';
+import {
+  AddItemForm,
+  TodoListFormType,
+} from "components/addItemForm/AddItemForm";
+import type { Meta, StoryObj } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
 import React from "react";
 
-
-const meta: Meta<typeof TodoListForm> = {
-    title: 'TODOLISTS/TodoListForm',
-    component: TodoListForm,
-    tags: ['autodocs'],
-    argTypes: {
-        addText: {
-            description: 'Button clicked inside form',
-            action: 'clicked'
-        }
+const meta: Meta<typeof AddItemForm> = {
+  title: "TODOLISTS/AddItemForm",
+  component: AddItemForm,
+  tags: ["autodocs"],
+  argTypes: {
+    addText: {
+      description: "Button clicked inside form",
+      action: "clicked",
     },
+  },
 };
 
-export default  meta;
+export default meta;
 
-type Story = StoryObj<typeof TodoListForm>;
+type Story = StoryObj<typeof AddItemForm>;
 
 // export const AddItemFormStory: Story = {
 //     args: {
@@ -26,22 +28,13 @@ type Story = StoryObj<typeof TodoListForm>;
 //     },
 // };
 
-
-
-export const ErrorTodoListFormStory = () => <TodoListForm addText={action('clicked')}/>
-export const DisableTodoListFormStory = () => <TodoListForm addText={action('clicked')} disabled={true}/>
-
-
-
-
-
-
-
-
-
-
-
+export const ErrorTodoListFormStory = () => (
+  <AddItemForm addText={action("clicked")} />
+);
+export const DisableTodoListFormStory = () => (
+  <AddItemForm addText={action("clicked")} disabled={true} />
+);
 
 // export const TodoListFormBase = () => {
-//     return <TodoListForm addText={(title) => {alert(title)}}/>
+//     return <AddItemForm addText={(title) => {alert(title)}}/>
 // }

@@ -8,7 +8,7 @@ export type TodoListFormType = {
   disabled?: boolean;
 };
 
-export const TodoListForm = React.memo(
+export const AddItemForm = React.memo(
   ({ addText, disabled = false }: TodoListFormType) => {
     const { text, error, addTask, onKeyDownHandler, onChangeHandler } =
       useForm(addText);

@@ -80,7 +80,7 @@ test("correct todolist filter", () => {
   let newFilter: FilterValuesType = "active";
 
   const action = TodoListActions.changeTodolistFilterAC({
-    todoId: todolistId2,
+    id: todolistId2,
     filter: newFilter,
   });
 
