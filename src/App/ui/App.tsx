@@ -6,12 +6,13 @@ import { TodoListBox } from "components/TodoList/ui/TodoListsBox";
 import { Route, Routes } from "react-router-dom";
 import { Login } from "components/Login/Login";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useApp } from "common/hooks/useApp";
 import { AuthThunks } from "components/Login/AuthReducer";
-import { isInitialized } from "App/bll/AppReducer";
+import { getIsInitialized } from "App/bll/AppReducer";
+import { useAppDispatch, useAppSelector } from "common/hooks/Hooks";
 
 function App() {
-  let { dispatch } = useApp();
+  const dispatch = useAppDispatch();
+  const isInitialized = useAppSelector(getIsInitialized);
 
   useEffect(() => {
     dispatch(AuthThunks.initializeApp());

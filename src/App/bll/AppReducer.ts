@@ -25,7 +25,7 @@ const slice = createSlice({
 
 export const AppReducer = slice.reducer;
 export const AppActions = slice.actions;
-export const isInitialized = slice.selectors;
+export const { getIsInitialized } = slice.selectors;
 
 export type RequestStatus = "idle" | "loading" | "succeeded" | "failed";
 export type InitState = {

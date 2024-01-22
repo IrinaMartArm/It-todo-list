@@ -1,22 +1,27 @@
 import { AddItemForm } from "components/addItemForm/AddItemForm";
-import React from "react";
-import { useTodo } from "common/hooks/useTodo";
+import React, { useCallback } from "react";
 import { TogoDomainType } from "components/TodoList/bll/TodoListsReduser";
-import { Navigate } from "react-router-dom";
 import { TodoTitle } from "components/TodoList/ui/TodoTitle";
 import { TasksList } from "components/TodoList/ui/TasksList";
 import { FilterButtons } from "components/TodoList/ui/FilterButtons";
+import { tasksThunks } from "components/TodoList/bll/TasksReducer";
+import { useAppDispatch } from "common/hooks/Hooks";
 
-export type PropsType = {
+export type Props = {
   todoList: TogoDomainType;
 };
 
-export const TodoList = React.memo(({ todoList }: PropsType) => {
-  let { addTask, isAuth } = useTodo(todoList.id);
+export const TodoList = React.memo(({ todoList }: Props) => {
+  const dispatch = useAppDispatch();
 
-  if (!isAuth) {
-    return <Navigate to={"/login"} />;
-  }
+  const addTask = useCallback(
+    (title: string) => {
+      return dispatch(
+        tasksThunks.addTaskTC({ todoId: todoList.id, title }),
+      ).unwrap();
+    },
+    [todoList.id],
+  );
 
   return (
     <div className="todolist">

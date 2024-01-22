@@ -14,24 +14,25 @@ export type Props = {
 };
 export const TodoTitle = ({ todoList }: Props) => {
   const dispatch = useAppDispatch();
+  const { id, title, entityStatus } = todoList;
 
   const removeTodoHandler = useCallback(() => {
-    dispatch(todoThunks.removeTodoTC(todoList.id));
-  }, [todoList.id]);
+    dispatch(todoThunks.removeTodoTC(id));
+  }, [id]);
 
   const changeTodoListTitle = useCallback(
     (value: string) => {
-      dispatch(changeTodoTitleTC(todoList.id, value));
+      dispatch(changeTodoTitleTC(id, value));
     },
-    [todoList.id],
+    [id],
   );
 
   return (
     <h3>
-      <EditableSpan title={todoList.title} onChange={changeTodoListTitle} />
+      <EditableSpan title={title} onChange={changeTodoListTitle} />
       <IconButton
         onClick={removeTodoHandler}
-        disabled={todoList.entityStatus === "loading"}
+        disabled={entityStatus === "loading"}
         className={"removeTodo"}
       >
         <Delete />

@@ -1,16 +1,29 @@
 import { AddItemForm } from "components/addItemForm/AddItemForm";
 import { TodoList } from "components/TodoList/ui/TodoList";
-import React, { useEffect } from "react";
-import { useApp } from "common/hooks/useApp";
-import { todoThunks } from "components/TodoList/bll/TodoListsReduser";
+import React, { useCallback, useEffect } from "react";
+import {
+  getTodoLists,
+  todoThunks,
+} from "components/TodoList/bll/TodoListsReduser";
 import { Navigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "common/hooks/Hooks";
+import { getIsAuth } from "components/Login/AuthReducer";
 
 export const TodoListBox = () => {
-  const { todoLists, addTodoList, isAuth, dispatch } = useApp();
+  const dispatch = useAppDispatch();
+  const todoLists = useAppSelector(getTodoLists);
+  const isAuth = useAppSelector(getIsAuth);
 
   useEffect(() => {
     dispatch(todoThunks.fetchTodoListsTC());
   }, []);
+
+  const addTodoList = useCallback(
+    (title: string) => {
+      return dispatch(todoThunks.addTodoListTC(title)).unwrap();
+    },
+    [dispatch],
+  );
 
   if (!isAuth) {
     return <Navigate to={"/login"} />;
