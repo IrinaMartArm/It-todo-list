@@ -3,7 +3,7 @@ import { TodoList } from "components/TodoList/ui/TodoList";
 import React, { useCallback, useEffect } from "react";
 import {
   getTodoLists,
-  todoThunks,
+  TodoThunks,
 } from "components/TodoList/bll/TodoListsReduser";
 import { Navigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "common/hooks/Hooks";
@@ -15,12 +15,13 @@ export const TodoListBox = () => {
   const isAuth = useAppSelector(getIsAuth);
 
   useEffect(() => {
-    dispatch(todoThunks.fetchTodoListsTC());
+    debugger;
+    dispatch(TodoThunks.fetchTodoListsTC());
   }, []);
 
   const addTodoList = useCallback(
     (title: string) => {
-      return dispatch(todoThunks.addTodoListTC(title)).unwrap();
+      return dispatch(TodoThunks.addTodoListTC(title)).unwrap();
     },
     [dispatch],
   );

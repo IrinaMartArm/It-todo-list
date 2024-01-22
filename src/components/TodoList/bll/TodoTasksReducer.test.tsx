@@ -1,6 +1,6 @@
 import {
   ReducerTodoLists,
-  todoThunks,
+  TodoThunks,
   TogoDomainType,
 } from "components/TodoList/bll/TodoListsReduser";
 import {
@@ -12,7 +12,7 @@ test("ids should be equals", () => {
   const startTasksState: TasksStateType = {};
   const startTodoListsState: Array<TogoDomainType> = [];
 
-  const action = todoThunks.addTodoListTC.fulfilled(
+  const action = TodoThunks.addTodoListTC.fulfilled(
     {
       todoList: { id: "1", title: "What to learn", order: 0, addedDate: "" },
     },

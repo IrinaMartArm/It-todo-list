@@ -3,7 +3,7 @@ import {
   TasksStateType,
   tasksThunks,
 } from "components/TodoList/bll/TasksReducer";
-import { todoThunks } from "components/TodoList/bll/TodoListsReduser";
+import { TodoThunks } from "components/TodoList/bll/TodoListsReduser";
 import { TaskPriorities, TaskStatuses } from "common/api";
 
 let startState: TasksStateType;
@@ -160,7 +160,7 @@ test("correct title should be changed", () => {
 });
 
 test("property with todoId should be removed", () => {
-  const action = todoThunks.removeTodoTC.fulfilled(
+  const action = TodoThunks.removeTodoTC.fulfilled(
     {
       todolistId: "todolistId2",
     },
@@ -175,7 +175,7 @@ test("property with todoId should be removed", () => {
 });
 
 test("todoLists should be added", () => {
-  const action = todoThunks.fetchTodoListsTC.fulfilled(
+  const action = TodoThunks.fetchTodoListsTC.fulfilled(
     {
       todoLists: [
         { id: "1", title: "What to learn", order: 0, addedDate: "" },
@@ -207,7 +207,7 @@ test("tasks should be set", () => {
   expect(endState["todolistId2"].length).toBe(0);
 });
 test("new array should be added when new todo added", () => {
-  const action = todoThunks.addTodoListTC.fulfilled(
+  const action = TodoThunks.addTodoListTC.fulfilled(
     {
       todoList: {
         id: "todolistId3",

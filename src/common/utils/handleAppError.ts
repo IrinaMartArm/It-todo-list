@@ -14,5 +14,5 @@ export const handleAppError = <D>(
       dispatch(AppActions.setAppErrorAC({ error: "some error" }));
     }
   }
-  dispatch(AppActions.setAppStatusAC({ status: "failed" }));
+  // dispatch(AppActions.setAppStatusAC({ status: "failed" }));
 };

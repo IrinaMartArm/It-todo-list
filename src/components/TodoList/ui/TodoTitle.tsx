@@ -3,8 +3,7 @@ import { EditableSpan } from "components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import Delete from "@mui/icons-material/Delete";
 import {
-  changeTodoTitleTC,
-  todoThunks,
+  TodoThunks,
   TogoDomainType,
 } from "components/TodoList/bll/TodoListsReduser";
 import { useAppDispatch } from "common/hooks/Hooks";
@@ -17,12 +16,12 @@ export const TodoTitle = ({ todoList }: Props) => {
   const { id, title, entityStatus } = todoList;
 
   const removeTodoHandler = useCallback(() => {
-    dispatch(todoThunks.removeTodoTC(id));
+    dispatch(TodoThunks.removeTodoTC(id));
   }, [id]);
 
   const changeTodoListTitle = useCallback(
-    (value: string) => {
-      dispatch(changeTodoTitleTC(id, value));
+    (title: string) => {
+      dispatch(TodoThunks.changeTodoTitleTC({ id, title }));
     },
     [id],
   );

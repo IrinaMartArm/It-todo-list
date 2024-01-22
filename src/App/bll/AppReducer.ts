@@ -1,4 +1,10 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  isFulfilled,
+  isPending,
+  isRejected,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 
 const slice = createSlice({
   name: "app",
@@ -15,11 +21,31 @@ const slice = createSlice({
       state.status = action.payload.status;
     },
     setAppIsInitialized: (state, action) => {
+      debugger;
       state.isInitialized = action.payload.isInitialized;
     },
   },
   selectors: {
     getIsInitialized: (sliceState) => sliceState.isInitialized,
+  },
+  extraReducers: (builder) => {
+    builder
+      .addMatcher(isPending, (state) => {
+        state.status = "loading";
+      })
+      .addMatcher(isFulfilled, (state) => {
+        state.status = "succeeded";
+      })
+      .addMatcher(isRejected, (state, action: any) => {
+        state.status = "failed";
+        // if (action.payload) {
+        //   state.error = action.payload.message[0];
+        // } else {
+        state.error = action.error.message;
+        //     ? action.error.message
+        //     : "Some error occurred";
+        // }
+      });
   },
 });
 
