@@ -10,7 +10,6 @@ export const initializeApp = createAppAsyncThunk<
   undefined
 >("app/initialization", async (_, { dispatch, rejectWithValue }) => {
   const res = await AuthApi.me();
-  debugger;
   dispatch(AppActions.setAppIsInitialized({ isInitialized: true }));
   if (res.data.resultCode === 0) {
     return { isAuth: true };

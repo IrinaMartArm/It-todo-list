@@ -46,7 +46,7 @@ export const AddItemForm = React.memo(
     const moveError = () => {
       setError(null);
     };
-    console.log(inputRef);
+
     return (
       <div>
         <TextField
